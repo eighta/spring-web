@@ -10,6 +10,17 @@
 	<!-- DEPENDENCIES VERSION NUMBERS -->
 	<properties>
 		<junit.version>4.12</junit.version>
+		
+		<slf4j.version>1.7.21</slf4j.version>
+		<logback.version>1.1.7</logback.version>
+		
+		<in-memory-db.h2.version>1.4.191</in-memory-db.h2.version>
+		
+		<!-- spring framework -->
+		<spring-context.version>4.3.0.RELEASE</spring-context.version>
+		<spring-jdbc.version>4.3.0.RELEASE</spring-jdbc.version>
+		<spring-test.version>4.3.0.RELEASE</spring-test.version>
+		
 	</properties>
 	
 	<!-- DEPENDENCIES -->
@@ -20,6 +31,62 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		
+		<!-- LogBack dependencies -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		
+		<!-- DATABASE DRIVER: H2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${in-memory-db.h2.version}</version>
+		</dependency>
+		
+		<!--SPRING CONTEXT -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring-context.version}</version>
+
+			<!-- Se excluye el commons-logging de spring (incluido by default) -->
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!--SPRING JDBC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring-jdbc.version}</version>
+		</dependency>
+		
+		<!--SPRING TEST -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring-test.version}</version>
 			<scope>test</scope>
 		</dependency>
 	
