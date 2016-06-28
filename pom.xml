@@ -15,6 +15,8 @@
 		<logback.version>1.1.7</logback.version>
 		
 		<in-memory-db.h2.version>1.4.191</in-memory-db.h2.version>
+		<db.mysql.version>6.0.2</db.mysql.version>
+		<db.postgresql.version>9.1-901-1.jdbc4</db.postgresql.version>
 		
 		<!-- spring framework -->
 		<spring-context.version>4.3.0.RELEASE</spring-context.version>
@@ -51,6 +53,21 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
+		</dependency>
+		
+		<!-- DATABASE DRIVER: MySQL 
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>${db.mysql.version}</version>
+		</dependency>
+		-->
+		
+		<!-- DATABASE DRIVER: postgress--> 
+		<dependency>
+		    <groupId>postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>${db.postgresql.version}</version>
 		</dependency>
 		
 		<!-- DATABASE DRIVER: H2 -->
