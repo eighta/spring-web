@@ -1,0 +1,6 @@
+google: tunneling java example http
+http://www.javaworld.com/article/2077475/core-java/java-tip-111--implement-https-tunneling-with-jsse.html
+http://www.sw-engineering-candies.com/blog-1/how-to-tunnel-http-protocol-with-a-simple-java-proxy-server-through-a-firewall
+
+IMPLEMENTAR TUNNELING
+https://es.wikipedia.org/wiki/T%C3%BAnel_(inform%C3%A1tica)

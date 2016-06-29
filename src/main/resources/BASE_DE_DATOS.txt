@@ -1,5 +1,9 @@
+UTILIZANDO: https://app.jackdb.com/ es posible conectarse a las bases de datos
+(ya se encuentran creados los DS en este sitio)
+
 freemysqlhosting.net
 Database Host:		sql5.freemysqlhosting.net
+port:				3306
 Database Name:		sql5125772
 Database Username:	sql5125772
 Database Password:	m8kvzb1Czk
