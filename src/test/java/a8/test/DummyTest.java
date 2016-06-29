@@ -1,4 +1,4 @@
-package a8;
+package a8.test;
 
 public class DummyTest {
 
