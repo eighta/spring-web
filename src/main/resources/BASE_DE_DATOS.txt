@@ -1,0 +1,15 @@
+freemysqlhosting.net
+Database Host:		sql5.freemysqlhosting.net
+Database Name:		sql5125772
+Database Username:	sql5125772
+Database Password:	m8kvzb1Czk
+Available Space:	5.00MB
+
+elephantsql.com
+host: 				pellefant-02.db.elephantsql.com
+port:				5432
+Database Name:		lrhvftyn
+Database Username:	lrhvftyn
+Database Password:	IA5OtW7om2hqvh_EFuuy-IhDAczg-FdF
+Available Space:	20 MB
+URL:	postgres://lrhvftyn:IA5OtW7om2hqvh_EFuuy-IhDAczg-FdF@pellefant.db.elephantsql.com:5432/lrhvftyn
