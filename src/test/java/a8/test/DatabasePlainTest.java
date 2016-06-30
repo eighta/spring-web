@@ -31,7 +31,7 @@ public class DatabasePlainTest {
 	public void propertiesLoaded(){
 		assertNotNull(properties);
 		
-		String prop = properties.getProperty("postgresql_dbProp.username");
+		String prop = properties.getProperty("postgresql_username");
 		assertNotNull(prop);
 	}
 
@@ -40,10 +40,10 @@ public class DatabasePlainTest {
 	public void connect2postgresql() {
 
 		String db = "postgresql";
-		String driverClassName = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"dbProp.driverClassName"));
-		String url = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"dbProp.url"));
-		String username = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"dbProp.username"));
-		String password = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"dbProp.password"));
+		String driverClassName = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"driverClassName"));
+		String url = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"url"));
+		String username = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"username"));
+		String password = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"password"));
 
 		Connection connection = getConnection(driverClassName, url, username, password);
 		assertNotNull(connection);
@@ -55,10 +55,10 @@ public class DatabasePlainTest {
 	public void connect2mysql() {
 		
 		String db = "mysql";
-		String driverClassName = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"dbProp.driverClassName"));
-		String url = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"dbProp.url"));
-		String username = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"dbProp.username"));
-		String password = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"dbProp.password"));
+		String driverClassName = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"driverClassName"));
+		String url = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"url"));
+		String username = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"username"));
+		String password = properties.getProperty(stringJoinUsingCharDelimiter("_",db,"password"));
 		
 		Connection connection = getConnection(driverClassName, url, username, password);
 		assertNotNull(connection);
@@ -103,7 +103,7 @@ public class DatabasePlainTest {
 		Integer registros = 0;
 
 		try {
-			String query = "select count(1) as registros from company";
+			String query = "select count(1) as registros from books";
 
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);

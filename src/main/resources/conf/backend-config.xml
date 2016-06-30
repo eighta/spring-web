@@ -17,6 +17,12 @@
 <!-- context namespace: 
 		property-placeholder -->
 		
+<!-- Prefixes and Corresponding Paths -->
+<!-- (no prefix): 	In root directory where the class creating the context is executed -->
+<!-- classpath: 	The resource should be obtained from the classpath -->
+<!-- file: 			In the absolute location following the prefix -->
+<!-- http: 			In the web location following the prefix -->		
+		
 		<!-- General properties -->
 		<context:property-placeholder location="classpath:core/backend.properties" />		
 

@@ -41,12 +41,14 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<!-- slf4j -->
+		<!-- LOGGER -->
+		<!-- slf4j (facade)-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		<!-- slf4j (facade API)-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
