@@ -5,13 +5,17 @@ import java.util.Properties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import a8.beans.SimpleBean;
-
 public class Main {
 
 	public static void main(String[] args) {
 
 		testClassPathXmlApplicationContext();
+		retrieveOsName();
+	}
+	
+	public static void retrieveOsName(){
+		String osName = System.getProperty("os.name");
+		System.out.println(osName);
 	}
 	
 	public static void testClassPathXmlApplicationContext(){

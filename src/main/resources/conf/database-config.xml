@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd">
+		
+	
+	<!-- DatabasePopulator -->
+	<bean name="embeddedDatabasePopulator" class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
+		<property name="scripts">
+			<list>
+				<value>classpath:database/DDL.sql</value>
+				<value>classpath:database/DML.sql</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Embedded Database -->
+	<!-- by Default is HSQLDB -->
+	<bean name="embeddedDS" class="org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean">
+		<property name="databasePopulator" ref="embeddedDatabasePopulator"/>
+	</bean>
+	
+	<!-- External Databases -->
+	<beans profile="sophieHome">
+	
+		<util:properties id="dbProps"
+			location="classpath:database/datasources.properties" />
+	
+		<!-- POSTGRESS -->
+		<!-- http://www.mchange.com/projects/c3p0/#what_is -->
+		<bean name="postgresqlDS" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+			p:driverClass="org.postgresql.Driver"
+			p:jdbcUrl="#{dbProps.postgresql_url}"
+			p:user="#{dbProps.postgresql_username}"
+			p:password="#{dbProps.postgresql_password}"
+			
+			p:minPoolSize="5"
+			p:acquireIncrement="5"
+			p:maxPoolSize="20"
+		/>
+		
+		<!-- 
+			p:driverClass="#{dbProps.postgresql_driverClassName}"
+			al cargar la propiedad, esta transformando el . por un slash
+			
+			TODO FALTA CREAR EL DS DE MySql
+		 -->
+	
+	</beans>
+		
+</beans>

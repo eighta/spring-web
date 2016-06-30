@@ -16,17 +16,32 @@ import a8.beans.SimplePropertiesBean;
 import a8.beans.SingletonBean;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/a8/conf/backend-config.xml")
+@ContextConfiguration("classpath:/conf/backend-config.xml")
 public class BackendXmlConfigTest {
 
 	@Autowired 
 	private ApplicationContext applicationContext;
 	
 	@Test
+	public void getAppleSlogan(){
+		SimpleBean simpleBean = applicationContext.getBean("specificSimpleBean",SimpleBean.class);
+		String simpleBeanName = simpleBean.getSimpleBeanName();
+		assertEquals("Think Different",simpleBeanName);
+	}
+	
+	@Test
+	public void getDaughterNameFromProperties(){
+		SimpleBean simpleBean = applicationContext.getBean("daughterName",SimpleBean.class);
+		String simpleBeanName = simpleBean.getSimpleBeanName();
+		assertEquals("Sophie",simpleBeanName);
+	}
+	
+	@Test
 	public void getSimplePropertiesBeanUsing_C_and_P_namespace(){
 		SimplePropertiesBean simplePropertiesBean = applicationContext.getBean("simplePropertiesBean_new",SimplePropertiesBean.class);
 		assertNotNull(simplePropertiesBean);
 		assertEquals("TAG c",simplePropertiesBean.getConstructorProperty());
+		assertNotNull(simplePropertiesBean.getReferenceProperty());
 	}
 	
 	@Test
@@ -34,6 +49,7 @@ public class BackendXmlConfigTest {
 		SimplePropertiesBean simplePropertiesBean = applicationContext.getBean("simplePropertiesBean_old",SimplePropertiesBean.class);
 		assertNotNull(simplePropertiesBean);
 		assertEquals("TAG constructor-arg",simplePropertiesBean.getConstructorProperty());
+		assertNotNull(simplePropertiesBean.getReferenceProperty());
 	}
 	
 	@Test

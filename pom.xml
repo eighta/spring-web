@@ -13,8 +13,11 @@
 		
 		<slf4j.version>1.7.21</slf4j.version>
 		<logback.version>1.1.7</logback.version>
+		<deltaspike.version>1.7.0</deltaspike.version>
 		
-		<in-memory-db.hsqldb>1.8.0.10</in-memory-db.hsqldb>
+		<!-- database -->
+		<ds.c3p0.version>0.9.1.2</ds.c3p0.version>
+		<in-memory-db.hsqldb.version>1.8.0.10</in-memory-db.hsqldb.version>
 		<in-memory-db.h2.version>1.4.191</in-memory-db.h2.version>
 		<db.mysql.version>6.0.2</db.mysql.version>
 		<db.postgresql.version>9.1-901-1.jdbc4</db.postgresql.version>
@@ -57,6 +60,22 @@
 			<version>${logback.version}</version>
 		</dependency>
 		
+		<!-- Apache DeltaSpike
+		ALTERNATIVA A SPRING 
+		<dependency>
+		    <groupId>org.apache.deltaspike.core</groupId>
+		    <artifactId>deltaspike-core-api</artifactId>
+		    <version>${deltaspike.version}</version>
+		</dependency>
+		-->
+		
+		<!-- DATASOURCE: C3P0 -->
+		<dependency>
+		    <groupId>c3p0</groupId>
+		    <artifactId>c3p0</artifactId>
+		    <version>${ds.c3p0.version}</version>
+		</dependency>
+		
 		<!-- DATABASE DRIVER: MySQL--> 
 		<dependency>
 		    <groupId>mysql</groupId>
@@ -75,7 +94,7 @@
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>${in-memory-db.hsqldb}</version>
+			<version>${in-memory-db.hsqldb.version}</version>
 		</dependency>
 		
 		<!-- DATABASE DRIVER: H2 -->
