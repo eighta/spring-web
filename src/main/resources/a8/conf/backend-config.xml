@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<util:properties id="dbProp"
+		location="classpath:database/datasources.properties" />
+		
+	<bean class="a8.beans.SimpleBean" >
+		<constructor-arg name="simpleBeanName" value="ONE"/>
+	</bean>
+	
+	<bean class="a8.beans.SimpleBean" >
+		<constructor-arg name="simpleBeanName" value="#{T(System).currentTimeMillis()}"/>
+	</bean>
+	
+	<bean class="a8.beans.SimpleBean" >
+		<constructor-arg name="simpleBeanName" value="#{dbProp.simple}"/>
+	</bean>
+
+<!-- 
+	<bean id="postgresqlDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="#{postgresql_dbProp.driverClassName}" />
+		<property name="url" value="#{postgresql_dbProp.url}" />
+		<property name="username" value="#{postgresql_dbProp.username}" />
+		<property name="password" value="#{postgresql_dbProp.password}" />
+	</bean>
+ -->
+ 
+ <!-- 
+	<bean id="mysqlDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="#{mysql_dbProp.driverClassName}" />
+		<property name="url" value="#{mysql_dbProp.url}" />
+		<property name="username" value="#{mysql_dbProp.username}" />
+		<property name="password" value="#{mysql_dbProp.password}" />
+	</bean>
+	
+	 -->
+
+</beans>

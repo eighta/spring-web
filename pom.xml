@@ -19,6 +19,7 @@
 		<db.postgresql.version>9.1-901-1.jdbc4</db.postgresql.version>
 		
 		<!-- spring framework -->
+		<spring-core.version>4.3.0.RELEASE</spring-core.version>
 		<spring-context.version>4.3.0.RELEASE</spring-context.version>
 		<spring-jdbc.version>4.3.0.RELEASE</spring-jdbc.version>
 		<spring-test.version>4.3.0.RELEASE</spring-test.version>
@@ -55,13 +56,12 @@
 			<version>${logback.version}</version>
 		</dependency>
 		
-		<!-- DATABASE DRIVER: MySQL 
+		<!-- DATABASE DRIVER: MySQL--> 
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>${db.mysql.version}</version>
 		</dependency>
-		-->
 		
 		<!-- DATABASE DRIVER: postgress--> 
 		<dependency>
@@ -75,6 +75,13 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${in-memory-db.h2.version}</version>
+		</dependency>
+		
+		<!--SPRING CORE -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-core</artifactId>
+		    <version>${spring-core.version}</version>
 		</dependency>
 		
 		<!--SPRING CONTEXT -->

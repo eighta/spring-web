@@ -7,7 +7,16 @@ import org.junit.Test;
 public class BackendXmlConfTest {
 
 	@Test
-	public void dummyTest(){
-		assertTrue(true);
+	public void postgresqlDataSource(){
+		
+		
+		
+	}
+	
+	@Test
+	public void mysqlDataSource(){
+		
+		
+		
 	}
 }
