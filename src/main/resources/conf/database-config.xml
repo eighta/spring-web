@@ -4,13 +4,18 @@
 	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:p="http://www.springframework.org/schema/p" 
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/util
-		http://www.springframework.org/schema/util/spring-util.xsd">
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/jdbc 
+		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 		
-	
 	<!-- DatabasePopulator -->
 	<bean name="embeddedDatabasePopulator" class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
 		<property name="scripts">
@@ -24,22 +29,32 @@
 	<!-- Embedded Database -->
 	<!-- by Default is HSQLDB -->
 	<bean name="embeddedDS" class="org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean">
+		<property name="databaseName" value="embeddedDS_1" />
 		<property name="databasePopulator" ref="embeddedDatabasePopulator"/>
 	</bean>
+	
+	<jdbc:embedded-database id="embeddedDS_2" type="HSQL">
+		<jdbc:script location="classpath:database/DDL.sql" />
+		<jdbc:script location="classpath:database/DML.sql" />
+	</jdbc:embedded-database>
 	
 	<!-- External Databases -->
 	<beans profile="sophieHome">
 	
+	<!-- 
 		<util:properties id="dbProps"
 			location="classpath:database/datasources.properties" />
+	-->
+	
+		<context:property-placeholder location="classpath:database/datasources.properties" />
 	
 		<!-- POSTGRESS -->
 		<!-- http://www.mchange.com/projects/c3p0/#what_is -->
 		<bean name="postgresqlDS" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-			p:driverClass="org.postgresql.Driver"
-			p:jdbcUrl="#{dbProps.postgresql_url}"
-			p:user="#{dbProps.postgresql_username}"
-			p:password="#{dbProps.postgresql_password}"
+			p:driverClass="${postgresql_driverClassName}"
+			p:jdbcUrl="${postgresql_url}"
+			p:user="${postgresql_username}"
+			p:password="${postgresql_password}"
 			
 			p:minPoolSize="5"
 			p:acquireIncrement="5"
@@ -52,6 +67,18 @@
 			
 			TODO FALTA CREAR EL DS DE MySql
 		 -->
+		 
+		 <!-- MYSQL -->
+		 <bean name="mysqlDS" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+			p:driverClass="${mysql_driverClassName}"
+			p:jdbcUrl="${mysql_url}"
+			p:user="${mysql_username}"
+			p:password="${mysql_password}"
+			
+			p:minPoolSize="5"
+			p:acquireIncrement="5"
+			p:maxPoolSize="20"
+		/>
 	
 	</beans>
 		

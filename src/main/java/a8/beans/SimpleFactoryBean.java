@@ -13,13 +13,11 @@ public class SimpleFactoryBean implements FactoryBean<SimpleBean>{
 
 	@Override
 	public Class<?> getObjectType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean isSingleton() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

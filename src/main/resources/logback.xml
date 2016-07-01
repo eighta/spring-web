@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!DOCTYPE xml>
 <!-- http://saltnlight5.blogspot.com.co/2013/08/how-to-configure-slf4j-with-different.html -->
 <!-- http://logback.qos.ch/manual/configuration.html -->
 <configuration>

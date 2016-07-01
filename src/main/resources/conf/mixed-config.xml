@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:component-scan base-package="a8.beans"/>
+<!-- 	
+	<context:annotation-config/> registers the following:
+		–– AutowiredAnnotationBeanPostProcessor (supports @Autowired, @Value,@Inject)
+		–– CommonAnnotationBeanPostProcessor (supports @Resource, @PostConstruct,@PreDestroy)
+		–– PersistenceAnnotationBeanPostProcessor (supports @PersistenceUnit,@PersistenceContext)
+		–– RequiredAnnotationBeanPostProcessor (supports @Required)
+
+	<context:component-scan base-package="com.book.beans"/> implicitly enables the functionality of 
+	<context:annotation-config> and adds support for more annotations (@Repository, @Service, 
+	@Controller, which are specializations of @Component, @Configuration, etc.)
+ -->
+	
+	<!-- Just a Simple Bean -->
+	<bean name="verySimpleBean" class="a8.beans.SimpleBean">
+		<constructor-arg name="simpleBeanName" value="ONE" />
+	</bean>
+		
+</beans>
