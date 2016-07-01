@@ -11,6 +11,11 @@ import a8.beans.SimpleBean;
 @PropertySource(value = "classpath:core/backend.properties")
 public class BackendJavaConfig {
 
+	@Bean
+	public SimpleBean getWhatIsMyBeanName(){
+		return  new SimpleBean("unknown");
+	}
+	
 	@Bean(name="daughterName")
 	public SimpleBean getSimpleBeanSpELProperties(
 			@Value("${daughter.name}")String daughterName){
