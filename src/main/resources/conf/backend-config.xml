@@ -24,9 +24,9 @@
 <!-- http: 			In the web location following the prefix -->		
 		
 		<!-- General properties -->
-		<context:property-placeholder location="classpath:core/backend.properties" />		
+		<context:property-placeholder location="classpath:core/backend.properties" />
 
-		<!-- Specific properties -->
+		<!-- Specific bean properties -->
 		<util:properties id="othersProperties"
 			location="classpath:core/others.properties" />
 		
