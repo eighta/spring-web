@@ -70,13 +70,4 @@ public class BackendXmlConfigTest {
 		assertNotNull(complexBean);
 	}
 	
-	@Test
-	@Ignore
-	public void postgresqlDataSource(){}
-	
-	@Test
-	@Ignore
-	public void mysqlDataSource(){}
-	
-	
 }
