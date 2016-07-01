@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main {
@@ -12,17 +12,10 @@ public class Main {
 	private static final Logger logger = LoggerFactory.getLogger(Main.class);
 	
 	public static void main(String[] args) {
-
 		testClassPathXmlApplicationContext();
 		retrieveOsName();
-		retrieveResourceFromApplicationContext();
 	}
 	
-	private static void retrieveResourceFromApplicationContext() {
-
-		
-	}
-
 	public static void retrieveOsName(){
 		String osName = System.getProperty("os.name");
 		logger.info(osName);
@@ -30,7 +23,7 @@ public class Main {
 	
 	public static void testClassPathXmlApplicationContext(){
 		
-		ApplicationContext context =
+		ConfigurableApplicationContext  context =
 				new ClassPathXmlApplicationContext("conf/backend-config.xml");
 		
 		//Properties properties = context.getBean(Properties.class);
@@ -40,6 +33,7 @@ public class Main {
 		
 		//SimpleBean simpleBean = context.getBean(SimpleBean.class);
 		//System.out.println(">>>"+ simpleBean);
+		
+		context.close();
 	}
-
 }

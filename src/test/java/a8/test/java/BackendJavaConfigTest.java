@@ -5,8 +5,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
@@ -20,17 +18,15 @@ import a8.conf.BackendJavaConfig;
 @ContextConfiguration(classes=BackendJavaConfig.class)
 public class BackendJavaConfigTest {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BackendJavaConfigTest.class);
+	//private static final Logger logger = LoggerFactory.getLogger(BackendJavaConfigTest.class);
 
 	@Autowired 
 	private ApplicationContext applicationContext;
 	
 	@Test
 	public void unknownSimpleBeanName(){
-		
 		SimpleBean simpleBean = applicationContext.getBean("getWhatIsMyBeanName",SimpleBean.class);
 		assertNotNull(simpleBean);
-		
 	}
 	
 	@Test
