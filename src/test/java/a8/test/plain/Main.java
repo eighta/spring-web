@@ -1,4 +1,4 @@
-package a8.test;
+package a8.test.plain;
 
 import java.util.Properties;
 

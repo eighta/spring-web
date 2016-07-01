@@ -1,4 +1,4 @@
-package a8.test;
+package a8.test.plain;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
