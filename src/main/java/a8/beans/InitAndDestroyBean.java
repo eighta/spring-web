@@ -12,6 +12,8 @@ public class InitAndDestroyBean implements InitializingBean, DisposableBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(InitAndDestroyBean.class);
 	
+	private String innerBeanName; 
+	
 	public InitAndDestroyBean(){
 		logger.info("constructor");
 	}
@@ -37,5 +39,14 @@ public class InitAndDestroyBean implements InitializingBean, DisposableBean {
 	}
 	public void plainCleanMethod(){
 		logger.info("plainCleanMethod(...)");
+	}
+
+	public String getInnerBeanName() {
+		return innerBeanName;
+	}
+
+	public void setInnerBeanName(String innerBeanName) {
+		logger.info("setInnerBeanName(...)");
+		this.innerBeanName = innerBeanName;
 	}
 }

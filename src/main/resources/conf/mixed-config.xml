@@ -40,7 +40,9 @@
 --> 
 
 	<!-- InitAndDestroyBean -->
-	<bean class="a8.beans.InitAndDestroyBean" init-method="plainInitMethod" destroy-method="plainCleanMethod"/>
+	<bean class="a8.beans.InitAndDestroyBean" init-method="plainInitMethod" destroy-method="plainCleanMethod">
+		<property name="innerBeanName" value="InitAndDestroyBean"/>
+	</bean>
 
 	<!-- DestroyingBeanStyle2 -->
 	<bean class="a8.beans.DestroyingBeanStyle2" destroy-method="plainCleanMethod"/>

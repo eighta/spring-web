@@ -1,0 +1,38 @@
+1. Load Configuration Files (read bean definitions)
+2. Post Process Bean definitions
+
+======
+Really
+======
+1.Instantiate Bean
+2.Inject Dependencies
+3[Post Process Bean] (before init)
+4.afterPropertiesSet (only if bean implements InitializingBean)
+5.Init Bean
+6[Post Process Bean] (after init)
+
+===============
+Mas exactamente
+===============
+when a bean is created, the following succession of actions happens:
+1.	The constructor is called first to create the bean.
+2.	The dependencies are injected (setters are called).
+3.	The pre-initialization BeanPostProcessors are consulted to see if they want to
+	call anything from this bean. The @PostConstruct annotation is registered by
+	the CommonAnnotationBeanPostProcessor, so this bean will call this annotated
+	method. This method is executed right after the bean has been constructed and
+	before the class is put into service, 6 before the actual initialization of the bean
+	(before afterPropertiesSet and init-method).
+4.	The InitializingBean’s afterPropertiesSet is executed right after the dependencies were injected.
+5.	The init-method attribute value method is executed last, as this is the actual initialization method of the bean.
+
+When a bean is destroyed:
+1.	The @PreDestroy method is executed, as this has to be executed before a destroy
+	method, if one exists. The PreDestroy annotation is used on methods as a
+	callback notification to signal that the instance is in the process of being removed
+	by the container.
+2.	The DisposableBean’s destroy method is executed next, as the Spring standard order defines it so.
+3.	The destroy-method attribute value method is executed last, as this is the actual
+	destroy method of the bean, and the Spring standard order defines it so.
+	
+	
