@@ -35,6 +35,13 @@ public class DatabaseXmlConfigTest {
 		runSuiteTest(embeddedDS.getConnection());
 	}
 	@Test
+	public void getEmbeddedDataSource_2() throws SQLException {
+		DataSource embeddedDS = applicationContext.getBean("embeddedDS_2", DataSource.class);
+		assertNotNull(embeddedDS);
+		runSuiteTest(embeddedDS.getConnection());
+	}
+	
+	@Test
 	// @Ignore //XXX SOLO FUNCIONAL EN "HOME", SE DEBE UTILIZAR MECANISMO DE
 	// PROFILES
 	public void getPostgresqlDataSource() throws SQLException {

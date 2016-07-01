@@ -5,13 +5,16 @@
 	xmlns:p="http://www.springframework.org/schema/p" 
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/util
-		http://www.springframework.org/schema/util/spring-util.xsd">
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/jdbc 
+		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 		
 	<!-- DatabasePopulator -->
 	<bean name="embeddedDatabasePopulator" class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
@@ -26,8 +29,14 @@
 	<!-- Embedded Database -->
 	<!-- by Default is HSQLDB -->
 	<bean name="embeddedDS" class="org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean">
+		<property name="databaseName" value="embeddedDS_1" />
 		<property name="databasePopulator" ref="embeddedDatabasePopulator"/>
 	</bean>
+	
+	<jdbc:embedded-database id="embeddedDS_2" type="HSQL">
+		<jdbc:script location="classpath:database/DDL.sql" />
+		<jdbc:script location="classpath:database/DML.sql" />
+	</jdbc:embedded-database>
 	
 	<!-- External Databases -->
 	<beans profile="sophieHome">

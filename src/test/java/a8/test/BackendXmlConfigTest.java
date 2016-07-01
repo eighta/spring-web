@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,6 +22,22 @@ public class BackendXmlConfigTest {
 
 	@Autowired 
 	private ApplicationContext applicationContext;
+	
+	@Test
+	public void retrieveResourceFromApplicationContext(){
+		Resource resource = applicationContext.getResource("logback.xml");
+		assertNotNull(resource);
+		
+		/*
+		Depending on the context class used, the resource loaded can have one of the following types:
+			• If ctx is a ClassPathXmlApplicationContext instance, the resource type is
+			ClassPathResource
+			• If ctx is a FileSystemXmlApplicationContext instance, the resource type is
+			FileSystemResource
+			• If ctx is a WebApplicationContext instance, the resource type is
+			ServletContextResource
+		*/
+	}
 	
 	@Test
 	public void getAppleSlogan(){
