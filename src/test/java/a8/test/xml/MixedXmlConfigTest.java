@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import a8.beans.AnnotatedBean;
+import a8.beans.RequiredBean;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:conf/mixed-config.xml")
@@ -21,6 +22,12 @@ public class MixedXmlConfigTest {
 	
 	@Autowired 
 	private ApplicationContext applicationContext;
+	
+	@Test
+	public void requiredBean(){
+		RequiredBean requiredBean = applicationContext.getBean(RequiredBean.class);
+		assertNotNull(requiredBean);
+	}
 	
 	@Test
 	public void printBeanNames(){
