@@ -39,6 +39,15 @@
       ░                                         ░                                                                                 
 --> 
 
+	<!-- InitAndDestroyBean -->
+	<bean class="a8.beans.InitAndDestroyBean" init-method="plainInitMethod" destroy-method="plainCleanMethod"/>
+
+	<!-- DestroyingBeanStyle2 -->
+	<bean class="a8.beans.DestroyingBeanStyle2" destroy-method="plainCleanMethod"/>
+
+	<!-- InitializationBeanStyle2 -->
+	<bean class="a8.beans.InitializationBeanStyle2" init-method="plainInitMethod"/>
+	
 	<!-- Required Bean -->
 	<bean class="a8.beans.RequiredBean">
 		<property name="verySimpleBean" ref="verySimpleBean"/>
