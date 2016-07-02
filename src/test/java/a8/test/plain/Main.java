@@ -22,13 +22,11 @@ public class Main {
 	private static void testLogLevel() {
 		
 System.out.println("PRINTING ALL LEVELS");
-		
 		logger.trace("1-TRACE MSG");
 		logger.debug("2-DEBUG MSG");
 		logger.info("3-INFO MSG");
 		logger.warn("4-WARNING MSG");
 		logger.error("5-ERROR MSG");
-
 System.out.println("END LEVELS");
 
 		//TRACE < DEBUG < INFO <  WARN < ERROR

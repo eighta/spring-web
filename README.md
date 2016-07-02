@@ -13,6 +13,7 @@ Proyecto en donde se plasmaran los conocimientos adquiridos en el spring-web
 #A9D40D	INFO
 #FAC848	WARNING
 #F55C5A	ERROR
-#9878D5	ASSERT
+#9878D5	TRACE (ASSERT)
+
 
 #Font	MONACO

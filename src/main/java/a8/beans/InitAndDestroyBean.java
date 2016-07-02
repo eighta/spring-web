@@ -26,11 +26,11 @@ public class InitAndDestroyBean implements InitializingBean, DisposableBean {
 	public void afterPropertiesSet() throws Exception {
 		logger.info("afterPropertiesSet(...) method [InitializingBean]");
 	}
-	@PostConstruct
+	@PostConstruct									//CommonAnnotationBeanPostProcessor
 	public void init(){
 		logger.info("@PostConstruct...");
 	}
-	@PreDestroy
+	@PreDestroy										//CommonAnnotationBeanPostProcessor.
 	public void cleanup(){
 		logger.info("@PreDestroy...");
 	}
