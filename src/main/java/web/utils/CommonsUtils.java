@@ -1,4 +1,4 @@
-package a8.test.utils;
+package web.utils;
 
 import java.util.Properties;
 import java.util.StringJoiner;

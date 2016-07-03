@@ -9,7 +9,7 @@ import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import a8.test.utils.CommonsUtils;
+import web.utils.CommonsUtils;
 
 @Component
 public class MyListener {

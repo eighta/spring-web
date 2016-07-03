@@ -1,38 +1,59 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>a8.learning</groupId>
 	<artifactId>spring-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	
+
 	<!-- DEPENDENCIES VERSION NUMBERS -->
 	<properties>
 		<junit.version>4.12</junit.version>
-		
+
 		<slf4j.version>1.7.21</slf4j.version>
 		<logback.version>1.1.7</logback.version>
 		<deltaspike.version>1.7.0</deltaspike.version>
-		
+
 		<!-- database -->
 		<ds.c3p0.version>0.9.1.2</ds.c3p0.version>
 		<in-memory-db.hsqldb.version>1.8.0.10</in-memory-db.hsqldb.version>
 		<in-memory-db.h2.version>1.4.191</in-memory-db.h2.version>
 		<db.mysql.version>6.0.2</db.mysql.version>
 		<db.postgresql.version>9.1-901-1.jdbc4</db.postgresql.version>
-		
+
 		<!-- spring framework -->
 		<spring-core.version>4.3.0.RELEASE</spring-core.version>
 		<spring-context.version>4.3.0.RELEASE</spring-context.version>
 		<spring-jdbc.version>4.3.0.RELEASE</spring-jdbc.version>
 		<spring-test.version>4.3.0.RELEASE</spring-test.version>
-		
+		<spring-web.version>4.3.0.RELEASE</spring-web.version>
+
+		<!-- java-web -->
+		<servlet.version>3.1.0</servlet.version>
+		<jsp.version>2.2</jsp.version>
+
 	</properties>
-	
+
 	<!-- DEPENDENCIES -->
 	<dependencies>
-		
+
+		<!-- WEB -->
+		<!-- servlets -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- jsp -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!--JUNIT -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -40,80 +61,75 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- LOGGER -->
-		<!-- slf4j (facade)-->
+		<!-- slf4j (facade) -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<!-- slf4j (facade API)-->
+		<!-- slf4j (facade API) -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		
+
 		<!-- LogBack dependencies -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
-		
-		<!-- Apache DeltaSpike
-		ALTERNATIVA A SPRING 
-		<dependency>
-		    <groupId>org.apache.deltaspike.core</groupId>
-		    <artifactId>deltaspike-core-api</artifactId>
-		    <version>${deltaspike.version}</version>
-		</dependency>
-		-->
-		
+
+		<!-- Apache DeltaSpike ALTERNATIVA A SPRING <dependency> <groupId>org.apache.deltaspike.core</groupId> 
+			<artifactId>deltaspike-core-api</artifactId> <version>${deltaspike.version}</version> 
+			</dependency> -->
+
 		<!-- DATASOURCE: C3P0 -->
 		<dependency>
-		    <groupId>c3p0</groupId>
-		    <artifactId>c3p0</artifactId>
-		    <version>${ds.c3p0.version}</version>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${ds.c3p0.version}</version>
 		</dependency>
-		
-		<!-- DATABASE DRIVER: MySQL--> 
+
+		<!-- DATABASE DRIVER: MySQL -->
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>${db.mysql.version}</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${db.mysql.version}</version>
 		</dependency>
-		
-		<!-- DATABASE DRIVER: postgress--> 
+
+		<!-- DATABASE DRIVER: postgress -->
 		<dependency>
-		    <groupId>postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
-		    <version>${db.postgresql.version}</version>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${db.postgresql.version}</version>
 		</dependency>
-		
+
 		<!-- DATABASE DRIVER: HSQL -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>${in-memory-db.hsqldb.version}</version>
 		</dependency>
-		
+
 		<!-- DATABASE DRIVER: H2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${in-memory-db.h2.version}</version>
 		</dependency>
-		
-		<!--SPRING CORE 
+
+		<!--SPRING CORE -->
+		<!-- (needed by spring-web) -->
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-core</artifactId>
-		    <version>${spring-core.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring-core.version}</version>
 		</dependency>
-		-->
-		
+
 		<!--SPRING CONTEXT -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -128,14 +144,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!--SPRING JDBC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring-jdbc.version}</version>
 		</dependency>
-		
+
 		<!--SPRING TEST -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -143,7 +159,14 @@
 			<version>${spring-test.version}</version>
 			<scope>test</scope>
 		</dependency>
-	
+
+		<!-- SPRING MVC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring-web.version}</version>
+		</dependency>
+
 	</dependencies>
-	
+
 </project>

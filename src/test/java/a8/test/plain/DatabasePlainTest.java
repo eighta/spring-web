@@ -10,8 +10,8 @@ import java.util.Properties;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import a8.test.utils.CommonsUtils;
 import a8.test.utils.DatabaseUtils;
+import web.utils.CommonsUtils;
 
 public class DatabasePlainTest {
 

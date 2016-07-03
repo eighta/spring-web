@@ -28,8 +28,6 @@ public class Main {
 		// delegate it to ClassLoader.getSystemResourceAsStream(java.lang.String) method
 		
 		logger.info("resourceAsStream: " + resourceAsStream);
-		
-		
 	}
 
 	private static void testLogLevel() {
