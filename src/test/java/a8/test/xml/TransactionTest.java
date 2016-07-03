@@ -26,10 +26,4 @@ public class TransactionTest {
 		assertNotNull(tx);
 	}
 	
-	@Test
-	@Ignore
-	public void getTx(){
-		PlatformTransactionManager tx = applicationContext.getBean("txManager_1",PlatformTransactionManager.class);
-		assertNotNull(tx);
-	}
 }

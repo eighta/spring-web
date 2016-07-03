@@ -42,7 +42,7 @@
 	<!-- Embedded Database -->
 	<!-- by Default is HSQLDB -->
 	<bean name="dataSource" class="org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean">
-		<property name="databaseName" value="embeddedDS_1" />
+		<property name="databaseName" value="embeddedDS_tx" />
 		<property name="databasePopulator">
 			<!-- DatabasePopulator -->
 			<bean class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
