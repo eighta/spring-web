@@ -30,24 +30,12 @@ import a8.test.utils.TestActiveProfilesResolver;
 public class DatabaseXmlConfigTest {
 
 	private static DatabaseUtils databaseUtils = DatabaseUtils.getInstance();
-	private boolean sophieHome = Boolean.FALSE;
-
-	@Autowired
-	private Environment environment;
+	
 	
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	@PostConstruct
-	public void init(){
-		//is Sophie Home ?
-		List<String> activeProfiles = Arrays.asList(environment.getActiveProfiles());
-		sophieHome = activeProfiles.contains("sophieHome");
-	}
 	
-	private boolean isSophieHome() {
-		return sophieHome;
-	}
 
 	@Test
 	public void getEmbeddedDataSource() throws SQLException {
@@ -65,7 +53,7 @@ public class DatabaseXmlConfigTest {
 	@Test
 	public void getPostgresqlDataSource() throws SQLException {
 		
-		Assume.assumeTrue(isSophieHome());
+		Assume.assumeTrue(TestActiveProfilesResolver.isSophieHome());
 		
 		DataSource postgresqlDS = applicationContext.getBean("postgresqlDS", DataSource.class);
 		assertNotNull(postgresqlDS);
@@ -74,7 +62,7 @@ public class DatabaseXmlConfigTest {
 	@Test
 	public void getMySqlDataSource() throws SQLException {
 		
-		Assume.assumeTrue(isSophieHome());
+		Assume.assumeTrue(TestActiveProfilesResolver.isSophieHome());
 		
 		DataSource mysqlDS = applicationContext.getBean("mysqlDS", DataSource.class);
 		assertNotNull(mysqlDS);
@@ -82,7 +70,7 @@ public class DatabaseXmlConfigTest {
 	@Test
 	public void getMySqlDataSourceFromSpringDriverManager() throws SQLException {
 		
-		Assume.assumeTrue(isSophieHome());
+		Assume.assumeTrue(TestActiveProfilesResolver.isSophieHome());
 		
 		DataSource mysqlDS = applicationContext.getBean("mysqlDS_springDriverManager", DataSource.class);
 		assertNotNull(mysqlDS);
