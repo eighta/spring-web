@@ -1,0 +1,21 @@
+==============
+spring testing
+==============
+Unit testing is used to test small units of code, thus its naming. Unit testing is easy to
+do—not much setup is necessary, and since JUnit10 has introduced @Test annotation
+writing, unit tests have become a breeze.
+
+Integration testing is used to test bigger chunks of code made up of objects
+interacting together in a given context, and the focus is set on business logic and
+object integration with each other. The context is usually made up of mocks or stubs
+that replace the objects, which are not the focus of the tests. You can imagine that
+creating a testing context is not a simple job.
+
+The Spring Framework includes a testing module called spring-test that makes integration testing
+really practical to implement.
+
+The SpringJUnit4ClassRunner, as the names says, is a Spring class used to tell JUnit
+that the tests in this class are executed in a Spring test context.
+
+The @ContextConfiguration receives one or more configuration files as parameters
+that are used to initialize the test context.

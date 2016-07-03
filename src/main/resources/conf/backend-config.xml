@@ -11,36 +11,26 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/util
-		http://www.springframework.org/schema/util/spring-util.xsd">
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd"
+		>
 		
 <!-- No schemaLocation needed for [c] and [p] namespace -->
-<!-- context namespace: 
-		property-placeholder -->
 		
+		<!-- General properties -->
+		<context:property-placeholder location="classpath:core/backend.properties" />
 <!-- Prefixes and Corresponding Paths -->
 <!-- (no prefix): 	In root directory where the class creating the context is executed -->
 <!-- classpath: 	The resource should be obtained from the classpath -->
 <!-- file: 			In the absolute location following the prefix -->
-<!-- http: 			In the web location following the prefix -->		
-		
-		<!-- General properties -->
-		<context:property-placeholder location="classpath:core/backend.properties" />
+<!-- http: 			In the web location following the prefix -->	
+
 
 		<!-- Specific bean properties -->
 		<util:properties id="othersProperties"
 			location="classpath:core/others.properties" />
 		
-	<!-- <bean id="postgresqlDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
-		<property name="driverClassName" value="#{postgresql_dbProp.driverClassName}" 
-		/> <property name="url" value="#{postgresql_dbProp.url}" /> <property name="username" 
-		value="#{postgresql_dbProp.username}" /> <property name="password" value="#{postgresql_dbProp.password}" 
-		/> </bean> -->
-
-	<!-- <bean id="mysqlDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
-		<property name="driverClassName" value="#{mysql_dbProp.driverClassName}" 
-		/> <property name="url" value="#{mysql_dbProp.url}" /> <property name="username" 
-		value="#{mysql_dbProp.username}" /> <property name="password" value="#{mysql_dbProp.password}" 
-		/> </bean> -->
 
 <!-- 
  ▄▄▄▄   ▓█████ ▄▄▄       ███▄    █   ██████    ▓█████▄ ▓█████   █████▒██▓ ███▄    █  ██▓▄▄▄█████▓ ██▓ ▒█████   ███▄    █   ██████ 
@@ -55,6 +45,12 @@
       ░                                         ░                                                                                 
 -->      
 <!-- http://patorjk.com/software/taag/ -->
+
+	<!-- listeners -->
+	<context:component-scan base-package="a8.listeners"/>
+
+	<!-- ApplicationContextAware -->
+	<bean class="a8.awares.MyApplicationContextAware" />
 
 	<!-- XML factory-method attribute -->
 	<bean class="a8.beans.SingletonBean" factory-method="getInstance" />

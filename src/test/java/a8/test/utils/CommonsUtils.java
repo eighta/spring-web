@@ -3,7 +3,15 @@ package a8.test.utils;
 import java.util.Properties;
 import java.util.StringJoiner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+
+import a8.listeners.MyListener;
+
 public class CommonsUtils {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CommonsUtils.class);
 
 	//BEGIN: SINGLETON
 	private static CommonsUtils INSTANCE = null;
@@ -20,6 +28,15 @@ public class CommonsUtils {
     //END: SINGLETON
 	
 	// UTIL
+    public void printAllNameBeans(ApplicationContext applicationContext){
+    	
+    	logger.info("===BEANS NAMES===");
+		for(String beanName:applicationContext.getBeanDefinitionNames()){
+			logger.info(beanName);
+		}
+		logger.info("===END BEANS NAMES===");
+    }
+    
 	public String stringJoinUsingCharDelimiter(CharSequence delimiter, String... strings) {
 
 		StringJoiner sjr = new StringJoiner(delimiter);

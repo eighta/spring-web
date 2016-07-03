@@ -27,11 +27,8 @@ public class DatabaseXmlConfigTest {
 
 	private static DatabaseUtils databaseUtils = DatabaseUtils.getInstance();
 	
-	
 	@Autowired
 	private ApplicationContext applicationContext;
-
-	
 
 	@Test
 	public void getEmbeddedDataSource() throws SQLException {

@@ -75,15 +75,6 @@ public class MixedXmlConfigTest {
 	}
 	
 	@Test
-	public void printBeanNames(){
-		logger.info("===BEANS NAMES===");
-		for(String beanName:applicationContext.getBeanDefinitionNames()){
-			logger.info(beanName);
-		}
-		logger.info("===END BEANS NAMES===");
-	}
-	
-	@Test
 	public void getAnnotatedBean(){
 		AnnotatedBean annotatedBean = applicationContext.getBean(AnnotatedBean.class);
 		assertNotNull(annotatedBean);

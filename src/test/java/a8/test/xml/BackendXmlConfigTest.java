@@ -19,9 +19,17 @@ import a8.beans.SingletonBean;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/conf/backend-config.xml")
 public class BackendXmlConfigTest {
-
+	
 	@Autowired 
 	private ApplicationContext applicationContext;
+	
+	@Test
+	public void getTransactionManager(){
+		
+		//PlatformTransactionManager tx = applicationContext.getBean(PlatformTransactionManager.class);
+		//assertNotNull(tx);
+	}
+	
 	
 	@Test
 	public void retrieveResourceFromApplicationContext(){

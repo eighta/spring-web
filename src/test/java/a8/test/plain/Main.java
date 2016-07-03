@@ -1,5 +1,6 @@
 package a8.test.plain;
 
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -14,11 +15,23 @@ public class Main {
 	private static final Logger logger = LoggerFactory.getLogger(Main.class);
 	
 	public static void main(String[] args) {
+		
+		retrieveResourceFromClasspath();
 		testClassPathXmlApplicationContext();
 		retrieveOsName();
 		testLogLevel();
 	}
 	
+	private static void retrieveResourceFromClasspath() {
+		
+		InputStream resourceAsStream = Class.class.getResourceAsStream("/database/DDL.sql");
+		// delegate it to ClassLoader.getSystemResourceAsStream(java.lang.String) method
+		
+		logger.info("resourceAsStream: " + resourceAsStream);
+		
+		
+	}
+
 	private static void testLogLevel() {
 		
 System.out.println("PRINTING ALL LEVELS");
