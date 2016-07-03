@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import a8.beans.ComplexBean;
+import a8.beans.EventNotifierBean;
 import a8.beans.SimpleBean;
 import a8.beans.SimplePropertiesBean;
 import a8.beans.SingletonBean;
@@ -23,11 +24,16 @@ public class BackendXmlConfigTest {
 	@Autowired 
 	private ApplicationContext applicationContext;
 	
+	@Autowired
+	EventNotifierBean eventNotifierBean;
+	
 	@Test
-	public void getTransactionManager(){
-		
-		//PlatformTransactionManager tx = applicationContext.getBean(PlatformTransactionManager.class);
-		//assertNotNull(tx);
+	public void testEventsApplication(){
+		eventNotifierBean.openTheWindow();
+		eventNotifierBean.closeTheDoor();
+		eventNotifierBean.sendEmail2Bouldering();
+		eventNotifierBean.sendEmail2Sport();
+		eventNotifierBean.sendEmail2Traditional();
 	}
 	
 	

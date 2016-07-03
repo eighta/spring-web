@@ -47,7 +47,24 @@
 <!-- http://patorjk.com/software/taag/ -->
 
 	<!-- listeners -->
-	<context:component-scan base-package="a8.listeners"/>
+		<!-- @EventListener -->
+	<bean class="a8.listeners.HardHouseListener" />
+		<!-- @EventListener -->
+	<bean class="a8.listeners.EmailListener" />
+		<!-- implements ApplicationListener -->
+		<!-- NOT WORK DOS NIVELES DE GENERIC -->
+	<bean class="a8.listeners.OnlyEmailBoulderingListener" />
+		<!-- implements ApplicationListener -->
+	<bean class="a8.listeners.OnlyOpenWindowListener" />
+		<!-- implements ApplicationListener -->
+		<!-- WORKS: SendEmail<?>-->
+	<bean class="a8.listeners.OnlyEmailListener" />
+	
+	<bean class="a8.listeners.MyEventListener" />
+	
+	<!-- looking for annotations beans -->
+	<context:component-scan base-package="a8.beans"/>
+	
 
 	<!-- ApplicationContextAware -->
 	<bean class="a8.awares.MyApplicationContextAware" />
