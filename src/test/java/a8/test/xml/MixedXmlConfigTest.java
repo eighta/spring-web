@@ -1,11 +1,11 @@
 package a8.test.xml;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,8 +22,6 @@ import a8.beans.SimpleBean;
 @ContextConfiguration("classpath:conf/mixed-config.xml")
 public class MixedXmlConfigTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(MixedXmlConfigTest.class);
-	
 	@Autowired 
 	private ApplicationContext applicationContext;
 	
