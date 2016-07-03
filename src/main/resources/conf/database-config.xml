@@ -71,7 +71,7 @@
 			p:driverClass="#{dbProps.postgresql_driverClassName}"
 			al cargar la propiedad, esta transformando el . por un slash
 			
-			TODO FALTA CREAR EL DS DE MySql
+			XXX FALTA CREAR EL DS DE MySql
 		 -->
 		 
 		 <!-- MYSQL -->

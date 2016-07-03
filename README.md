@@ -17,3 +17,8 @@ Proyecto en donde se plasmaran los conocimientos adquiridos en el spring-web
 
 
 #Font	MONACO
+
+at HOME
+C:\Yesta\dev\eclipse\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\spring-web\
+
+at WORK

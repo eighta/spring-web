@@ -59,12 +59,15 @@
 		<!-- implements ApplicationListener -->
 		<!-- WORKS: SendEmail<?>-->
 	<bean class="a8.listeners.OnlyEmailListener" />
-	
+		<!-- implements ApplicationListener -->
 	<bean class="a8.listeners.MyEventListener" />
+		<!-- implements ApplicationListener -->
+	<bean class="a8.listeners.AllApplicationEventListener"/> 
+		<!-- implements ApplicationListener -->
+	<bean class="a8.listeners.ContextRefreshedEventListener"/>
 	
 	<!-- looking for annotations beans -->
 	<context:component-scan base-package="a8.beans"/>
-	
 
 	<!-- ApplicationContextAware -->
 	<bean class="a8.awares.MyApplicationContextAware" />

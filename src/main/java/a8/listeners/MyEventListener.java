@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationListener;
 import a8.events.SendEmail;
 import a8.events.types.SendMailTypes;
 
+//XXX IMPLEMENTAR QUE LOS TIPOS DE MAILS SEAN GENERICS DE: SendMailTypes
 public class MyEventListener 
 	implements ApplicationListener<SendEmail<? extends SendMailTypes>>
 	//implements ApplicationListener<SendEmail<? extends SendMailTypes>>	PELIGROSO

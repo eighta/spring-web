@@ -5,29 +5,36 @@
 	version="3.1" metadata-complete="false">
 	<display-name>spring-web</display-name>
 
-
+	<!-- FRONT END -->
 	<!-- front-end configuration -->
 	<servlet>
 		<servlet-name>frontController</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 
+		<!-- default web-config path file: /WEB-INF/[servlet-name]-servlet.xml -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/mvc-config1.xml</param-value>
+			<param-value>/WEB-INF/spring/mvc-config.xml</param-value>
 		</init-param>
+		
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>frontController</servlet-name>
-		<url-pattern>/</url-pattern>
+		<!-- XXX PROBLEMA si coloco /*, la peticion como que la respuesta de la vista es agarrada  por Catalina (tomcat)-->
+		<!-- XXX investigar como evitar esto -->
+		<url-pattern>/s/*</url-pattern>
 	</servlet-mapping>
 
-	<!-- back-end configuration -->
+	<!-- BACKEND -->
+	<!-- back-end configuration-->
+	<!-- default backend-config path file: /WEB-INF/applicationContext.xml] -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/backend-config.xml</param-value>
 	</context-param>
-
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

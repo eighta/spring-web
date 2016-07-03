@@ -8,7 +8,6 @@ public class OpenWindow extends ApplicationEvent{
 
 	public OpenWindow() {
 		super(new Object());
-		// TODO Auto-generated constructor stub
 	}
 
 }

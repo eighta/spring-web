@@ -19,6 +19,7 @@
 
 	<!-- listeners -->
 	<context:component-scan base-package="a8.listeners"/>
-	<bean id="allAppEventListener" class="a8.listeners.AllApplicationEventListener"/>   
+	<bean id="allAppEventListener" class="a8.listeners.AllApplicationEventListener"/>
+	<bean class="a8.listeners.ContextRefreshedEventListener"/>
 		
 </beans>
