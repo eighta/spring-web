@@ -12,9 +12,20 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 
 		<!-- default web-config path file: /WEB-INF/[servlet-name]-servlet.xml -->
+		<!-- OFF mvc-config.xml OFF 
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/mvc-config.xml</param-value>
+		</init-param>
+		-->
+		<!-- ON MvcJavaConfig.java ON-->
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>web.conf.MvcJavaConfig</param-value>
 		</init-param>
 		
 		<load-on-startup>1</load-on-startup>
