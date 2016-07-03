@@ -38,8 +38,13 @@
  ░         ░  ░     ░  ░         ░       ░        ░       ░  ░        ░           ░  ░            ░      ░ ░           ░       ░  
       ░                                         ░                                                                                 
 --> 
+	<!-- Multiple-name commans separe  -->
+	<bean id="sbId" name="sbName1,sbName2;sbName3" class="a8.beans.SimpleBean">
+		<constructor-arg name="simpleBeanName" value="${daughter.name}" />
+	</bean>
 
 	<!-- InitAndDestroyBean -->
+	<!-- JavaConfig @Bean(initMethod = "initMethod", destroyMethod = "destroyMethod") -->
 	<bean class="a8.beans.InitAndDestroyBean" init-method="plainInitMethod" destroy-method="plainCleanMethod">
 		<property name="innerBeanName" value="InitAndDestroyBean"/>
 	</bean>

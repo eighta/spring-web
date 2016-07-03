@@ -1,7 +1,6 @@
 package a8.test.xml;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +16,7 @@ import a8.beans.InitializationBeanStyle1;
 import a8.beans.InitializationBeanStyle2;
 import a8.beans.InitializationBeanStyle3;
 import a8.beans.RequiredBean;
+import a8.beans.SimpleBean;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:conf/mixed-config.xml")
@@ -26,6 +26,26 @@ public class MixedXmlConfigTest {
 	
 	@Autowired 
 	private ApplicationContext applicationContext;
+	
+	@Test
+	public void accessingAnnotatedBeans(){
+		
+		AnnotatedBean annotatedBeanByName = (AnnotatedBean)applicationContext.getBean("annotatedBean");
+		assertNotNull(annotatedBeanByName);
+	}
+	
+	@Test
+	public void multipleNameBean(){
+		
+		SimpleBean bean = applicationContext.getBean("sbId",SimpleBean.class);
+		SimpleBean sbName1 = applicationContext.getBean("sbName1",SimpleBean.class);
+		SimpleBean sbName2 = applicationContext.getBean("sbName2",SimpleBean.class);
+		SimpleBean sbName3 = applicationContext.getBean("sbName3",SimpleBean.class);
+		
+		assertTrue(bean == sbName1);
+		assertTrue(sbName1 == sbName2);
+		assertTrue(sbName2 == sbName3);
+	}
 	
 	@Test
 	public void InitializationBeanStyle3(){

@@ -1,0 +1,127 @@
+===============
+Beans Lifecycle
+===============
+
+1. Load Configuration Files (read bean definitions)
+2. Post Process Bean definitions
+
+Detail
+1.Instantiate Bean
+2.Inject Dependencies
+3[Post Process Bean] (before init)
+4.afterPropertiesSet (only if bean implements InitializingBean)
+5.Init Bean
+6[Post Process Bean] (after init)
+
+Very Detail
+when a bean is created, the following succession of actions happens:
+1.	The constructor is called first to create the bean.
+2.	The dependencies are injected (setters are called).
+3.	The pre-initialization BeanPostProcessors are consulted to see if they want to
+	call anything from this bean. The @PostConstruct annotation is registered by
+	the CommonAnnotationBeanPostProcessor, so this bean will call this annotated
+	method. This method is executed right after the bean has been constructed and
+	before the class is put into service, 6 before the actual initialization of the bean
+	(before afterPropertiesSet and init-method).
+4.	The InitializingBean’s afterPropertiesSet is executed right after the dependencies were injected.
+5.	The init-method attribute value method is executed last, as this is the actual initialization method of the bean.
+
+When a bean is destroyed:
+1.	The @PreDestroy method is executed, as this has to be executed before a destroy
+	method, if one exists. The PreDestroy annotation is used on methods as a
+	callback notification to signal that the instance is in the process of being removed
+	by the container.
+2.	The DisposableBean’s destroy method is executed next, as the Spring standard order defines it so.
+3.	The destroy-method attribute value method is executed last, as this is the actual
+	destroy method of the bean, and the Spring standard order defines it so.
+
+===========
+Bean Scopes
+===========
+
+-singleton 
+The Spring IoC creates a single instance of this bean and any request for beans with
+an id or ids matching this bean definition results in this instance being returned.
+
+-prototype
+Every time a request is made for this specific bean, the Spring IoC creates
+a new instance.
+
+-request
+The Spring IoC creates a bean instance for each HTTP request. Only valid in the
+context of a web-aware Spring ApplicationContext.
+
+-session
+The Spring IoC creates a bean instance for each HTTP session. Only valid in the
+context of a web-aware Spring ApplicationContext.
+
+-global-session
+The Spring IoC creates a bean instance for each global HTTP session. Only valid in
+the context of a web-aware Spring ApplicationContext.
+
+ejemplos de uso:
+XML
+<bean id="personRepository" class="com.book.JdbcPersonRepository" scope="prototype">
+Java
+@Bean(name="personManager")
+@Scope("prototype")
+or
+@Component 
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE) is equivalent to
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE) and @Scope("prototype") because constant
+SCOPE_PROTOTYPE is of type string and has the "prototype" value. Using Spring constants eliminates the
+risk of misspelling the scope value.
+
+A special case of bean scope is the scope of an inner bean. An inner bean is defined within the scope
+of another bean. The reason for doing this is because the bean does not need to be shared with other
+beans, but is needed only for the creation of the enclosing bean. The scope attribute has no meaning for an
+inner bean and is ignored; so are the attributes id and name, as the bean is anonymous. When using Java
+Configuration, the inner bean is just a local variable in a method.
+
+===============
+Accessing Beans
+===============
+
+-Bean Identification by Type
+
+<context:annotation-config/>
+ Is equivalent to this:
+<!--the org.springframework. package was shortened to o.s.
+for this code to fit the page better -->
+<bean class="o.s.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+<bean class="o.s.context.annotation.CommonAnnotationBeanPostProcessor"/>
+<bean class="o.s.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+<bean class="o.s.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+
+ejemplo de acceso:
+<bean class="com.book.sandbox.SimpleBean" />
+
+SimpleBean sb = context.getBean(SimpleBean.class);
+or
+@Autowired
+SimpleBean simpleBean;
+
+-Bean Identification by Name
+<bean name="sbb0" class="com.book.sandbox.SimpleBean"/>
+then
+SimpleBean sb0 = context.getBean("sb0", SimpleBean.class);
+or
+@Bean(name="simpleBean")
+then
+@Autowired
+@Qualifier(value = "simpleBean")
+SimpleBean simpleBean;
+
+-Bean Identification by id
+The id and the name attributes serve the same purpose: they are both used to define bean
+identifications. The difference between them is that the value of the id attribute must conform to XML
+standard id, which means no weird characters like a comma (",") or semicolon (";") can be contained in it.
+
+Accessing Annotated Beans
+The beans defined using @Component and extensions of it can be autowired by name or by type without any
+extra configuration.
+
+IoC container also creates a logical name for these beans by lowercasing the first letter of the class name
+
