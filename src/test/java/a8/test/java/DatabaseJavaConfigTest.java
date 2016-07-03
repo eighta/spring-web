@@ -35,8 +35,6 @@ public class DatabaseJavaConfigTest {
 	@Test
 	public void getPostgresqlDataSource() throws SQLException {
 		Assume.assumeTrue(TestActiveProfilesResolver.isSophieHome());
-		
-		System.out.println(TestActiveProfilesResolver.isSophieHome());
 		assertNotNull(postgresqlDS);
 		runSuiteTest(postgresqlDS.getConnection());
 	}
