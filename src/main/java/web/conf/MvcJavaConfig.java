@@ -31,7 +31,7 @@ public class MvcJavaConfig
 		
 	// <=> <mvc:resources />
 		public void addResourceHandlers(ResourceHandlerRegistry registry) {
-			registry.addResourceHandler("/images/**").addResourceLocations("/images/");
+			registry.addResourceHandler("/images/**").addResourceLocations("/images/").setCachePeriod(31556926);;
 		}
 		
 		public void addViewControllers(ViewControllerRegistry registry) {

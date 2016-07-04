@@ -23,3 +23,11 @@ The Spring components mentioned earlier can be categorized as follows:
 	• handler interceptors
 	• controllers
 	
+Configuration Without Using web.xml
+===================================
+Starting with Servlet 3.0+, the web.xml file is no longer needed to configure a web application. It
+can be replaced with a class implementing the WebApplicationInitializer (or a class extending
+any of the Spring classes that extend this interface). This class is detected automatically by
+SpringServletContainerInitializer (an internal Spring supported class, which is not meant to be used
+directly or extended). The SpringServletContainerInitializer class is bootstrapped automatically by any
+Servlet 3.0+ container.

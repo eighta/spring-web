@@ -185,7 +185,6 @@
 		    <artifactId>spring-webmvc</artifactId>
 		    <version>${spring-webmvc.version}</version>
 		</dependency>
-		
 
 	</dependencies>
 
