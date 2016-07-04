@@ -6,7 +6,22 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 /**
  * Created by iuliana.cosmina on 3/14/15.
  */
-public class WebInitializer {
-    /*TODO 15. Implement this class in order to provide a working web application configuration for a Servlet 3.0+ environment
+public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
+
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return null;
+	}
+
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return new Class[]{ WebConfig.class};
+	}
+
+	@Override
+	protected String[] getServletMappings() {
+		return new String[]{"/"};
+	}
+    /*FIXED-TOD 15. Implement this class in order to provide a working web application configuration for a Servlet 3.0+ environment
      * and using the WebConfig class for application configuration */
 }

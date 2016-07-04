@@ -35,4 +35,3 @@ Servlet 3.0+ container.
 1: extends org.springframework.web.servlet.support.AbstractDispatcherServletInitializer
 2: extends org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
 3: implements org.springframework.web.WebApplicationInitializer
-

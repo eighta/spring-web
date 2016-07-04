@@ -1,0 +1,54 @@
+MVC Components
+
+The DispatcherServlet looks for implementations of type: 
+	HandlerMapping, 
+	HandlerAdapter,
+	ViewResolver, and 
+	HandlerExceptionResolver
+	
+default configuration can be found in the DispatcherServlet.properties!
+
+----------------------------------------------------------------------------------------------------------------------------------
+# Default implementation classes for DispatcherServlet's strategy interfaces.
+# Used as fallback when no matching beans are found in the DispatcherServlet context.
+# Not meant to be customized by application developers.
+
+LocaleResolver=
+	org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver
+
+ThemeResolver=
+	org.springframework.web.servlet.theme.FixedThemeResolver
+
+HandlerMapping=
+	org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,\
+	org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping (Deprecated) -> RequestMappingHandlerMapping
+
+HandlerAdapter=
+	org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\
+	org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\
+	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter (Deprecated) -> RequestMappingHandlerAdapter
+
+HandlerExceptionResolver=
+	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver,\
+	org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver,\
+	org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver
+
+RequestToViewNameTranslator=
+	org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator
+
+ViewResolver=
+	org.springframework.web.servlet.view.InternalResourceViewResolver
+
+FlashMapManager=
+	org.springframework.web.servlet.support.SessionFlashMapManager
+----------------------------------------------------------------------------------------------------------------------------------
+
+The infrastructure beans mentioned earlier can be configured manually, but this is rarely done and is
+recommended to be avoided, as the explicit configuration cancels the default configuration for that bean
+type. In Spring 4.0, <mvc:annotation-driven/> and the equivalent @EnableWebMvc do just that—override
+the default configuration to provide the new features, so you don’t have to struggle with the configuration
+yourself.
+
+A Spring web application can use more than one infrastructure bean of a specific type. In this case, the
+beans can be chained and have an associated priority value specified using the order property.
+

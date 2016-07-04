@@ -31,6 +31,8 @@
 	
 	<!-- Serves up cached and compressed static content at /resources/* from the webapp root and classpath  -->
     <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/libs/**" location="/libs/"/>
 	
 <!-- 
  ▄████▄   ▒█████   ███▄    █ ▄▄▄█████▓ ██▀███   ▒█████   ██▓     ██▓    ▓█████  ██▀███    ██████ 

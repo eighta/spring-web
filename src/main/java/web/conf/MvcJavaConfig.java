@@ -31,11 +31,15 @@ public class MvcJavaConfig
 		
 	// <=> <mvc:resources />
 		public void addResourceHandlers(ResourceHandlerRegistry registry) {
-			registry.addResourceHandler("/images/**").addResourceLocations("/images/").setCachePeriod(31556926);;
+			registry.addResourceHandler("/images/**").addResourceLocations("/images/").setCachePeriod(31556926);
+			registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);;
+			registry.addResourceHandler("/libs/**").addResourceLocations("/libs//").setCachePeriod(31556926);;
 		}
 		
 		public void addViewControllers(ViewControllerRegistry registry) {
 			registry.addViewController("/").setViewName("bienvenido");
+			registry.addViewController("/tasks").setViewName("tasks");
+			registry.addViewController("/tasks/mvc_components").setViewName("tasks/mvc_components");
 		}
 	
 //	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> arg0) {}

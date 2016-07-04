@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import a8.core.Life;
 import web.utils.ServletContextUtil;
 
 @WebListener
@@ -16,12 +17,6 @@ public class MyServletContextListener
 
 	private static final Logger logger = LoggerFactory.getLogger(MyServletContextListener.class);
 	private static final ServletContextUtil servletContextUtil = ServletContextUtil.getInstance();
-	
-	@Override
-	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		logger.info("contextDestroyed(...)");
-		
-	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -31,6 +26,10 @@ public class MyServletContextListener
 		//java.lang.IllegalArgumentException: Una vez que el primer ServletContextListener ha sido llamado, no se pueden añadir más ServletContextListeners.
 		//ServletContext servletContext = servletContextEvent.getServletContext();
 		//servletContextUtil.registrarListener4backendConfiguration(servletContext);
+		
+		ServletContext servletContext = servletContextEvent.getServletContext();
+		servletContext.setAttribute("GLOBAL", Life.getInstance());
+		
 		
 		
 		//+--- nancyj
@@ -44,7 +43,25 @@ public class MyServletContextListener
 //http://www.askapache.com/online-tools/figlet-ascii/
 		
 		logger.info(text);
-		servletContextUtil.printAllServletNames(servletContextEvent.getServletContext());
+		servletContextUtil.printAllServletNames(servletContext);
+	}
+	
+	@Override
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+		logger.info("contextDestroyed(...)");
+		
+		//+--- fender
+		String text ="\n"+
+
+".|'''',                   ||                    ||    '||'''|.                ||                                      ||` \n"+
+"||                        ||                    ||     ||   ||                ||                                      ||  \n"+
+"||      .|''|, `||''|,  ''||''  .|''|, \\  // ''||''   ||   || .|''|, ('''' ''||''  '||''| .|''|, '||  ||` .|''|, .|''||  \n"+
+"||      ||  ||  ||  ||    ||    ||..||   ><     ||     ||   || ||..||  `'')   ||     ||    ||  ||  `|..||  ||..|| ||  ||  \n"+
+"`|....' `|..|' .||  ||.   `|..' `|...  //  \\   `|..' .||...|' `|...  `...'   `|..' .||.   `|..|'      ||  `|...  `|..||. \n"+
+"                                                                                                    ,  |'                 \n"+
+"                                                                                                     ''                   \n";
+		logger.info(text);
+		
 	}
 
 }

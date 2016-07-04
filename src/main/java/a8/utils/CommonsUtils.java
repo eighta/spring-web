@@ -11,7 +11,7 @@ public class CommonsUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonsUtils.class);
 
-	//BEGIN: SINGLETON
+	//BEING: SINGLETON
 	private static CommonsUtils INSTANCE = null;
 	private CommonsUtils(){}
     private synchronized static void createInstance() {
