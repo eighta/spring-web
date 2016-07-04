@@ -31,3 +31,8 @@ any of the Spring classes that extend this interface). This class is detected au
 SpringServletContainerInitializer (an internal Spring supported class, which is not meant to be used
 directly or extended). The SpringServletContainerInitializer class is bootstrapped automatically by any
 Servlet 3.0+ container.
+
+1: extends org.springframework.web.servlet.support.AbstractDispatcherServletInitializer
+2: extends org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
+3: implements org.springframework.web.WebApplicationInitializer
+
