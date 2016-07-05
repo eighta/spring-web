@@ -18,8 +18,8 @@
 	
 	<!-- sample de import
 	http://www.java2s.com/Tutorial/Java/0380__JSTL/ImportPagewithParameterPassing.htm
-	 <c:import var="data" url="http://www.tutorialspoint.com"/>
-		<c:out value="${data}"/>
+	 	c:import var="data" url="URL FUENTE" />
+		c:out value="${data}"/>
 	
 	 -->
 	
