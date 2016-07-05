@@ -11,60 +11,173 @@
 <title>MVC Components</title>
 </head>
 <body>
+	<c:set var="global" value="${applicationScope.GLOBAL}" />
+
 	<h2>MVC Components</h2>
 	<h4>views/tasks/mvc_components.jsp</h4>
 	
+	<!-- sample de import
+	http://www.java2s.com/Tutorial/Java/0380__JSTL/ImportPagewithParameterPassing.htm
+	 <c:import var="data" url="http://www.tutorialspoint.com"/>
+		<c:out value="${data}"/>
+	
+	 -->
+	
 	<div class="test">
-		<c:set var="global" value="${applicationScope.GLOBAL}" />
-		<c:out value="${global.giveMeDauthersName()}"/>
+		<c:out value="${global.giveMeDauthersName().getClass().getCanonicalName()}"/>
 	</div>
 	
 	<div class="title">HandlerMapping's</div>
 	<table class="pure-table">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Year</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Honda</td>
-            <td>Accord</td>
-            <td>2009</td>
-        </tr>
-
-        <tr>
-            <td>2</td>
-            <td>Toyota</td>
-            <td>Camry</td>
-            <td>2012</td>
-        </tr>
-
-        <tr>
-            <td>3</td>
-            <td>Hyundai</td>
-            <td>Elantra</td>
-            <td>2010</td>
-        </tr>
-    </tbody>
-</table>
+		<thead>
+	        <tr>
+	            <th>Bean name</th>
+	            <th>Class</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getHandlerMappings()}" var="handlerMapping">
+				<tr>
+					<td>${handlerMapping.key}</td>
+					<td>${handlerMapping.value.getClass().getCanonicalName()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
 	
-	
-	<br/><br/><br/>
 	<div class="title">HandlerAdapter's</div>
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Bean name</th>
+	            <th>Class</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getHandlerAdapters()}" var="handlerAdapter">
+				<tr>
+					<td>${handlerAdapter.key}</td>
+					<td>${handlerAdapter.value.getClass().getCanonicalName()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
+	
 	<div class="title">ViewResolver's</div>
-	<div class="title">HandlerExceptionsResolver's</div>
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Bean name</th>
+	            <th>Class</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getViewResolvers()}" var="viewResolver">
+				<tr>
+					<td>${viewResolver.key}</td>
+					<td>${viewResolver.value.getClass().getCanonicalName()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
+	
+	<div class="title">HandlerExceptionResolver's</div>
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Bean name</th>
+	            <th>Class</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getHandlerExceptionResolvers()}" var="handlerExceptionResolver">
+				<tr>
+					<td>${handlerExceptionResolver.key}</td>
+					<td>${handlerExceptionResolver.value.getClass().getCanonicalName()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
+	
 	<div class="title">LocaleResolver's</div>
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Bean name</th>
+	            <th>Class</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getLocaleResolvers()}" var="localeResolver">
+				<tr>
+					<td>${localeResolver.key}</td>
+					<td>${localeResolver.value.getClass().getCanonicalName()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
+	
 	<div class="title">ThemeResolver's</div>
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Bean name</th>
+	            <th>Class</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getThemeResolvers()}" var="themeResolver">
+				<tr>
+					<td>${themeResolver.key}</td>
+					<td>${themeResolver.value.getClass().getCanonicalName()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
+	
 	<div class="title">RequestToViewNameTraslator's</div>
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Bean name</th>
+	            <th>Class</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getRequestToViewNameTranslators()}" var="requestToViewNameTranslator">
+				<tr>
+					<td>${requestToViewNameTranslator.key}</td>
+					<td>${requestToViewNameTranslator.value.getClass().getCanonicalName()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
+	
 	<div class="title">FlashManager's</div>
-	
-	
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Bean name</th>
+	            <th>Class</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getFlashMapManagers()}" var="flashMapManager">
+				<tr>
+					<td>${flashMapManager.key}</td>
+					<td>${flashMapManager.value.getClass().getCanonicalName()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
 	
 </body>
 </html>

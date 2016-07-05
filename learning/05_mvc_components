@@ -13,34 +13,39 @@ default configuration can be found in the DispatcherServlet.properties!
 # Used as fallback when no matching beans are found in the DispatcherServlet context.
 # Not meant to be customized by application developers.
 
-LocaleResolver=
-	org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver
-
-ThemeResolver=
-	org.springframework.web.servlet.theme.FixedThemeResolver
-
 HandlerMapping=
-	org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,\
-	org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping (Deprecated) -> RequestMappingHandlerMapping
+	org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,\															->ACTIVADO
+	org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping (Deprecated) -> RequestMappingHandlerMapping	->ACTIVADO
+	org.springframework.web.servlet.handler.SimpleUrlHandlerMapping																->TAMBIEN ACTIVADO (x3)
+	
+	
 
 HandlerAdapter=
-	org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\
-	org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\
-	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter (Deprecated) -> RequestMappingHandlerAdapter
-
-HandlerExceptionResolver=
-	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver,\
-	org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver,\
-	org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver
-
-RequestToViewNameTranslator=
-	org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator
-
+	org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\																->ACTIVADO
+	org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\														->ACTIVADO
+	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter (Deprecated) -> RequestMappingHandlerAdapter	->ACTIVADO
+	
 ViewResolver=
-	org.springframework.web.servlet.view.InternalResourceViewResolver
+	org.springframework.web.servlet.view.InternalResourceViewResolver							->ACTIVADO	
+	org.springframework.web.servlet.view.ViewResolverComposite									->TAMBIEN ACTIVADO
 
-FlashMapManager=
-	org.springframework.web.servlet.support.SessionFlashMapManager
+HandlerExceptionResolver=)
+	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver,\	->NO ACTIVADO
+	org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver,\			->NO ACTIVADO
+	org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver					->NO ACTIVADO
+	org.springframework.web.servlet.handler.HandlerExceptionResolverComposite					-> EL UNICO ACTIVADO
+
+LocaleResolver= 																				(NINGUNO ACTIVADO BY DEFAULT)
+	org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver								->NO ACTIVADO
+
+ThemeResolver=																					(NINGUNO ACTIVADO BY DEFAULT)
+	org.springframework.web.servlet.theme.FixedThemeResolver									->NO ACTIVADO
+
+RequestToViewNameTranslator=																	(NINGUNO ACTIVADO BY DEFAULT)
+	org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator						->NO ACTIVADO
+
+FlashMapManager=																				(NINGUNO ACTIVADO BY DEFAULT)
+	org.springframework.web.servlet.support.SessionFlashMapManager								->NO ACTIVADO
 ----------------------------------------------------------------------------------------------------------------------------------
 
 The infrastructure beans mentioned earlier can be configured manually, but this is rarely done and is

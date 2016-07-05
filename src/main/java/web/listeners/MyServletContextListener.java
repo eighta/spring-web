@@ -28,7 +28,7 @@ public class MyServletContextListener
 		//servletContextUtil.registrarListener4backendConfiguration(servletContext);
 		
 		ServletContext servletContext = servletContextEvent.getServletContext();
-		servletContext.setAttribute("GLOBAL", Life.getInstance());
+		servletContext.setAttribute("GLOBAL", Life.getInstance(servletContext));
 		
 		
 		
