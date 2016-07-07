@@ -29,9 +29,6 @@ public class MyServletContextListener
 		
 		ServletContext servletContext = servletContextEvent.getServletContext();
 		servletContext.setAttribute("GLOBAL", Life.getInstance(servletContext));
-		
-		
-		
 		//+--- nancyj
 		String text ="\n"+
 "dP   dP   dP          dP        a88888b.                     dP                       dP   dP          oo   dP   oo          dP oo                         dP \n"+
