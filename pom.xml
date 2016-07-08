@@ -34,11 +34,22 @@
 		<servlet.version>3.1.0</servlet.version>
 		<jsp.version>2.2</jsp.version>
 		<jstl.version>1.2</jstl.version>
+		
+		<!-- utilitarios -->
+		<asciitable.version>0.2.5</asciitable.version>
 
 	</properties>
 
 	<!-- DEPENDENCIES -->
 	<dependencies>
+
+		<!-- UTILITARIOS -->
+		<!-- ASCII-TABLE -->
+		<dependency>
+		    <groupId>de.vandermeer</groupId>
+		    <artifactId>asciitable</artifactId>
+		    <version>${asciitable.version}</version>
+		</dependency>
 
 		<!-- WEB -->
 		<!-- servlets -->

@@ -14,67 +14,63 @@ import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.ViewResolver;
 
+import a8.utils.CommonsUtils;
+
 //ESTA CLASE en realidad debe ser una interface
 //ya que ofrece una serie de servicios
 //XXX exponerlo como spring bean
 public class Life {
 
+	private CommonsUtils commonsUtils = CommonsUtils.getInstance();
+	
 	private Heart heart = Heart.getInstance(); 
 	
 	public Map<String, FlashMapManager> getFlashMapManagers(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		Map<String, FlashMapManager> flashMapManagerMap = frontendApplicationContext.getBeansOfType(FlashMapManager.class);
-		return flashMapManagerMap;
+		return commonsUtils.getBeansOfType(frontendApplicationContext, FlashMapManager.class);
 	}
 	
 	public Map<String, RequestToViewNameTranslator> getRequestToViewNameTranslators(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		Map<String, RequestToViewNameTranslator> requestToViewNameTranslatorMap = frontendApplicationContext.getBeansOfType(RequestToViewNameTranslator.class);
-		return requestToViewNameTranslatorMap;
+		return commonsUtils.getBeansOfType(frontendApplicationContext, RequestToViewNameTranslator.class);
 	}
 	
 	public Map<String, ThemeResolver> getThemeResolvers(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		Map<String, ThemeResolver> themeResolverMap = frontendApplicationContext.getBeansOfType(ThemeResolver.class);
-		return themeResolverMap;
+		return commonsUtils.getBeansOfType(frontendApplicationContext, ThemeResolver.class);
 	}
 	
 	public Map<String, LocaleResolver> getLocaleResolvers(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		Map<String, LocaleResolver> localeResolverMap = frontendApplicationContext.getBeansOfType(LocaleResolver.class);
-		return localeResolverMap;
+		return commonsUtils.getBeansOfType(frontendApplicationContext, LocaleResolver.class);
 	}
 	
 	public Map<String, HandlerExceptionResolver> getHandlerExceptionResolvers(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		Map<String, HandlerExceptionResolver> handlerExceptionResolverMap = frontendApplicationContext.getBeansOfType(HandlerExceptionResolver.class);
-		return handlerExceptionResolverMap;
+		return commonsUtils.getBeansOfType(frontendApplicationContext, HandlerExceptionResolver.class);
 	}
 	
 	public Map<String, ViewResolver> getViewResolvers(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		Map<String, ViewResolver> viewResolverMap = frontendApplicationContext.getBeansOfType(ViewResolver.class);
-		return viewResolverMap;
+		return commonsUtils.getBeansOfType(frontendApplicationContext, ViewResolver.class);
 	}
 	
 	public Map<String, HandlerAdapter> getHandlerAdapters(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		Map<String, HandlerAdapter> handlerAdapterMap = frontendApplicationContext.getBeansOfType(HandlerAdapter.class);
-		return handlerAdapterMap;
+		return commonsUtils.getBeansOfType(frontendApplicationContext, HandlerAdapter.class);
 	}
 	
 	public Map<String, HandlerMapping> getHandlerMappings(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		Map<String, HandlerMapping> handlerMappingMap = frontendApplicationContext.getBeansOfType(HandlerMapping.class);
-		return handlerMappingMap;
+		return commonsUtils.getBeansOfType(frontendApplicationContext, HandlerMapping.class);
 	}
 	
 	public String giveMeDauthersName(){

@@ -141,7 +141,7 @@
 		</tbody>
 	</table>
 	
-	<div class="title">RequestToViewNameTraslator's</div>
+	<div class="title">RequestToViewNameTranslator's</div>
 	<table class="pure-table">
 		<thead>
 	        <tr>

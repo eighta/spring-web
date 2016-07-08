@@ -22,7 +22,12 @@ public class BackendJavaConfig {
 			@Value("${daughter.name}")String daughterName){
 		
 		return new SimpleBean(daughterName);
-	} 
+	}
+	
+	@Bean
+	public SimpleBean verySimpleBean(){
+		return new SimpleBean("ONE");
+	}
 	
 	//profiles
 	@Bean

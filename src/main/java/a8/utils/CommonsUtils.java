@@ -1,6 +1,8 @@
 package a8.utils;
 
+import java.util.Enumeration;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.StringJoiner;
@@ -13,7 +15,21 @@ public class CommonsUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonsUtils.class);
 	
-	// UTIL
+	public <T> Map<String, T> getBeansOfType(ApplicationContext webApplicationContext, Class<T> type){
+		return webApplicationContext.getBeansOfType(type);
+	}
+	
+	public void printEnumeration(Enumeration<String> attributeNames) {
+
+		logger.info("===Enumeration BEGIN===");
+		
+		while(attributeNames.hasMoreElements()){
+			String item = attributeNames.nextElement(); 
+			logger.info(item);
+		}
+		logger.info("===Enumeration END===");
+	} 
+	
 	public ResourceBundle getResourceBundle(String resource, Locale locale){
 		//https://docs.oracle.com/javase/7/docs/api/java/util/ResourceBundle.html
 		//Resource bundles contain key/value pairs. The keys uniquely identify a locale-specific object in the bundle
@@ -68,5 +84,4 @@ public class CommonsUtils {
         return INSTANCE;
     }
     //END: SINGLETON
-
 }
