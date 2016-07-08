@@ -1,6 +1,8 @@
 package a8.utils;
 
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.StringJoiner;
 
 import org.slf4j.Logger;
@@ -10,22 +12,14 @@ import org.springframework.context.ApplicationContext;
 public class CommonsUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonsUtils.class);
-
-	//BEING: SINGLETON
-	private static CommonsUtils INSTANCE = null;
-	private CommonsUtils(){}
-    private synchronized static void createInstance() {
-        if (INSTANCE == null) { 
-            INSTANCE = new CommonsUtils();
-        }
-    }
-    public static CommonsUtils getInstance() {
-        if (INSTANCE == null) createInstance();
-        return INSTANCE;
-    }
-    //END: SINGLETON
 	
 	// UTIL
+	public ResourceBundle getResourceBundle(String resource, Locale locale){
+		//https://docs.oracle.com/javase/7/docs/api/java/util/ResourceBundle.html
+		//Resource bundles contain key/value pairs. The keys uniquely identify a locale-specific object in the bundle
+		return ResourceBundle.getBundle(resource, locale);
+	}
+	
     public void printAllNameBeans(ApplicationContext applicationContext){
     	
     	logger.info("===BEANS NAMES===");
@@ -60,5 +54,19 @@ public class CommonsUtils {
 			return null;
 		}
 	}
+	
+	//BEING: SINGLETON
+	private static CommonsUtils INSTANCE = null;
+	private CommonsUtils(){}
+    private synchronized static void createInstance() {
+        if (INSTANCE == null) { 
+            INSTANCE = new CommonsUtils();
+        }
+    }
+    public static CommonsUtils getInstance() {
+        if (INSTANCE == null) createInstance();
+        return INSTANCE;
+    }
+    //END: SINGLETON
 
 }
