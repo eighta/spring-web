@@ -36,20 +36,21 @@ public class CommonsUtils {
 	public Object callMethod(Object target, String methodName){
 		
 		try {
+			Object invokeResult = null;
+			
 			Class<? extends Object> classTarget = target.getClass();
 			Object classTargetObject = (Object) classTarget;
 			
-			Method methodTarget=null;
 			
 			if(classTargetObject instanceof Proxy){ 
 				Object proxied = callMethod(classTargetObject, "getProxied");
-				//classTargetObjet.
+				invokeResult = callMethod(proxied,methodName);
 			}else{
-				methodTarget = classTarget.getMethod(methodName);
+				Method methodTarget = classTarget.getMethod(methodName);
+				invokeResult = methodTarget.invoke(target);
+				
 			}
 			
-			
-			Object invokeResult = methodTarget.invoke(target);
 			return invokeResult;
 		} catch (Exception e) {
 		  e.printStackTrace();
@@ -176,6 +177,51 @@ System.out.println("CUSTOM comparator HERE... ");
 		}
 	}
 	
+	 //Dynamic Proxies
+		public Map<String, Comparable> wrapComparableInterface(
+				Map//<String, ? extends Object> 
+					map) {
+			
+			Object newProxyInstance = Proxy.newProxyInstance(
+					Object.class.getClassLoader(),	//the class loader
+					new Class[] { Map.class },							//an array of interfaces that will be implemented by the proxy
+					new ComparableBehavior(map));					//the power behind the throne in the form of the invocation handler
+			Map m = (Map) newProxyInstance;
+			
+			return m;
+		}
+
+		public void printHashOfMapValues(Map<String, ? extends Object> beansOfType, Class<?> class1) {
+			Collection<? extends Object> values = beansOfType.values();
+			for(Object o:values){
+				Boolean instanceOf = o instanceof Comparable;
+				System.out.println(o.hashCode()+">>>"+o.getClass()+">>>"+instanceOf);
+			}
+		}
+
+		public Map<String, Comparable> wrapComparableInterfaceToMapValues(Map<String, ? extends Object> map) {
+			
+			Map<String, Comparable> mapaComparable = new TreeMap<>();
+			
+			Set<String> keySet = map.keySet();
+			
+			//Collection<? extends Object> values = beansOfType.values();
+			//for(Object v:values){
+			for(String key:keySet){
+				Object value = map.get(key);
+			
+				Object newProxyInstance = Proxy.newProxyInstance(
+						Object.class.getClassLoader(),		//the class loader
+						new Class[] { Comparable.class }, 	//an array of interfaces that will be implemented by the proxy
+						new ComparableBehaviorREAL(value));		//the power behind the throne in the form of the invocation handler
+				
+				Comparable c = (Comparable) newProxyInstance;
+				mapaComparable.put(key, c);
+			}
+			
+			return mapaComparable;
+		}
+	
 	//BEING: SINGLETON
 	private static CommonsUtils INSTANCE = null;
 	private CommonsUtils(){}
@@ -189,120 +235,5 @@ System.out.println("CUSTOM comparator HERE... ");
         return INSTANCE;
     }
     //END: SINGLETON
-
-    //Dynamic Proxies
-	public Map<String, Comparable> wrapComparableInterface(
-			Map//<String, ? extends Object> 
-				map) {
-		
-		Object newProxyInstance = Proxy.newProxyInstance(
-				Object.class.getClassLoader(),	//the class loader
-				new Class[] { Map.class },							//an array of interfaces that will be implemented by the proxy
-				new ComparableBehavior(map));					//the power behind the throne in the form of the invocation handler
-		
-		
-		
-		//Comparable c = (Comparable) newProxyInstance;
-		Map m = (Map) newProxyInstance;
-		
-		
-		//System.out.println(newProxyInstance);
-		
-//		Map<String, Comparable> proxy=null; //= (Map<String, Comparable>) 
-		  //return newProxyInstance;
-		return m;
-		  
-		
-	}
-
-	/*
-	public void printHashOfMapValues(Map<String, ? extends Object> beansOfType) {
-		
-		Collection<? extends Object> values = beansOfType.values();
-		for(Object o:values){
-			System.out.println(o.hashCode()+">>>"+o.getClass());
-		}
-	}
-	*/
-
-	public void printHashOfMapValues(Map<String, ? extends Object> beansOfType, Class<?> class1) {
-		Collection<? extends Object> values = beansOfType.values();
-		for(Object o:values){
-			
-			Boolean instanceOf = o instanceof Comparable;
-			System.out.println(o.hashCode()+">>>"+o.getClass()+">>>"+instanceOf);
-		}
-		
-	}
-
-	public Map<String, Comparable> wrapComparableInterfaceToMapValues(Map<String, ? extends Object> map) {
-		
-		
-		Map<String, Comparable> mapaComparable = new TreeMap<>();
-		
-		Set<String> keySet = map.keySet();
-		
-		//Collection<? extends Object> values = beansOfType.values();
-		//for(Object v:values){
-		for(String key:keySet){
-			Object value = map.get(key);
-		
-			Object newProxyInstance = Proxy.newProxyInstance(
-					Object.class.getClassLoader(),		//the class loader
-					new Class[] { Comparable.class }, 	//an array of interfaces that will be implemented by the proxy
-					new ComparableBehaviorREAL(value));		//the power behind the throne in the form of the invocation handler
-			
-			Comparable c = (Comparable) newProxyInstance;
-			mapaComparable.put(key, c);
-		}
-		
-		//--
-		
-		
-		
-		
-		
-		//Comparable c = (Comparable) newProxyInstance;
-		//Map m = (Map) newProxyInstance;
-		
-		
-		//System.out.println(newProxyInstance);
-		
-//		Map<String, Comparable> proxy=null; //= (Map<String, Comparable>) 
-		  //return newProxyInstance;
-	//	return m;
-		
-		
-		//--
-		
-		
-
-		return mapaComparable;
-	}
-	
-	//===============
 }
 
-/* 
- 
- DOS INTERFACES con el mismo nombre del metodo y diferentes retorno
- compile loop error
- 
-interface i1{
-	int nameMethod();
-}
-
-interface i2{
-	double nameMethod();
-}
-
-
-class C implements i1, i2{
-
-	@Override
-	public double nameMethod() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-}
-*/

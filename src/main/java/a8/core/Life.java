@@ -1,9 +1,6 @@
 package a8.core;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -70,16 +67,6 @@ public class Life {
 		return commonsUtils.getBeansOfType(frontendApplicationContext, HandlerAdapter.class);
 	}
 	
-	class DeleteMe implements Comparable<DeleteMe>{
-
-		@Override
-		public int compareTo(DeleteMe o) {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-		
-	}
-	
 	public Map<String, HandlerMapping> getHandlerMappings(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
@@ -115,14 +102,9 @@ System.out.print("---"+commonsUtils.callMethod(c, "hashCode"));
 
 }		
 		
-
-		
-		
 		//Map<String, DeleteMe> map = new HashMap<>();
-		
 		commonsUtils.sortByValue(mapComparable);
 */		
-		
 		/*
 		Map sortedMap = commonsUtils.sortByValue(mapComparable);
 		

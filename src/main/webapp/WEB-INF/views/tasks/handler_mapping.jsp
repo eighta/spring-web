@@ -13,8 +13,8 @@
 <body>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
 
-	<span class="title">HandlerMapping's</span>
-	<h4>views/tasks/handler_mapping.jsp</h4>
+	<div class="bigtitle">HandlerMapping's</div>
+	<div class="box">views/tasks/handler_mapping.jsp</div>
 	
 	<div class="test">
 		<c:out value="${global.giveMeDauthersName().getClass().getCanonicalName()}"/>

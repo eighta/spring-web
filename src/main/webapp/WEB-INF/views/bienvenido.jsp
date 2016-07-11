@@ -7,9 +7,10 @@
 <title>Welcome Page (spring-web)</title>
 </head>
 <body>
-	<h2>Welcome Page (spring-web)</h2>
-	<h4>views/bienvenido.jsp</h4>
+	<div class="bigTitle">Welcome Page (spring-web)</div>
+	<div class="box">views/bienvenido.jsp</div>
 	
+	<br/>
 	<a href="tasks">
 		<img src="<c:url value='/images/photo.jpg'/>"/>
 	</a>

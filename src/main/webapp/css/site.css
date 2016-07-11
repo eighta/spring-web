@@ -1,7 +1,11 @@
 /*fonts*/
 /*http://www.awwwards.com/20-best-web-fonts-from-google-web-fonts-and-font-face.html*/
-
 @import url("lists.css");
+
+@font-face {
+    font-family: "Anime";
+    src: url("../fonts/animeace2_reg.ttf");
+}
 
 html * {
   /*color: #C6C8CA !important;*/
@@ -23,6 +27,51 @@ span{
 	margin: 5px;
 }
 /*customs*/
+.box{
+	color: #393939;
+	background: #bcbcbc none repeat scroll 0 0;
+    border-color: #FFF;
+    border-style: solid;
+    border-width: 3px;
+    display: inline-block;
+    font-size: 12px;
+    padding: 10px;
+    text-align: left;
+    font-family: Anime;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.bigTitle{
+	margin-left: 20px;
+	color: #393939;
+    font-size: 60px;
+    text-shadow: 3px 3px 0 #FFF, -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+    text-transform: uppercase;
+	font-family: Anime;
+}
+
+.bigTitle0{
+	
+	margin: 10px;
+	
+	font-size: 550%;
+	
+	color: #393939;
+    text-shadow: -3px -3px 0 #FFF, 1px -3px 0 #FFF, -3px 3px 0 #FFF, 3px 3px 0 #FFF;
+    
+    /*font-family: Bangers;*/
+     font-family: Anime;
+}
+
+.neon{
+	text-shadow: 1px 1px 4px #00FF00; 
+	font-size: 150%;
+	margin:-2px;
+	color: #fff;	
+}
+
+
 .readable{
 	font-family: 'Ubuntu', serif;
 }

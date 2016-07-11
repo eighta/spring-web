@@ -8,9 +8,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import web.controllers.PlainController;
@@ -56,6 +53,7 @@ public class MvcJavaConfig
 			registry.addResourceHandler("/images/**").addResourceLocations("/images/").setCachePeriod(31556926);
 			registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);;
 			registry.addResourceHandler("/libs/**").addResourceLocations("/libs//").setCachePeriod(31556926);;
+			registry.addResourceHandler("/fonts/**").addResourceLocations("/fonts//").setCachePeriod(31556926);;
 		}
 		
 		public void addViewControllers(ViewControllerRegistry registry) {

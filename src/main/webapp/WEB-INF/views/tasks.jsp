@@ -12,9 +12,9 @@
 </head>
 <body>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
-
-	<h2>Tasks page</h2>
-	<h4>views/tasks.jsp</h4>
+	
+	<div class="bigTitle">Tasks page</div>
+	<div class="box">views/tasks.jsp</div>
 	
 	<div class="test">
 		<c:out value="${global.giveMeDauthersName().getClass().getCanonicalName()}"/>

@@ -6,6 +6,7 @@
 
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Josefin+Slab" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bangers" />
 <link rel="stylesheet" href="../libs/pure-release-0.6.0/pure-min.css">
 
 <title>MVC Components</title>
@@ -14,15 +15,13 @@
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
 	
-
-	<h2>MVC Components</h2>
-	<h4>views/tasks/mvc_components.jsp</h4>
+	<div class="bigTitle">MVC Components</div>
+	<div class="box">views/tasks/mvc_components.jsp</div>
 	
 	<!-- sample de import
 	http://www.java2s.com/Tutorial/Java/0380__JSTL/ImportPagewithParameterPassing.htm
 	 	c:import var="data" url="URL FUENTE" />
 		c:out value="${data}"/>
-	
 	 -->
 	
 	<div class="test">
@@ -31,7 +30,7 @@
 	
 	<div>
 		<a href="handler_mapping" class="title">HandlerMapping's</a>
-		<span class="readable">org.springframework.web.servlet.<span style="font-size: 150%; text-shadow: 1px 1px 4px #00FF00; margin:-2px;">HandlerMapping</span></span>
+		<span class="readable">org.springframework.web.servlet.<span class="neon">HandlerMapping</span></span>
 	</div>
 	
 	<table class="pure-table">
