@@ -1,6 +1,9 @@
 package a8.core;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -67,10 +70,64 @@ public class Life {
 		return commonsUtils.getBeansOfType(frontendApplicationContext, HandlerAdapter.class);
 	}
 	
+	class DeleteMe implements Comparable<DeleteMe>{
+
+		@Override
+		public int compareTo(DeleteMe o) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		
+	}
+	
 	public Map<String, HandlerMapping> getHandlerMappings(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		return commonsUtils.getBeansOfType(frontendApplicationContext, HandlerMapping.class);
+		Map<String, HandlerMapping> beansOfType = commonsUtils.getBeansOfType(frontendApplicationContext, HandlerMapping.class);
+		return beansOfType;
+
+/*
+ *XXX IMPLEMENTAR UN MAPA ORDERNABLE 
+ * 		
+ *
+		System.out.println("-IMPRIMIENDO MAPA ORIGINAL");
+commonsUtils.printHashOfMapValues(beansOfType,Comparable.class);
+
+System.out.println("-CONVIRTIENDO MAPA A WRAP...");
+		Map<String,Comparable> mapComparable= mapComparable = commonsUtils.wrapComparableInterfaceToMapValues(beansOfType);
+		System.out.println("-IMPRIMIENDO MAPA WRAPEADO");
+commonsUtils.printHashOfMapValues(mapComparable,Comparable.class);
+
+/*
+System.out.println("despues de aplicar WRAP Comparable");		
+Set<Entry<String, Comparable>> entrySet = mapComparable.entrySet();		
+for(Entry<String, Comparable> entry: entrySet){
+String key = entry.getKey() ;
+System.out.println("->" + key + "--");
+
+Object c = mapComparable.get(key);
+if(c instanceof Comparable){
+	System.out.print("SI ES INSTANCIA DE COMPARABLE");
+}else{
+	System.out.print("SI ES INSTANCIA DE COMPARABLE");
+}
+System.out.print("---"+commonsUtils.callMethod(c, "hashCode"));
+
+}		
+		
+
+		
+		
+		//Map<String, DeleteMe> map = new HashMap<>();
+		
+		commonsUtils.sortByValue(mapComparable);
+*/		
+		
+		/*
+		Map sortedMap = commonsUtils.sortByValue(mapComparable);
+		
+		return sortedMap;
+		*/
 	}
 	
 	public String giveMeDauthersName(){

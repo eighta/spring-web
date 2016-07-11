@@ -18,8 +18,6 @@ HandlerMapping=
 	org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping (Deprecated) -> RequestMappingHandlerMapping	->ACTIVADO
 	org.springframework.web.servlet.handler.SimpleUrlHandlerMapping																->TAMBIEN ACTIVADO (x3)
 	
-	
-
 HandlerAdapter=
 	org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\																->ACTIVADO
 	org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\														->ACTIVADO

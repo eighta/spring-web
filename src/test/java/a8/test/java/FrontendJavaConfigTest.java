@@ -1,6 +1,8 @@
 package a8.test.java;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -26,6 +28,15 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
+import org.springframework.web.servlet.handler.HandlerExceptionResolverComposite;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter;
+import org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.ViewResolverComposite;
 
 import a8.conf.BackendJavaConfig;
 import a8.core.Heart;
@@ -73,29 +84,29 @@ public class FrontendJavaConfigTest {
 		//HandlerMapping's
 		Map<String, HandlerMapping> handlerMappings = life.getHandlerMappings();
 		assertEquals(5,handlerMappings.size());
-		assertNotNull(handlerMappings.get("beanNameHandlerMapping"));
-		assertNotNull(handlerMappings.get("resourceHandlerMapping"));
-		assertNotNull(handlerMappings.get("defaultServletHandlerMapping"));
-		assertNotNull(handlerMappings.get("viewControllerHandlerMapping"));
-		assertNotNull(handlerMappings.get("requestMappingHandlerMapping"));
+		assertTrue(handlerMappings.get("beanNameHandlerMapping") instanceof BeanNameUrlHandlerMapping);
+		assertTrue(handlerMappings.get("resourceHandlerMapping") instanceof SimpleUrlHandlerMapping);
+		assertTrue(handlerMappings.get("defaultServletHandlerMapping") instanceof SimpleUrlHandlerMapping);
+		assertTrue(handlerMappings.get("viewControllerHandlerMapping") instanceof SimpleUrlHandlerMapping);
+		assertTrue(handlerMappings.get("requestMappingHandlerMapping") instanceof RequestMappingHandlerMapping);
 		
 		//HandlerAdapter's
 		Map<String, HandlerAdapter> handlerAdapters = life.getHandlerAdapters();
 		assertEquals(3,handlerAdapters.size());
-		assertNotNull(handlerAdapters.get("simpleControllerHandlerAdapter"));
-		assertNotNull(handlerAdapters.get("requestMappingHandlerAdapter"));
-		assertNotNull(handlerAdapters.get("httpRequestHandlerAdapter"));
+		assertTrue(handlerAdapters.get("simpleControllerHandlerAdapter") instanceof SimpleControllerHandlerAdapter);
+		assertTrue(handlerAdapters.get("requestMappingHandlerAdapter") instanceof RequestMappingHandlerAdapter);
+		assertTrue(handlerAdapters.get("httpRequestHandlerAdapter") instanceof HttpRequestHandlerAdapter);
 		
 		//ViewResolver's
 		Map<String, ViewResolver> viewResolvers = life.getViewResolvers();
 		assertEquals(2,viewResolvers.size());
-		assertNotNull(viewResolvers.get("mvcViewResolver"));
-		assertNotNull(viewResolvers.get("getViewResolver"));
+		assertTrue(viewResolvers.get("mvcViewResolver") instanceof ViewResolverComposite);
+		assertTrue(viewResolvers.get("getViewResolver") instanceof InternalResourceViewResolver);
 		
 		//HandlerExceptionResolver's
 		Map<String, HandlerExceptionResolver> handlerExceptionResolvers = life.getHandlerExceptionResolvers();
 		assertEquals(1,handlerExceptionResolvers.size());
-		assertNotNull(handlerExceptionResolvers.get("handlerExceptionResolver"));
+		assertTrue(handlerExceptionResolvers.get("handlerExceptionResolver") instanceof HandlerExceptionResolverComposite);
 		
 		//LocaleResolver's
 		Map<String, LocaleResolver> localeResolvers = life.getLocaleResolvers();

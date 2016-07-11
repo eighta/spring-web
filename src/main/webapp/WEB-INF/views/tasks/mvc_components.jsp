@@ -11,7 +11,9 @@
 <title>MVC Components</title>
 </head>
 <body>
+	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
+	
 
 	<h2>MVC Components</h2>
 	<h4>views/tasks/mvc_components.jsp</h4>
@@ -27,12 +29,17 @@
 		<c:out value="${global.giveMeDauthersName().getClass().getCanonicalName()}"/>
 	</div>
 	
-	<div class="title">HandlerMapping's</div>
+	<div>
+		<a href="handler_mapping" class="title">HandlerMapping's</a>
+		<span class="readable">org.springframework.web.servlet.<span style="font-size: 150%; text-shadow: 1px 1px 4px #00FF00; margin:-2px;">HandlerMapping</span></span>
+	</div>
+	
 	<table class="pure-table">
 		<thead>
 	        <tr>
 	            <th>Bean name</th>
 	            <th>Class</th>
+	            <th>Order</th>
         	</tr>
     	</thead>
 		<tbody>
@@ -40,18 +47,23 @@
 				<tr>
 					<td>${handlerMapping.key}</td>
 					<td>${handlerMapping.value.getClass().getCanonicalName()}</td>
+					<td>${handlerMapping.value.getOrder()}</td>
 				</tr>
 			</c:forEach>
 		
 		</tbody>
 	</table>
 	
-	<div class="title">HandlerAdapter's</div>
+	<div>
+		<span class="title">HandlerAdapter's</span>
+		<span>org.springframework.web.servlet.HandlerAdapter</span>
+	</div>
 	<table class="pure-table">
 		<thead>
 	        <tr>
 	            <th>Bean name</th>
 	            <th>Class</th>
+	            <th>Order</th>
         	</tr>
     	</thead>
 		<tbody>
@@ -59,18 +71,23 @@
 				<tr>
 					<td>${handlerAdapter.key}</td>
 					<td>${handlerAdapter.value.getClass().getCanonicalName()}</td>
+					<td>NO ORDER</td>
 				</tr>
 			</c:forEach>
 		
 		</tbody>
 	</table>
 	
-	<div class="title">ViewResolver's</div>
+	<div>
+		<span class="title">ViewResolver's</span>
+		<span>org.springframework.web.servlet.ViewResolver</span>
+	</div>
 	<table class="pure-table">
 		<thead>
 	        <tr>
 	            <th>Bean name</th>
 	            <th>Class</th>
+	            <th>Order</th>
         	</tr>
     	</thead>
 		<tbody>
@@ -78,18 +95,23 @@
 				<tr>
 					<td>${viewResolver.key}</td>
 					<td>${viewResolver.value.getClass().getCanonicalName()}</td>
+					<td>${viewResolver.value.getOrder()}</td>
 				</tr>
 			</c:forEach>
 		
 		</tbody>
 	</table>
 	
-	<div class="title">HandlerExceptionResolver's</div>
+	<div>
+		<span class="title">HandlerExceptionResolver's</span>
+		<span>org.springframework.web.servlet.HandlerExceptionResolver</span>
+	</div>
 	<table class="pure-table">
 		<thead>
 	        <tr>
 	            <th>Bean name</th>
 	            <th>Class</th>
+	            <th>Order</th>
         	</tr>
     	</thead>
 		<tbody>
@@ -97,18 +119,23 @@
 				<tr>
 					<td>${handlerExceptionResolver.key}</td>
 					<td>${handlerExceptionResolver.value.getClass().getCanonicalName()}</td>
+					<td>${handlerExceptionResolver.value.getOrder()}</td>
 				</tr>
 			</c:forEach>
 		
 		</tbody>
 	</table>
 	
-	<div class="title">LocaleResolver's</div>
+	<div>
+		<span class="title">LocaleResolver's</span>
+		<span>org.springframework.web.servlet.LocaleResolver</span>
+	</div>
 	<table class="pure-table">
 		<thead>
 	        <tr>
 	            <th>Bean name</th>
 	            <th>Class</th>
+	            <th>Order</th>
         	</tr>
     	</thead>
 		<tbody>
@@ -116,18 +143,23 @@
 				<tr>
 					<td>${localeResolver.key}</td>
 					<td>${localeResolver.value.getClass().getCanonicalName()}</td>
+					<td>${localeResolver.value.getOrder()}</td>
 				</tr>
 			</c:forEach>
 		
 		</tbody>
 	</table>
 	
-	<div class="title">ThemeResolver's</div>
+	<div>
+		<span class="title">ThemeResolver's</span>
+		<span>org.springframework.web.servlet.ThemeResolver</span>
+	</div>
 	<table class="pure-table">
 		<thead>
 	        <tr>
 	            <th>Bean name</th>
 	            <th>Class</th>
+	            <th>Order</th>
         	</tr>
     	</thead>
 		<tbody>
@@ -135,18 +167,23 @@
 				<tr>
 					<td>${themeResolver.key}</td>
 					<td>${themeResolver.value.getClass().getCanonicalName()}</td>
+					<td>${themeResolver.value.getOrder()}</td>
 				</tr>
 			</c:forEach>
 		
 		</tbody>
 	</table>
 	
-	<div class="title">RequestToViewNameTranslator's</div>
+	<div>
+		<span class="title">RequestToViewNameTranslator's</span>
+		<span>org.springframework.web.servlet.RequestToViewNameTranslator</span>
+	</div>
 	<table class="pure-table">
 		<thead>
 	        <tr>
 	            <th>Bean name</th>
 	            <th>Class</th>
+	            <th>Order</th>
         	</tr>
     	</thead>
 		<tbody>
@@ -154,18 +191,24 @@
 				<tr>
 					<td>${requestToViewNameTranslator.key}</td>
 					<td>${requestToViewNameTranslator.value.getClass().getCanonicalName()}</td>
+					<td>${requestToViewNameTranslator.value.getOrder()}</td>
 				</tr>
 			</c:forEach>
 		
 		</tbody>
 	</table>
 	
-	<div class="title">FlashManager's</div>
+	<div>
+		<span class="title">FlashManager's</span>
+		<span>org.springframework.web.servlet.FlashMapManager</span>
+	</div>
+	
 	<table class="pure-table">
 		<thead>
 	        <tr>
 	            <th>Bean name</th>
 	            <th>Class</th>
+	            <th>Order</th>
         	</tr>
     	</thead>
 		<tbody>
@@ -173,6 +216,7 @@
 				<tr>
 					<td>${flashMapManager.key}</td>
 					<td>${flashMapManager.value.getClass().getCanonicalName()}</td>
+					<td>${flashMapManager.value.getOrder()}</td>
 				</tr>
 			</c:forEach>
 		

@@ -1,0 +1,66 @@
+ol {
+    counter-reset: li; /* Inicia el contador */
+    list-style: none; /* Elimina el número por defecto */
+    *list-style: decimal; /* Continúa usando el número por defecto en IE6/7 */
+    font: 15px 'trebuchet MS', 'lucida sans';
+    /*padding: 0;*/
+    margin-bottom: 4em;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+/*=====================================*/
+
+.rounded-list li{
+	/*height: 20px;*/
+	width: 400px;
+	background: #393939;
+    position: relative;
+    /*display: block;*/				
+    padding: .4em .4em .4em 2em;
+    *padding: .4em;
+    margin: .5em 0;
+    color: #444;
+    
+    border-radius: .3em;
+    
+    border-color: #c6c8ca;
+    border-style: solid;
+    
+        
+}
+
+.rounded-list a{
+	text-decoration: none;
+	transition: all .3s ease-out;
+	
+	color: #c6c8ca;
+}
+ 
+.rounded-list li:hover{
+    background: #eee;
+    color: #393939;
+}
+ 
+.rounded-list a:hover:before{
+    transform: rotate(360deg);  
+    color: #1e9600;
+}
+ 
+.rounded-list a:before{
+	color: yellow;
+    content: counter(li);
+    /*counter-increment: li;*/
+    position: absolute; 
+    left: -1.3em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #87ceeb;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    border: .3em solid #fff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all .3s ease-out;
+}

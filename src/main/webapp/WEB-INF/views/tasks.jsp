@@ -20,7 +20,7 @@
 		<c:out value="${global.giveMeDauthersName().getClass().getCanonicalName()}"/>
 	</div>
 	
-	<ul>
+	<ul class="rounded-list">
 	  <li><a href="tasks/mvc_components">Ver MVC Components</a></li>
 	</ul>
 	
