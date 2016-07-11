@@ -7,7 +7,7 @@
 <title>viewFromClassNameController.jsp</title>
 </head>
 <body>
-	<h2>viewFromClassNameController.jsp</h2>
-	<h4>views/viewFromClassNameController.jsp</h4>
+	<div class="tres">viewFromClassNameController.jsp</h2>
+	<div class="box">views/viewFromClassNameController.jsp</h4>
 </body>
 </html>

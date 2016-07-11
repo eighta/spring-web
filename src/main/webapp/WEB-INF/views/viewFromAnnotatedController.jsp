@@ -7,7 +7,7 @@
 <title>viewFromAnnotatedController.jsp</title>
 </head>
 <body>
-	<h2>viewFromAnnotatedController.jsp</h2>
-	<h4>views/viewFromAnnotatedController.jsp</h4>
+	<div class="t3">viewFromAnnotatedController.jsp</div>
+	<div class="box">views/viewFromAnnotatedController.jsp</div>
 </body>
 </html>

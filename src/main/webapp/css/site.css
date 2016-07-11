@@ -27,6 +27,21 @@ span{
 	margin: 5px;
 }
 /*customs*/
+.t3 {
+	margin-left:15px;
+	font-size:30px;
+   	color: #D0F8FF;
+    text-shadow: 0 0 5px #A5F1FF, 0 0 10px #A5F1FF,
+             0 0 20px #A5F1FF, 0 0 30px #A5F1FF,
+             0 0 40px #A5F1FF;
+}
+
+
+
+.tres{
+	color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 275px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center;
+}
+
 .box{
 	color: #393939;
 	background: #bcbcbc none repeat scroll 0 0;
