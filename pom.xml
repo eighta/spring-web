@@ -37,6 +37,7 @@
 		
 		<!-- utilitarios -->
 		<asciitable.version>0.2.5</asciitable.version>
+		<freemaker.version>2.3.23</freemaker.version>
 
 	</properties>
 
@@ -44,6 +45,13 @@
 	<dependencies>
 
 		<!-- UTILITARIOS -->
+		<!-- FREE MAKER -->
+		<dependency>
+		    <groupId>org.freemarker</groupId>
+		    <artifactId>freemarker</artifactId>
+		    <version>${freemaker.version}</version>
+		</dependency>
+		
 		<!-- ASCII-TABLE -->
 		<dependency>
 		    <groupId>de.vandermeer</groupId>
