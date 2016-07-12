@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import web.controllers.PlainController;
-import web.freemaker.FreeMarkerUtil;
+import web.templates.freemaker.FreeMarkerUtil;
 
 //This is a JavaConfiguration File
 @Configuration

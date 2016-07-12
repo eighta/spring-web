@@ -1,4 +1,4 @@
-package web.freemaker;
+package web.templates.freemaker;
 
 import java.io.File;
 import java.io.IOException;

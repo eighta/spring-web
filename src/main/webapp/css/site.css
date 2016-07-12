@@ -26,6 +26,15 @@ span{
 	color: #C6C8CA;
 	margin: 5px;
 }
+h1, p{
+	color: #FFCC00;
+	font-family: "Open Sans";
+}
+
+a{
+	color: red;
+	font-family: "Open Sans";
+}
 /*customs*/
 .yellow{
 	font-family: 'Ubuntu', serif;

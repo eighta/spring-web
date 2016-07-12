@@ -1,4 +1,4 @@
-package web.freemaker;
+package web.templates.freemaker;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
-public class FreeMakerConf {
+public class FreeMakerTest {
 
 	public static void main(String[] args) throws IOException, TemplateException {
 		

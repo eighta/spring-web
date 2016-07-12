@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import web.freemaker.FreeMarkerUtil;
+import web.templates.freemaker.FreeMarkerUtil;
 
 @WebServlet("/freemarker")
 public class FreeMarkerServlet extends HttpServlet{

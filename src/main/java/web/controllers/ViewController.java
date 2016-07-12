@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.InternalResourceView;
 
-import web.freemaker.FreeMarkerUtil;
+import web.templates.freemaker.FreeMarkerUtil;
 import web.views.MyInternalResourceView;
 
 @Controller
