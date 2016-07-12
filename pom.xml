@@ -25,6 +25,7 @@
 		<!-- spring framework -->
 		<spring-core.version>4.3.0.RELEASE</spring-core.version>
 		<spring-context.version>4.3.0.RELEASE</spring-context.version>
+		<spring-context-support.version>4.3.0.RELEASE</spring-context-support.version>
 		<spring-jdbc.version>4.3.0.RELEASE</spring-jdbc.version>
 		<spring-test.version>4.3.0.RELEASE</spring-test.version>
 		<spring-web.version>4.3.0.RELEASE</spring-web.version>
@@ -172,6 +173,14 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<!-- SPRING CONTEXT SUPPORT (necesitado al utilizar FreeMarker) -->
+		<!-- FreeMarkerConfigurationFactory -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${spring-context-support.version}</version>
 		</dependency>
 
 		<!--SPRING JDBC -->

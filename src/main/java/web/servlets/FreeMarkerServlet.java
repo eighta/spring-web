@@ -27,10 +27,7 @@ public class FreeMarkerServlet extends HttpServlet{
 		Template template = freeMarkerUtil.getTemplate("single.ftl");
 		
 		//Dummy MODEL
-		Map<String,String> model = new HashMap<>();
-		model.put("user", "EIGHTA");
-		model.put("url","/LA_URL");
-		model.put("name", "Stopper");
+		Map<String,String> model = freeMarkerUtil.getFixedModel();
 		
 		//RESPONSE
 		Writer out = new OutputStreamWriter(response.getOutputStream());

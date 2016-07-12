@@ -2,6 +2,8 @@ package web.freemaker;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -10,6 +12,18 @@ import freemarker.template.TemplateExceptionHandler;
 public class FreeMarkerUtil {
 
 	private Configuration cfg;
+	
+	public Map<String,String> getFixedModel(){
+		Map<String,String> model = new HashMap<>();
+		model.put("user", "EIGHTA");
+		model.put("url","/LA_URL");
+		model.put("name", "Stopper");
+		return model;
+	}
+	
+	public Configuration getConfiguration(){
+		return cfg;
+	}
 	
 	public Template getTemplate(String template) {
 
@@ -29,7 +43,10 @@ public class FreeMarkerUtil {
 
 		// Specify the source where the template files come from. Here I set a
 		// plain directory for it, but non-file-system sources are possible too:
-		cfg.setDirectoryForTemplateLoading(new File("/p_wrk1/2016/workspace/eclipseNeon/git/spring-web/src/main/webapp/WEB-INF/views/freemarker"));
+//FIXED
+cfg.setDirectoryForTemplateLoading(new File("/p_wrk1/2016/workspace/eclipseNeon/git/spring-web/src/main/webapp/WEB-INF/views/freemarker"));
+//XXX HABILIARLO ADECUADAMENTE cfg.setServletContextForTemplateLoading(context, "WEB-INF/ftl");
+		
 
 		// Set the preferred charset template files are stored in. UTF-8 is
 		// a good choice in most applications:

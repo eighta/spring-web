@@ -25,6 +25,7 @@
 	    <li><a href="/spring-web/s/view/a">/spring-web/s/view/a</a> <span class="resalt">View return</span><span class="yellow">(InternalResourceView)</span></li>    
 	    <li><a href="/spring-web/s/view/b">/spring-web/s/view/b</a> <span class="resalt">View return</span><span class="yellow">(MyInternalResourceView)</span></li>
 	    <li><a href="/spring-web/s/view/c">/spring-web/s/view/c</a> <span class="resalt">ModelAndView return</span><span class="yellow">(ModelAndView)</span></li>
+	    <li><a href="/spring-web/s/view/d">/spring-web/s/view/d</a> <span class="resalt">String return</span><span class="yellow">(FreeMarker)</span></li>
 	</ul>
 	
 </body>

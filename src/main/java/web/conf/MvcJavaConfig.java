@@ -3,14 +3,19 @@ package web.conf;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import web.controllers.PlainController;
+import web.freemaker.FreeMarkerUtil;
 
 //This is a JavaConfiguration File
 @Configuration
@@ -102,8 +107,26 @@ public class MvcJavaConfig
       ░   ░     ░  ░    ░          ░        ░  ░      ░      ░ ░      ░  ░   ░     ░  ░   ░           ░  
      ░                                                                      ░                            
 */
+		
+	//FreeMarker
+	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
+		
 	@Bean
-	InternalResourceViewResolver getViewResolver(){
+	public FreeMarkerConfig freeMarkerConfig(){
+		FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+		freeMarkerConfigurer.setConfiguration(freeMarkerUtil.getConfiguration());
+		return freeMarkerConfigurer;
+	}
+	@Bean
+	public ViewResolver freeMarkerViewResolver(){
+		FreeMarkerViewResolver freeMarkerViewResolver = new FreeMarkerViewResolver();
+		freeMarkerViewResolver.setOrder(1);
+		return freeMarkerViewResolver;
+	}
+	
+	//DEFAULT
+	@Bean
+	public ViewResolver internalResourceViewResolver(){
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp" );
