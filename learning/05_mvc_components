@@ -55,3 +55,12 @@ yourself.
 A Spring web application can use more than one infrastructure bean of a specific type. In this case, the
 beans can be chained and have an associated priority value specified using the order property.
 
+HandlerMapping
+==============
+
+HandlerAdapter
+==============
+
+ViewResoulver
+=============
+http://docs.spring.io/spring/docs/4.1.x/spring-framework-reference/htmlsingle/#mvc-viewresolver

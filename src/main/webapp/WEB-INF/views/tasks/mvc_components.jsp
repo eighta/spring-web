@@ -55,7 +55,7 @@
 	
 	<div>
 		<span class="title">HandlerAdapter's</span>
-		<span>org.springframework.web.servlet.HandlerAdapter</span>
+		<span>org.springframework.web.servlet.<span class="neon">HandlerAdapter</span></span>
 	</div>
 	<table class="pure-table">
 		<thead>
@@ -79,7 +79,7 @@
 	
 	<div>
 		<span class="title">ViewResolver's</span>
-		<span>org.springframework.web.servlet.ViewResolver</span>
+		<span>org.springframework.web.servlet.<span class="neon">ViewResolver</span></span>
 	</div>
 	<table class="pure-table">
 		<thead>
