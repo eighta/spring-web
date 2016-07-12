@@ -78,7 +78,7 @@
 	</table>
 	
 	<div>
-		<span class="title">ViewResolver's</span>
+		<a href="view_resolver" class="title">ViewResolver's</a>
 		<span>org.springframework.web.servlet.<span class="neon">ViewResolver</span></span>
 	</div>
 	<table class="pure-table">

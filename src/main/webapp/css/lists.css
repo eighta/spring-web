@@ -1,7 +1,7 @@
 ol {
     counter-reset: li; /* Inicia el contador */
-    list-style: none; /* Elimina el número por defecto */
-    *list-style: decimal; /* Continúa usando el número por defecto en IE6/7 */
+    list-style: none; /* Elimina el nï¿½mero por defecto */
+    *list-style: decimal; /* Continï¿½a usando el nï¿½mero por defecto en IE6/7 */
     font: 15px 'trebuchet MS', 'lucida sans';
     /*padding: 0;*/
     margin-bottom: 4em;
@@ -12,7 +12,7 @@ ol {
 
 .rounded-list li{
 	/*height: 20px;*/
-	width: 400px;
+	width: 700px;
 	background: #393939;
     position: relative;
     /*display: block;*/				

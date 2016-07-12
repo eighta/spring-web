@@ -27,6 +27,18 @@ span{
 	margin: 5px;
 }
 /*customs*/
+.yellow{
+	font-family: 'Ubuntu', serif;
+	font-size: 15px; 
+	color: yellow;
+}
+
+.resalt{
+	font-family: 'Ubuntu', serif;
+	font-size: 25px; 
+	color: red;
+}
+
 .t3 {
 	margin-left:15px;
 	font-size:30px;

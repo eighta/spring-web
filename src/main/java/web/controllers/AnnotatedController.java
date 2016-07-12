@@ -10,6 +10,6 @@ public class AnnotatedController {
 
 	@RequestMapping(method=RequestMethod.GET)
 	public String goToView(){
-		return "viewFromAnnotatedController";
+		return "simple/viewFromAnnotatedController";
 	}
 }
