@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.View;
 
-public class ListExcelView implements View{
+public class CustomView implements View{
 
 	@Override
 	public String getContentType() {
-		return "application/vnd.ms-excel";
+		return "application/custom";
 	}
 
 	@Override
