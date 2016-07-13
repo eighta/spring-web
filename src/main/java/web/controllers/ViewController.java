@@ -17,6 +17,21 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/j")
+	public String goToXmlViewRsolver(Model model){
+		model.addAttribute("user", "EIGHTA");
+		model.addAttribute("name", "Camalots");
+		model.addAttribute("url", "the_url");
+		return "bean/defined_xml";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/i")
+	public String goToCustomJackson2View(Model model){
+		model.addAttribute("name", "EIGHTA");
+		model.addAttribute("project", "SPRING-WEB");
+		return "bean/json_jackson2";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/h")
 	public String goToCustomPdfView(Model model){
 		return "bean/pdf_itext";

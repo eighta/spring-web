@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.ViewResolver;
 
 import a8.core.Life;
 import a8.utils.CommonsUtils;
@@ -33,33 +34,32 @@ public class MyServlet extends HttpServlet {
 			throws ServletException, IOException {
 		logger.info("doGet(...)");
 		
-		//HandlerMapping
 		ServletContext servletContext = request.getServletContext();
 		Life life = (Life)servletContext.getAttribute("GLOBAL");
 		Map<String, HandlerMapping> handlerMappings = life.getHandlerMappings();
+		Map<String, ViewResolver> viewResolvers = life.getViewResolvers();
 		
-		handlerMappings.entrySet();
-		
-		
-		Set<String> keySet = handlerMappings.keySet();
-		for(String  nameHandlerMapping: keySet){
-			
-			Object hm = handlerMappings.get(nameHandlerMapping);
-			//HandlerMapping hm =handlerMappings.get(nameHandlerMapping);
-			
-			
-			Integer order = (Integer)commonsUtils.callMethod(hm, "getOrder");
-			
-			System.out.print("["+ /*String.valueOf( ((Ordered) hm).getOrder()  )*/order+"]" );
-			System.out.println("["+nameHandlerMapping+"]");
-			/*
-			logger.info("["+nameHandlerMapping+"]");
-			logger.info(hm.toString());
-			logger.info( String.valueOf( ((Ordered) hm).getOrder()  ) );
-			*/
-		}
+		//prints
+		printMvcComponents("HandlerMapping",handlerMappings);
+		printMvcComponents("ViewResolver",viewResolvers);
 		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+	
+	private void printMvcComponents(String title, Map<String, ? extends Object> map){
+		
+		System.out.println("=="+title+"===");
+		
+		Set<String> keySet = map.keySet();
+		for(String  key: keySet){
+			
+			Object value = map.get(key);
+			Integer order = (Integer)commonsUtils.callMethod(value, "getOrder");
+			
+			System.out.print("["+ order+"]" );
+			System.out.print("["+key+"]");
+			System.out.println("["+value.getClass()+"]");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

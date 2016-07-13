@@ -30,6 +30,8 @@
 	    <li><a href="/spring-web/s/view/f">/spring-web/s/view/f</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XLS-poi)</span></li>
 	    <li><a href="/spring-web/s/view/g">/spring-web/s/view/g</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XLS-JExcelApi)</span></li>
 	    <li><a href="/spring-web/s/view/h">/spring-web/s/view/h</a> <span class="resalt">String return</span><span class="yellow">(BeanName-PDF-iText)</span></li>
+	    <li><a href="/spring-web/s/view/i">/spring-web/s/view/i</a> <span class="resalt">String return</span><span class="yellow">(BeanName-JSON-Jackson2)</span></li>
+	    <li><a href="/spring-web/s/view/j">/spring-web/s/view/j</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XmlViewResolver)</span></li>
 	</ul>
 	
 </body>

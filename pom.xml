@@ -43,6 +43,7 @@
 		<poi.version>3.14</poi.version>
 		<jexcelapi.version>2.6.12</jexcelapi.version>
 		<itext.version>2.1.7</itext.version>
+		<jackson-databind.version>2.8.0</jackson-databind.version>
 
 	</properties>
 
@@ -50,6 +51,13 @@
 	<dependencies>
 
 		<!-- UTILITARIOS -->
+		<!-- JACKSON-DATABIND--> 
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>${jackson-databind.version}</version>
+		</dependency>
+		
 		<!-- ITEXT (PDF)-->
 		<dependency>
 		    <groupId>com.lowagie</groupId>

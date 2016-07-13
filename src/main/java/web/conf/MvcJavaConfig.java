@@ -1,8 +1,13 @@
 package web.conf;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -12,9 +17,11 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.XmlViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.velocity.VelocityConfig;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
@@ -117,6 +124,14 @@ public class MvcJavaConfig
 	
 	//BeanNameViewResolver
 	//returns a view based on the name of a bean
+	@Bean(name="bean/json_jackson2")
+	public View pdfJackson2View(){
+		//Esta clase esta disenada para tomar el Modelo
+		//y transformarlo a un objeto JSON
+		//no se necesita extender la clase
+		return new MappingJackson2JsonView();
+	}
+		
 	@Bean(name="bean/pdf_itext")
 	public View pdfItextView(){
 		return new CustomPdfView();
@@ -137,6 +152,25 @@ public class MvcJavaConfig
 		BeanNameViewResolver beanNameViewResolver = new BeanNameViewResolver();
 		beanNameViewResolver.setOrder(3);
 		return beanNameViewResolver;
+	}
+	//XML
+	@Autowired
+	ServletContext servletContext;
+//	
+	@Bean
+	public ViewResolver xmlViewResolver(){
+		
+		//Este ViewResolver lo que pretende es que:
+		//en un archivo XML, esten definidos las vistas (beans) tipo View
+		
+		//by default the files is in and is: [/WEB-INF/views.xml]
+		Resource location = new ServletContextResource(servletContext,"/WEB-INF/views/xml/views.xml");
+		
+		XmlViewResolver xmlViewResolver = new XmlViewResolver();
+		xmlViewResolver.setLocation(location);
+		xmlViewResolver.setOrder(4);
+		
+		return xmlViewResolver;
 	}
 		
 	//Velocity
@@ -170,12 +204,25 @@ public class MvcJavaConfig
 		return freeMarkerViewResolver;
 	}
 	
+	//ResourceBundle
+	//http://www.mkyong.com/spring-mvc/spring-mvc-resourcebundleviewresolver-example/
+/*	
+	@Bean
+	public ViewResolver resourceBundleViewResolver(){
+		ResourceBundleViewResolver resourceBundleViewResolver = new ResourceBundleViewResolver();
+		resourceBundleViewResolver.setOrder(4);
+		return resourceBundleViewResolver;
+		
+	}
+*/	
+	
 	//DEFAULT
 	@Bean
 	public ViewResolver internalResourceViewResolver(){
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp" );
+		resolver.setOrder(999999999);
 		return resolver;
 	}
 	
