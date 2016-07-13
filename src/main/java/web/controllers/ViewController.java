@@ -17,6 +17,11 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/h")
+	public String goToCustomPdfView(Model model){
+		return "bean/pdf_itext";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/g")
 	public String goToCustomViewXlsJExcelApi(Model model){
 		return "bean/xls_jexcelapi";

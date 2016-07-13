@@ -42,6 +42,7 @@
 		<velocity.version>1.7</velocity.version>
 		<poi.version>3.14</poi.version>
 		<jexcelapi.version>2.6.12</jexcelapi.version>
+		<itext.version>2.1.7</itext.version>
 
 	</properties>
 
@@ -49,6 +50,13 @@
 	<dependencies>
 
 		<!-- UTILITARIOS -->
+		<!-- ITEXT (PDF)-->
+		<dependency>
+		    <groupId>com.lowagie</groupId>
+		    <artifactId>itext</artifactId>
+		    <version>${itext.version}</version>
+		</dependency>
+		
 
 		<!-- JEXCEL API -->		
 		<dependency>

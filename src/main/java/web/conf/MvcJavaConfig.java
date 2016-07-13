@@ -20,6 +20,7 @@ import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import web.controllers.PlainController;
+import web.templates.customs.CustomPdfView;
 import web.templates.customs.OneExcelView;
 import web.templates.customs.TwoExcelView;
 
@@ -116,6 +117,11 @@ public class MvcJavaConfig
 	
 	//BeanNameViewResolver
 	//returns a view based on the name of a bean
+	@Bean(name="bean/pdf_itext")
+	public View pdfItextView(){
+		return new CustomPdfView();
+	}
+		
 	@Bean(name="bean/xls_jexcelapi")
 	public View excelJExcelApiView(){
 		return new TwoExcelView();
