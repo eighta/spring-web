@@ -25,6 +25,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.velocity.VelocityConfig;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
+import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
 
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
@@ -130,9 +131,17 @@ public class MvcJavaConfig
 	public View rssView(){
 		return new CustomRssView();
 	}
+	
+	@Bean(name="bean/xml_jackson2")
+	public View xmlJackson2View(){
+		//Esta clase esta disenada para tomar el Modelo
+		//y transformarlo a un objeto JSON
+		//no se necesita extender la clase
+		return new MappingJackson2XmlView();
+	}
 		
 	@Bean(name="bean/json_jackson2")
-	public View pdfJackson2View(){
+	public View jsonJackson2View(){
 		//Esta clase esta disenada para tomar el Modelo
 		//y transformarlo a un objeto JSON
 		//no se necesita extender la clase

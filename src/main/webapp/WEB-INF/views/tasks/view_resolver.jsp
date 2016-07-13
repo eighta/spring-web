@@ -34,6 +34,7 @@
 	    <li><a href="/spring-web/s/view/j">/spring-web/s/view/j</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XmlViewResolver::JstlView)</span></li>
 	    <li><a href="/spring-web/s/view/k">/spring-web/s/view/k</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XmlViewResolver::RedirectView)</span></li>
 	    <li><a href="/spring-web/s/view/l">/spring-web/s/view/l</a> <span class="resalt">String return</span><span class="yellow">(BeanName-RSS)</span></li>
+	    <li><a href="/spring-web/s/view/m">/spring-web/s/view/m</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XML-Jackson2)</span></li>
 	</ul>
 	
 </body>

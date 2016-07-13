@@ -17,6 +17,12 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/m")
+	public String goToXmlJackson2View(Model model){
+		model.addAttribute("name", "EIGHTA");
+		return "bean/xml_jackson2";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/l")
 	public String goToRssView(Model model){
 //		model.addAttribute("user", "EIGHTA");
