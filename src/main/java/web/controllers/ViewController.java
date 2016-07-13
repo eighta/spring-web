@@ -17,6 +17,16 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/o")
+	public String goToRedirect(){
+		return "redirect:http://www.bing.com";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/n")
+	public String goToForward(){
+		return "forward:a";	//Forward a: [/view/a]
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/m")
 	public String goToXmlJackson2View(Model model){
 		model.addAttribute("name", "EIGHTA");

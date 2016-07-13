@@ -21,6 +21,8 @@
 	</div>
 	
 	<ul class="rounded-list">
+		<li><a href="/spring-web/s/view/o">/spring-web/s/view/o</a> <span class="resalt">String return<span class="yellow">("redirect:")</span></span></li>
+		<li><a href="/spring-web/s/view/n">/spring-web/s/view/n</a> <span class="resalt">String return<span class="yellow">("fordward:")</span></span></li>
 	    <li><a href="/spring-web/s/view">/spring-web/s/view</a> <span class="resalt">String return<span class="yellow">("simple/viewFromAnnotatedController")</span></span></li>
 	    <li><a href="/spring-web/s/view/a">/spring-web/s/view/a</a> <span class="resalt">View return</span><span class="yellow">(InternalResourceView)</span></li>    
 	    <li><a href="/spring-web/s/view/b">/spring-web/s/view/b</a> <span class="resalt">View return</span><span class="yellow">(MyInternalResourceView)</span></li>
