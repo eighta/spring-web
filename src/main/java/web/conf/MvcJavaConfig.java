@@ -3,19 +3,24 @@ package web.conf;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+import org.springframework.web.servlet.view.velocity.VelocityConfig;
+import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
+import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import web.controllers.PlainController;
-import web.templates.freemaker.FreeMarkerUtil;
+import web.templates.customs.OneExcelView;
 
 //This is a JavaConfiguration File
 @Configuration
@@ -107,14 +112,42 @@ public class MvcJavaConfig
       ░   ░     ░  ░    ░          ░        ░  ░      ░      ░ ░      ░  ░   ░     ░  ░   ░           ░  
      ░                                                                      ░                            
 */
+	
+	//BeanNameViewResolver
+	//returns a view based on the name of a bean
+	@Bean(name="bean/list.xls")
+	public View excelView(){
+		return new OneExcelView();
+	}
+	
+		
+	@Bean
+	public ViewResolver beanNameViewResolver(){
+		return new BeanNameViewResolver();
+	}
+		
+	//Velocity
+	@Bean
+	public VelocityConfig velocityConfig(){
+		VelocityConfigurer velocityConfigurer = new VelocityConfigurer();
+		velocityConfigurer.setResourceLoaderPath("/WEB-INF/views/velocity");
+		return velocityConfigurer;
+	}
+		
+	@Bean
+	public ViewResolver velocityViewResolver(){
+		VelocityViewResolver velocityViewResolver = new VelocityViewResolver();
+		velocityViewResolver.setOrder(2);
+		return velocityViewResolver;
+	}
 		
 	//FreeMarker
-	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
-		
 	@Bean
 	public FreeMarkerConfig freeMarkerConfig(){
 		FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
-		freeMarkerConfigurer.setConfiguration(freeMarkerUtil.getConfiguration());
+		//FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
+		//freeMarkerConfigurer.setConfiguration(freeMarkerUtil.getConfiguration());
+		freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/views/freemarker");
 		return freeMarkerConfigurer;
 	}
 	@Bean

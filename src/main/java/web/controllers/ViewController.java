@@ -1,7 +1,5 @@
 package web.controllers;
 
-import java.util.HashMap;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +17,17 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/f")
+	public String goToCustomViewXls(Model model){
+		return "bean/list.xls";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/e")
+	public String goToViewUsingVelocity(Model model){
+		model.addAttribute("name", "EIGHTA");
+		model.addAttribute("project", "SPRING-WEB");
+		return "template.vm";
+	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/d")
 	public String goToViewUsingFreeMarker(Model model){

@@ -40,6 +40,7 @@
 		<asciitable.version>0.2.5</asciitable.version>
 		<freemaker.version>2.3.23</freemaker.version>
 		<velocity.version>1.7</velocity.version>
+		<poi.version>3.14</poi.version>
 
 	</properties>
 
@@ -47,6 +48,14 @@
 	<dependencies>
 
 		<!-- UTILITARIOS -->
+		<!-- POI -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>${poi.version}</version>
+		</dependency>
+		
+		
 		<!-- VELOCITY -->
 		<dependency>
 		    <groupId>org.apache.velocity</groupId>
