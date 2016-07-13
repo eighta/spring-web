@@ -21,6 +21,13 @@
 	</div>
 	
 	<ul class="rounded-list">
+	
+	
+		<li><a href="/spring-web/s/view/p.xls">/spring-web/s/view/p.xls</a> <span class="resalt">ContentNegotiating<span class="yellow">(XLS)</span></span></li>
+		<li><a href="/spring-web/s/view/p.json">/spring-web/s/view/p.json</a> <span class="resalt">ContentNegotiating<span class="yellow">(JSON)</span></span></li>
+		<li><a href="/spring-web/s/view/p.pdf">/spring-web/s/view/p.pdf</a> <span class="resalt">ContentNegotiating<span class="yellow">(PDF)</span></span></li>
+		<li><a href="/spring-web/s/view/p.html">/spring-web/s/view/p.html</a> <span class="resalt">ContentNegotiating<span class="yellow">(HTML)</span></span></li>
+	
 		<li><a href="/spring-web/s/view/o">/spring-web/s/view/o</a> <span class="resalt">String return<span class="yellow">("redirect:")</span></span></li>
 		<li><a href="/spring-web/s/view/n">/spring-web/s/view/n</a> <span class="resalt">String return<span class="yellow">("fordward:")</span></span></li>
 	    <li><a href="/spring-web/s/view">/spring-web/s/view</a> <span class="resalt">String return<span class="yellow">("simple/viewFromAnnotatedController")</span></span></li>

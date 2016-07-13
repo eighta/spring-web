@@ -17,6 +17,11 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/p.html")
+	public String goToHTML(){
+		return "p.html";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/o")
 	public String goToRedirect(){
 		return "redirect:http://www.bing.com";

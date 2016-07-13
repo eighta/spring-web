@@ -52,11 +52,13 @@
 	<dependencies>
 
 		<!-- UTILITARIOS -->
+		<!-- JavaBeans(TM) Activation Framework -->
 		<dependency>
-			<groupId>net.java.dev.rome</groupId>
-			<artifactId>rome</artifactId>
-			<version>1.0.0</version>
+		    <groupId>javax.activation</groupId>
+		    <artifactId>activation</artifactId>
+		    <version>1.1.1</version>
 		</dependency>
+		
 		
 		<!-- ROME:RSS -->
 		<dependency>

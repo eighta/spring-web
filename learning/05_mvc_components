@@ -48,8 +48,8 @@ FlashMapManager=																				(NINGUNO ACTIVADO BY DEFAULT)
 
 The infrastructure beans mentioned earlier can be configured manually, but this is rarely done and is
 recommended to be avoided, as the explicit configuration cancels the default configuration for that bean
-type. In Spring 4.0, <mvc:annotation-driven/> and the equivalent @EnableWebMvc do just that—override
-the default configuration to provide the new features, so you don’t have to struggle with the configuration
+type. In Spring 4.0, <mvc:annotation-driven/> and the equivalent @EnableWebMvc do just thatï¿½override
+the default configuration to provide the new features, so you donï¿½t have to struggle with the configuration
 yourself.
 
 A Spring web application can use more than one infrastructure bean of a specific type. In this case, the
@@ -61,6 +61,21 @@ HandlerMapping
 HandlerAdapter
 ==============
 
-ViewResoulver
+ViewResolver
 =============
 http://docs.spring.io/spring/docs/4.1.x/spring-framework-reference/htmlsingle/#mvc-viewresolver
+
+Design pattern named Post-Redirect-Get that prevents duplicate form submissions
+
+Content Type Negotiation
+Clients might request different content-types for the same resource via: 
+extension, request header, request parameter, and so forth
+
+There are two strategies for a client to request a view from the server:
+-Use a distinct URL for each resource by using a different extension in the URL
+http://localhost:8080/persons/list.xls requests an Excel view containing a list of persons, while 
+http://localhost:8080/persons/list.pdf requests a PDF view containing a list of persons)
+
+-Use the same URL but set the "Accept HTTP request header" to the desired resource type 
+(example: a request coming from http://localhost:8080/persons/list
+having the Accept header set to application/pdf requests a PDF view containing a list of persons)

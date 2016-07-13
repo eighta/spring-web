@@ -1,12 +1,18 @@
 package web.conf;
 
+import java.util.Properties;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -16,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.XmlViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
@@ -124,7 +131,56 @@ public class MvcJavaConfig
       ░   ░     ░  ░    ░          ░        ░  ░      ░      ░ ░      ░  ░   ░     ░  ░   ░           ░  
      ░                                                                      ░                            
 */
+
+	//ContentNegotiatingViewResolver
+		
+	@Bean
+	public ContentNegotiationManager contentNegotiationManager(){
+		
+		ContentNegotiationManagerFactoryBean contentNegotiationManagerFactoryBean 
+			= new ContentNegotiationManagerFactoryBean();
+		
+		Properties mediaTypes = new Properties();
+		mediaTypes.setProperty("html", MediaType.TEXT_HTML_VALUE);
+		mediaTypes.setProperty("json", MediaType.APPLICATION_JSON_VALUE);
+		mediaTypes.setProperty("pdf", MediaType.APPLICATION_PDF_VALUE);
+		mediaTypes.setProperty("xls", "application/vnd.ms-excel");
+		
+		contentNegotiationManagerFactoryBean.setMediaTypes(mediaTypes);
+		contentNegotiationManagerFactoryBean.setDefaultContentType(MediaType.TEXT_HTML);
+		contentNegotiationManagerFactoryBean.setIgnoreAcceptHeader(Boolean.TRUE);
+		contentNegotiationManagerFactoryBean.setFavorParameter(Boolean.FALSE);
+		contentNegotiationManagerFactoryBean.setFavorPathExtension(Boolean.TRUE);
+		
+		return contentNegotiationManagerFactoryBean.getObject();
+	}
+
+//XXX DESACTIVADO PARA QUE NO SOBRE ESCRIBA EL COMPORTAMIENTO DE LOS OTROS VIEW-RESOLVER
+//XXX REPASARLO, PARA SABER CUAL ES EL COMPORTAMIENDO POR DEFECTO DE ESTE VIEW-RESOLVER	
+//	@Bean
+	public ViewResolver contentNegotiatingViewResolver(
+//			@Qualifier("internalResourceViewResolver")
+//			ViewResolver internalResourceViewResolver
+			
+			@Qualifier("contentNegotiationManager")
+			ContentNegotiationManager contentNegotiationManager
+			){
+		
+		
+//		List<ViewResolver> viewResolverList = new ArrayList<>();
+//		viewResolverList.add(internalResourceViewResolver);
+		
+		
+		ContentNegotiatingViewResolver contentNegotiatingViewResolver 
+			= new ContentNegotiatingViewResolver();
+		contentNegotiatingViewResolver.setOrder(-1);
+		
+		contentNegotiatingViewResolver.setContentNegotiationManager(contentNegotiationManager);
+		return contentNegotiatingViewResolver;
+	}
 	
+	//
+		
 	//BeanNameViewResolver
 	//returns a view based on the name of a bean
 	@Bean(name="bean/rss")
