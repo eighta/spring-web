@@ -41,6 +41,7 @@
 		<freemaker.version>2.3.23</freemaker.version>
 		<velocity.version>1.7</velocity.version>
 		<poi.version>3.14</poi.version>
+		<jexcelapi.version>2.6.12</jexcelapi.version>
 
 	</properties>
 
@@ -48,6 +49,14 @@
 	<dependencies>
 
 		<!-- UTILITARIOS -->
+
+		<!-- JEXCEL API -->		
+		<dependency>
+		    <groupId>net.sourceforge.jexcelapi</groupId>
+		    <artifactId>jxl</artifactId>
+		    <version>${jexcelapi.version}</version>
+		</dependency>
+		
 		<!-- POI -->
 		<dependency>
 		    <groupId>org.apache.poi</groupId>

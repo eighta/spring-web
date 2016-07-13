@@ -21,6 +21,7 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import web.controllers.PlainController;
 import web.templates.customs.OneExcelView;
+import web.templates.customs.TwoExcelView;
 
 //This is a JavaConfiguration File
 @Configuration
@@ -115,15 +116,21 @@ public class MvcJavaConfig
 	
 	//BeanNameViewResolver
 	//returns a view based on the name of a bean
-	@Bean(name="bean/list.xls")
-	public View excelView(){
+	@Bean(name="bean/xls_jexcelapi")
+	public View excelJExcelApiView(){
+		return new TwoExcelView();
+	}
+		
+	@Bean(name="bean/xls_poi")
+	public View excelPoiView(){
 		return new OneExcelView();
 	}
-	
 		
 	@Bean
 	public ViewResolver beanNameViewResolver(){
-		return new BeanNameViewResolver();
+		BeanNameViewResolver beanNameViewResolver = new BeanNameViewResolver();
+		beanNameViewResolver.setOrder(3);
+		return beanNameViewResolver;
 	}
 		
 	//Velocity

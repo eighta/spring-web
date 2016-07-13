@@ -27,7 +27,8 @@
 	    <li><a href="/spring-web/s/view/c">/spring-web/s/view/c</a> <span class="resalt">ModelAndView return</span><span class="yellow">(ModelAndView)</span></li>
 	    <li><a href="/spring-web/s/view/d">/spring-web/s/view/d</a> <span class="resalt">String return</span><span class="yellow">(FreeMarker)</span></li>
 	    <li><a href="/spring-web/s/view/e">/spring-web/s/view/e</a> <span class="resalt">String return</span><span class="yellow">(Velocity)</span></li>
-	    <li><a href="/spring-web/s/view/f">/spring-web/s/view/f</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XLS)</span></li>
+	    <li><a href="/spring-web/s/view/f">/spring-web/s/view/f</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XLS-poi)</span></li>
+	    <li><a href="/spring-web/s/view/g">/spring-web/s/view/g</a> <span class="resalt">String return</span><span class="yellow">(BeanName-XLS-JExcelApi)</span></li>
 	</ul>
 	
 </body>
