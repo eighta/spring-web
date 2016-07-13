@@ -156,14 +156,13 @@ public class MvcJavaConfig
 	//XML
 	@Autowired
 	ServletContext servletContext;
-//	
+
 	@Bean
 	public ViewResolver xmlViewResolver(){
+
+		//XmlViewResolver is used to resolve "view name" based on view beans in the XML file. 
+		//By default, XmlViewResolver will loads the view beans from /WEB-INF/views.xml
 		
-		//Este ViewResolver lo que pretende es que:
-		//en un archivo XML, esten definidos las vistas (beans) tipo View
-		
-		//by default the files is in and is: [/WEB-INF/views.xml]
 		Resource location = new ServletContextResource(servletContext,"/WEB-INF/views/xml/views.xml");
 		
 		XmlViewResolver xmlViewResolver = new XmlViewResolver();
