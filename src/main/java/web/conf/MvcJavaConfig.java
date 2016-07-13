@@ -26,10 +26,11 @@ import org.springframework.web.servlet.view.velocity.VelocityConfig;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
+import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
-import web.templates.customs.CustomPdfView;
-import web.templates.customs.OneExcelView;
-import web.templates.customs.TwoExcelView;
+import web.views.CustomPdfView;
+import web.views.OneExcelView;
+import web.views.TwoExcelView;
 
 //This is a JavaConfiguration File
 @Configuration
@@ -247,6 +248,11 @@ public class MvcJavaConfig
 	@Bean(name="/slash_plain_controller")
 	public PlainController thisIsPlainController(){
 		return new PlainController();
+	}
+	
+	@Bean(name="/slash_abstract_controller")
+	public MyAbstractController thisIsAbstractController(){
+		return new MyAbstractController();
 	}
 	
 	

@@ -17,6 +17,14 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/k")
+	public String goToXmlViewRsolverRedirect(Model model){
+//		model.addAttribute("user", "EIGHTA");
+//		model.addAttribute("name", "Camalots");
+//		model.addAttribute("url", "the_url");
+		return "bean/defined_xml_redirect";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/j")
 	public String goToXmlViewRsolver(Model model){
 		model.addAttribute("user", "EIGHTA");

@@ -1,4 +1,4 @@
-package web.templates.customs;
+package web.views;
 
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class CustomView implements View{
 	@Override
 	public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		
+		//XXX CREAR UN CUSTOM VIEW, UNA IMAGEN, GENERADA, YO QUE SE
 	}
 
 }

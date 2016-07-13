@@ -22,6 +22,7 @@
 	
 	<ul class="rounded-list">
 	    <li><a href="/spring-web/s/slash_plain_controller">/spring-web/s/slash_plain_controller</a></li>
+	    <li><a href="/spring-web/s/slash_abstract_controller">/spring-web/s/slash_abstract_controller</a></li>
 	    <li><a href="/spring-web/s/annotated_controller">/spring-web/s/annotated_controller</a></li>    
 	    <li><a href="/spring-web/s/class_name_controller">/spring-web/s/className/methodName</a></li>
 	    <li><a href="">List item 4</a></li>                       

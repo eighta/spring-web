@@ -1,4 +1,4 @@
-package web.templates.customs;
+package web.views;
 
 import java.util.Map;
 

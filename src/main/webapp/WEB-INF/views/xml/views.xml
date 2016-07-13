@@ -19,5 +19,9 @@
 	<bean name="bean/defined_xml" class="org.springframework.web.servlet.view.JstlView">
 		<property name="url" value="/WEB-INF/views/xml/jsp_view.jsp" />
 	</bean>
+	
+	<bean name="bean/defined_xml_redirect" class="org.springframework.web.servlet.view.RedirectView">
+		<property name="url" value="http://www.google.com.co/" />
+	</bean>
 
 </beans>

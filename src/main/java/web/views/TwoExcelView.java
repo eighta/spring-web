@@ -1,4 +1,4 @@
-package web.templates.customs;
+package web.views;
 
 import java.awt.print.Book;
 import java.util.Map;
