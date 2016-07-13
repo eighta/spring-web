@@ -17,6 +17,15 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/l")
+	public String goToRssView(Model model){
+//		model.addAttribute("user", "EIGHTA");
+//		model.addAttribute("name", "Camalots");
+//		model.addAttribute("url", "the_url");
+		return "bean/rss";
+	}
+	
+	
 	@RequestMapping(method=RequestMethod.GET, path="/k")
 	public String goToXmlViewRsolverRedirect(Model model){
 //		model.addAttribute("user", "EIGHTA");

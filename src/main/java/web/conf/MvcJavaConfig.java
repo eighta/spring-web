@@ -29,6 +29,7 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
 import web.views.CustomPdfView;
+import web.views.CustomRssView;
 import web.views.OneExcelView;
 import web.views.TwoExcelView;
 
@@ -125,6 +126,11 @@ public class MvcJavaConfig
 	
 	//BeanNameViewResolver
 	//returns a view based on the name of a bean
+	@Bean(name="bean/rss")
+	public View rssView(){
+		return new CustomRssView();
+	}
+		
 	@Bean(name="bean/json_jackson2")
 	public View pdfJackson2View(){
 		//Esta clase esta disenada para tomar el Modelo
