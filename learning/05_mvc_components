@@ -79,3 +79,9 @@ http://localhost:8080/persons/list.pdf requests a PDF view containing a list of 
 -Use the same URL but set the "Accept HTTP request header" to the desired resource type 
 (example: a request coming from http://localhost:8080/persons/list
 having the Accept header set to application/pdf requests a PDF view containing a list of persons)
+
+The problem with using JavaBeans Activation Framework is that if the extension is not recognized, it sets
+the content-type to application/octet-stream by default. This means that the Views configured with the
+defaultViews property are not taken into consideration and the ContentNegotiatingViewResolver will return
+null. That’s why in Spring 3.2, the useJaf property was introduced; it can be set to false to disable the JavaBeans
+Activation Framework. This property has been added to ContentNegotiationManagerFactoryBean too.
