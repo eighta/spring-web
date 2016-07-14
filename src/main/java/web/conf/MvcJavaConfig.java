@@ -1,45 +1,24 @@
 package web.conf;
 
-import java.util.Properties;
-
-import javax.servlet.ServletContext;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
-import org.springframework.web.accept.ContentNegotiationManager;
-import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
-import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.BeanNameViewResolver;
-import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.XmlViewResolver;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
-import org.springframework.web.servlet.view.velocity.VelocityConfig;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
-import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
-import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
 
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
 import web.views.CustomPdfView;
-import web.views.CustomRssView;
 import web.views.OneExcelView;
-import web.views.TwoExcelView;
 
 //This is a JavaConfiguration File
 @Configuration
@@ -131,7 +110,50 @@ public class MvcJavaConfig
       ░   ░     ░  ░    ░          ░        ░  ░      ░      ░ ░      ░  ░   ░     ░  ░   ░           ░  
      ░                                                                      ░                            
 */
-
+	@Override
+	public void configureContentNegotiation(ContentNegotiationConfigurer contentNegotiationConfigurer) {
+		contentNegotiationConfigurer.useJaf(false).
+				defaultContentType(MediaType.TEXT_HTML);
+	}
+	
+	@Override
+	public void configureViewResolvers(ViewResolverRegistry viewResolverRegistry) {
+		
+		viewResolverRegistry.beanName();
+		viewResolverRegistry.velocity();
+		viewResolverRegistry.freeMarker();
+		viewResolverRegistry.jsp("/WEB-INF/views/", ".jsp");
+	}
+	//BeanName
+	@Bean(name="bean/xls_poi")
+	public View excelPoiView(){
+		return new OneExcelView();
+	}
+	@Bean(name="bean/pdf_itext")
+	public View pdfItextView(){
+		return new CustomPdfView();
+	}
+	
+	//Velocity
+	@Bean
+	public VelocityConfigurer velocityConfigurer(){
+		VelocityConfigurer velocityConfigurer = new VelocityConfigurer();
+		velocityConfigurer.setResourceLoaderPath("/WEB-INF/views/velocity");
+		return velocityConfigurer;
+	}
+	
+	//FreeMarker
+	@Bean
+	public FreeMarkerConfigurer freeMarkerConfigurer(){
+		FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+		//FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
+		//freeMarkerConfigurer.setConfiguration(freeMarkerUtil.getConfiguration());
+		freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/views/freemarker");
+		return freeMarkerConfigurer;
+	}
+		
+/*	
+ 
 	//ContentNegotiatingViewResolver
 		
 	@Bean
@@ -155,9 +177,7 @@ public class MvcJavaConfig
 		return contentNegotiationManagerFactoryBean.getObject();
 	}
 
-//XXX DESACTIVADO PARA QUE NO SOBRE ESCRIBA EL COMPORTAMIENTO DE LOS OTROS VIEW-RESOLVER
-//XXX REPASARLO, PARA SABER CUAL ES EL COMPORTAMIENDO POR DEFECTO DE ESTE VIEW-RESOLVER	
-//	@Bean
+	@Bean
 	public ViewResolver contentNegotiatingViewResolver(
 //			@Qualifier("internalResourceViewResolver")
 //			ViewResolver internalResourceViewResolver
@@ -191,7 +211,7 @@ public class MvcJavaConfig
 	@Bean(name="bean/xml_jackson2")
 	public View xmlJackson2View(){
 		//Esta clase esta disenada para tomar el Modelo
-		//y transformarlo a un objeto JSON
+		//y transformarlo a un XML
 		//no se necesita extender la clase
 		return new MappingJackson2XmlView();
 	}
@@ -275,17 +295,17 @@ public class MvcJavaConfig
 		return freeMarkerViewResolver;
 	}
 	
-	//ResourceBundle
-	//http://www.mkyong.com/spring-mvc/spring-mvc-resourcebundleviewresolver-example/
-/*	
-	@Bean
-	public ViewResolver resourceBundleViewResolver(){
-		ResourceBundleViewResolver resourceBundleViewResolver = new ResourceBundleViewResolver();
-		resourceBundleViewResolver.setOrder(4);
-		return resourceBundleViewResolver;
-		
-	}
-*/	
+//	//ResourceBundle
+//	//http://www.mkyong.com/spring-mvc/spring-mvc-resourcebundleviewresolver-example/
+//	
+//	@Bean
+//	public ViewResolver resourceBundleViewResolver(){
+//		ResourceBundleViewResolver resourceBundleViewResolver = new ResourceBundleViewResolver();
+//		resourceBundleViewResolver.setOrder(4);
+//		return resourceBundleViewResolver;
+//		
+//	}
+	
 	
 	//DEFAULT
 	@Bean
@@ -296,6 +316,7 @@ public class MvcJavaConfig
 		resolver.setOrder(999999999);
 		return resolver;
 	}
+*/	
 	
 /* 
 	 ▄████▄   ▒█████   ███▄    █ ▄▄▄█████▓ ██▀███   ▒█████   ██▓     ██▓    ▓█████  ██▀███    ██████ 

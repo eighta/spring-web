@@ -17,9 +17,25 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
-	@RequestMapping(method=RequestMethod.GET, path="/p.html")
-	public String goToHTML(){
-		return "p.html";
+	/*
+	@RequestMapping(method=RequestMethod.GET, path="/p.json")
+	public String goToJSON(){
+		return "contentNegotiationView";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/p.pdf")
+	public String goToPDF(){
+		return "contentNegotiationView";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/p.xls")
+	public String goToXLS(){
+		return "contentNegotiationView";
+	}*/
+	
+	@RequestMapping(method=RequestMethod.GET, path="/p")
+	public String goToContentNegotiation(){
+		return "simple/contentNegotiationView";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/o")
@@ -89,13 +105,13 @@ public class ViewController {
 	public String goToViewUsingVelocity(Model model){
 		model.addAttribute("name", "EIGHTA");
 		model.addAttribute("project", "SPRING-WEB");
-		return "template.vm";
+		return "template";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/d")
 	public String goToViewUsingFreeMarker(Model model){
 		model.addAllAttributes(freeMarkerUtil.getFixedModel());
-		return "single.ftl";
+		return "single";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/c")
