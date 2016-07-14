@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 
 import web.controllers.MyAbstractController;
@@ -119,11 +120,26 @@ public class MvcJavaConfig
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry viewResolverRegistry) {
 		
+		System.out.println("hasRegistrations: " + viewResolverRegistry.hasRegistrations());
+		
+		viewResolverRegistry.tiles();
 		viewResolverRegistry.beanName();
 		viewResolverRegistry.velocity();
 		viewResolverRegistry.freeMarker();
 		viewResolverRegistry.jsp("/WEB-INF/views/", ".jsp");
+		
+		System.out.println("hasRegistrations: " + viewResolverRegistry.hasRegistrations());
+		
 	}
+	//Tiles
+	@Bean
+	public TilesConfigurer tilesConfigurer(){
+		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+		tilesConfigurer.setDefinitions("/WEB-INF/views/tiles/tiles.xml");
+		
+		return tilesConfigurer;
+	}
+	
 	//BeanName
 	@Bean(name="bean/xls_poi")
 	public View excelPoiView(){

@@ -22,6 +22,7 @@
 	
 	<ul class="rounded-list">
 	
+		<li><a href="/spring-web/s/view/q">/spring-web/s/view/q</a> <span class="resalt">Tiles<span class="yellow">(Tiles)</span></span></li>
 	
 		<li><a href="/spring-web/s/view/p.xls">/spring-web/s/view/p.xls</a> <span class="resalt">ContentNegotiating<span class="yellow">(XLS)</span></span></li>
 		<li><a href="/spring-web/s/view/p.json">/spring-web/s/view/p.json</a> <span class="resalt">ContentNegotiating<span class="yellow">(JSON)</span></span></li>

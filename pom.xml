@@ -45,6 +45,7 @@
 		<itext.version>2.1.7</itext.version>
 		<jackson-databind.version>2.8.0</jackson-databind.version>
 		<rss.version>1.6.1</rss.version>
+		<tiles.version>3.0.5</tiles.version>
 
 	</properties>
 
@@ -52,6 +53,20 @@
 	<dependencies>
 
 		<!-- UTILITARIOS -->
+		<!-- TILES 3:core -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-core</artifactId>
+		    <version>${tiles.version}</version>
+		</dependency>
+		
+		<!-- TILES 3:Tiles Servlet Support  -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-servlet</artifactId>
+		    <version>${tiles.version}</version>
+		</dependency>
+		
 		<!-- JavaBeans(TM) Activation Framework -->
 		<dependency>
 		    <groupId>javax.activation</groupId>

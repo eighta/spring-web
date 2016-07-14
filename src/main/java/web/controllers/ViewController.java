@@ -17,6 +17,13 @@ public class ViewController {
 	
 	private final FreeMarkerUtil freeMarkerUtil = FreeMarkerUtil.getInstance();
 	
+	@RequestMapping(method=RequestMethod.GET, path="/q")
+	public String goToTileView(Model model){
+		model.addAttribute("user", "EIGHTA");
+		model.addAttribute("project", "Camalots");
+		return "tilesView";
+	}
+	
 	/*
 	@RequestMapping(method=RequestMethod.GET, path="/p.json")
 	public String goToJSON(){
