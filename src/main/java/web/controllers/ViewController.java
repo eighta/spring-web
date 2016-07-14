@@ -1,5 +1,8 @@
 package web.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,24 +27,18 @@ public class ViewController {
 		return "tilesView";
 	}
 	
-	/*
-	@RequestMapping(method=RequestMethod.GET, path="/p.json")
-	public String goToJSON(){
-		return "contentNegotiationView";
-	}
-	
-	@RequestMapping(method=RequestMethod.GET, path="/p.pdf")
-	public String goToPDF(){
-		return "contentNegotiationView";
-	}
-	
-	@RequestMapping(method=RequestMethod.GET, path="/p.xls")
-	public String goToXLS(){
-		return "contentNegotiationView";
-	}*/
-	
+	//catch: [p, p.json, p.pdf, p.xls]
 	@RequestMapping(method=RequestMethod.GET, path="/p")
-	public String goToContentNegotiation(){
+	public String goToContentNegotiation(Model model){
+		
+		List<String> books = new ArrayList<>();
+		books.add("Las mil y una noches");
+		books.add("Divina Comedia");
+		books.add("Don Quijote de la Mancha");
+		books.add("Cien años de soledad");
+		books.add("Odisea");
+		model.addAttribute(books);
+		
 		return "simple/contentNegotiationView";
 	}
 	

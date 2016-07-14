@@ -18,6 +18,9 @@ import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
+import web.view_resolvers.JsonViewResolver;
+import web.view_resolvers.PdfViewResolver;
+import web.view_resolvers.XlsViewResolver;
 import web.views.CustomPdfView;
 import web.views.OneExcelView;
 
@@ -114,21 +117,42 @@ public class MvcJavaConfig
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer contentNegotiationConfigurer) {
 		contentNegotiationConfigurer.useJaf(false).
+				ignoreAcceptHeader(true).	//IGNORAR EL ACEPT HEADER
+				favorPathExtension(false).	//NO IDENTIFICAR POR EXTENSION
+				favorParameter(true).		//IDENTIFICAR POR PARAMETRO
+				parameterName("formatType").//NOMBRE DEL PARAMETRO PARA IDENTIFICAR EL FORMATO SOLICITADO
+				
+				mediaType("xls", new MediaType("application","vnd.ms-excel")).
+				mediaType("json", MediaType.APPLICATION_JSON).
+				mediaType("pdf", MediaType.APPLICATION_PDF).
 				defaultContentType(MediaType.TEXT_HTML);
 	}
 	
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry viewResolverRegistry) {
 		
-		System.out.println("hasRegistrations: " + viewResolverRegistry.hasRegistrations());
+		// <=><mvc:annotation-driven content-negotiation-manager="cnm"/>
+		viewResolverRegistry.enableContentNegotiation();
 		
+		//xls
+		XlsViewResolver xlsViewResolver = new XlsViewResolver(); 
+		viewResolverRegistry.viewResolver(xlsViewResolver);
+		
+		//pdf
+		PdfViewResolver pdfViewResolver = new PdfViewResolver();
+		viewResolverRegistry.viewResolver(pdfViewResolver);
+		
+		//json
+		JsonViewResolver jsonViewResolver = new JsonViewResolver();
+		viewResolverRegistry.viewResolver(jsonViewResolver);
+		
+		//built-in
 		viewResolverRegistry.tiles();
 		viewResolverRegistry.beanName();
 		viewResolverRegistry.velocity();
 		viewResolverRegistry.freeMarker();
 		viewResolverRegistry.jsp("/WEB-INF/views/", ".jsp");
 		
-		System.out.println("hasRegistrations: " + viewResolverRegistry.hasRegistrations());
 		
 	}
 	//Tiles
