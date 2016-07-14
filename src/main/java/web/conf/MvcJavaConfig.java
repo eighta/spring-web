@@ -1,8 +1,10 @@
 package web.conf;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
@@ -41,13 +43,16 @@ public class MvcJavaConfig
 //	public void addCorsMappings(CorsRegistry arg0) {}
 //	public void addFormatters(FormatterRegistry arg0) {}
 //	public void addInterceptors(InterceptorRegistry arg0) {}
+//>	public void addResourceHandlers(ResourceHandlerRegistry registry) {}
 //	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> arg0) {}
+//>	public void addViewControllers(ViewControllerRegistry registry) {}
 //	public void configureAsyncSupport(AsyncSupportConfigurer arg0) {}
-//	public void configureContentNegotiation(ContentNegotiationConfigurer arg0) {}
+//>	public void configureContentNegotiation(ContentNegotiationConfigurer arg0) {}
+//>	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {}
 //	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> arg0) {}
 //	public void configureMessageConverters(List<HttpMessageConverter<?>> arg0) {}
 //	public void configurePathMatch(PathMatchConfigurer arg0) {}
-//	public void configureViewResolvers(ViewResolverRegistry arg0) {}
+//>	public void configureViewResolvers(ViewResolverRegistry arg0) {}
 //	public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> arg0) {}
 //	public void extendMessageConverters(List<HttpMessageConverter<?>> arg0) {}
 //	public MessageCodesResolver getMessageCodesResolver() {return ;}
@@ -56,11 +61,13 @@ public class MvcJavaConfig
 	extends WebMvcConfigurerAdapter { // <- better than WebMvcConfigurer (interface)
 	
 	// <=> <mvc:default-servlet-handler/>
+		@Override
 		public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 			configurer.enable();
 		}
 		
 	// <=> <mvc:resources />
+		@Override
 		public void addResourceHandlers(ResourceHandlerRegistry registry) {
 			registry.addResourceHandler("/images/**").addResourceLocations("/images/").setCachePeriod(31556926);
 			registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);;
@@ -68,6 +75,7 @@ public class MvcJavaConfig
 			registry.addResourceHandler("/fonts/**").addResourceLocations("/fonts//").setCachePeriod(31556926);;
 		}
 		
+		@Override
 		public void addViewControllers(ViewControllerRegistry registry) {
 			registry.addViewController("/").setViewName("bienvenido");
 			registry.addViewController("/tasks").setViewName("tasks");
@@ -101,6 +109,37 @@ public class MvcJavaConfig
 		return new AnnotationMethodHandlerAdapter();
 	}
 	*/
+
+/*
+   .                                              
+  @88>        oe       u+=~~~+u.                  
+  %8P       .@88     z8F      `8N.     u.    u.   
+   .    ==*88888    d88L       98E   x@88k u@88c. 
+ .@88u     88888    98888bu.. .@*   ^"8888""8888" 
+''888E`    88888    "88888888NNu.     8888  888R  
+  888E     88888     "*8888888888i    8888  888R  
+  888E     88888     .zf""*8888888L   8888  888R  
+  888E     88888    d8F      ^%888E   8888  888R  
+  888&     88888    88>        `88~  "*88*" 8888" 
+  R888"    88888    '%N.       d*"     ""   'Y"   
+   ""   '**%%%%%%**    ^"====="`                  
+*/
+	
+	@Bean
+	public MessageSource messageSource(){
+		ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource = 
+				new ReloadableResourceBundleMessageSource();
+		reloadableResourceBundleMessageSource.setBasename("classpath:/bundles/greetings");
+		reloadableResourceBundleMessageSource.setCacheSeconds(5);
+		return reloadableResourceBundleMessageSource;
+	}
+		
+//	@Bean
+//	public MessageSource messageSource(){
+//		ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+//		resourceBundleMessageSource.setBasename("bundles/greetings");
+//		return resourceBundleMessageSource;
+//	}
 		
 /* 
  ██▒   █▓ ██▓▓█████  █     █░    ██▀███  ▓█████   ██████  ▒█████   ██▓  ██▒   █▓▓█████  ██▀███    ██████ 

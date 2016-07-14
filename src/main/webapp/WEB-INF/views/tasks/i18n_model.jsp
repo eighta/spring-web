@@ -2,28 +2,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/site.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/spring-web/s/css/site.css">
 
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Josefin+Slab" />
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
 <link rel="stylesheet" href="../libs/pure-release-0.6.0/pure-min.css">
 
-<title>Tasks page</title>
+<title>Internationalization</title>
 </head>
 <body>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
+
+	<div class="bigtitle">i18n</div>
+	<div class="box">views/tasks/i18n_model.jsp</div>
 	
-	<div class="bigTitle">Tasks page</div>
-	<div class="box">views/tasks.jsp</div>
-	
-	<div class="test">
-		<c:out value="${global.giveMeDauthersName().getClass().getCanonicalName()}"/>
-	</div>
-	
-	<ul class="rounded-list">
-	  <li><a href="tasks/mvc_components">Ver MVC Components</a></li>
-	  <li><a href="tasks/i18n">Internationalization (i18n)</a></li>
-	</ul>
+	<h1>Model: ${modelAttribute}!</h1>
 	
 </body>
 </html>

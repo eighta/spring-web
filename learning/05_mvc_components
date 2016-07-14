@@ -86,3 +86,15 @@ defaultViews property are not taken into consideration and the ContentNegotiatin
 null. That’s why in Spring 3.2, the useJaf property was introduced; it can be set to false to disable the JavaBeans
 Activation Framework. This property has been added to ContentNegotiationManagerFactoryBean too.
 
+MessageSource
+=============
+To support internationalization, a Spring application must have in its context a bean named messageSource.
+
+Spring provides two out-of-the-box implementations for the MessageSource interface:
+ResourceBundleMessageSource and StaticMessageSource.
+
+ReloadableResourceBundleMessageSource (util para cambiar mensajes en RunTime)
+
+OJO: al definir el bean MessageSource, el nombre debe ser: "messageSource" porque de lo contrario,
+se crea implicitamente uno del tipo: DelegatingMessageSource y este se encuentra vacio
+ 
