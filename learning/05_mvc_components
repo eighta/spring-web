@@ -86,12 +86,3 @@ defaultViews property are not taken into consideration and the ContentNegotiatin
 null. That’s why in Spring 3.2, the useJaf property was introduced; it can be set to false to disable the JavaBeans
 Activation Framework. This property has been added to ContentNegotiationManagerFactoryBean too.
 
-CONTINUAR ACA:
-http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/ViewResolverRegistry.html#freeMarker--
-http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/ContentNegotiationConfigurer.html
-https://spring.io/blog/2013/05/11/content-negotiation-using-spring-mvc
-http://www.baeldung.com/2011/10/25/building-a-restful-web-service-with-spring-3-1-and-java-based-configuration-part-2/
-http://www.baeldung.com/spring-mvc-content-negotiation-json-xml
-https://dzone.com/articles/content-negotiation-using
-https://dzone.com/articles/spring-rest-web-service-and
-
