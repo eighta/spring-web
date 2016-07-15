@@ -18,12 +18,12 @@ public class InternationalizationController {
 	
 	@RequestMapping(method=RequestMethod.GET, path="/d")
 	public String byModelD(){
-		return "tasks/i18n_jstl_locale";
+		return "i18n/i18n_jstl_locale";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/c")
 	public String byModelC(){
-		return "tasks/i18n_jstl";
+		return "i18n/i18n_jstl";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/b")
@@ -31,7 +31,7 @@ public class InternationalizationController {
 		
 		String saludo = messageSource.getMessage("welcome", null, Locale.GERMAN);
 		model.addAttribute("modelAttribute", saludo);
-		return "tasks/i18n_model";
+		return "i18n/i18n_model";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/a")
@@ -40,11 +40,11 @@ public class InternationalizationController {
 		Locale locale = Locale.getDefault();
 		String saludo = messageSource.getMessage("welcome", null, locale);
 		model.addAttribute("modelAttribute", saludo);
-		return "tasks/i18n_model";
+		return "i18n/i18n_model";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String index(){
-		return "tasks/i18n";
+		return "i18n/i18n";
 	}
 }

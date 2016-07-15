@@ -26,6 +26,8 @@
 	<!-- XXX TODO nose como cambiar el Locale en el contexto de spring, investigar -->
 	<h1>Spring(&lt;spring:message/&gt;): <spring:message code="welcome" />!</h1>
 	
+	<h1>Spring(&lt;spring:message text='Default Message'/&gt;): <spring:message code="welcome_a" text="Default Message"/>!</h1>
+	
 	
 	
 	

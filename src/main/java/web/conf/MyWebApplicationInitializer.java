@@ -1,10 +1,12 @@
 package web.conf;
 
+import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import web.utils.ServletContextUtil;
 
@@ -57,5 +59,12 @@ public class MyWebApplicationInitializer
 		
 		//frontend
 		servletContextUtil.registrarFrontControllerServlet(servletContext);
+		
+		//Filter encoding 4 ReloadableResourceBundleMessageSource is used to apply character encoding to requests
+		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+		characterEncodingFilter.setEncoding("UTF-8");
+		characterEncodingFilter.setForceEncoding(true);
+		servletContext.addFilter("characterEncodingFilter", characterEncodingFilter);
 	}
+	
 }
