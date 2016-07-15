@@ -6,14 +6,19 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
@@ -42,7 +47,7 @@ public class MvcJavaConfig
 //	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> arg0) {}
 //	public void addCorsMappings(CorsRegistry arg0) {}
 //	public void addFormatters(FormatterRegistry arg0) {}
-//	public void addInterceptors(InterceptorRegistry arg0) {}
+//>	public void addInterceptors(InterceptorRegistry arg0) {}
 //>	public void addResourceHandlers(ResourceHandlerRegistry registry) {}
 //	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> arg0) {}
 //>	public void addViewControllers(ViewControllerRegistry registry) {}
@@ -125,6 +130,25 @@ public class MvcJavaConfig
    ""   '**%%%%%%**    ^"====="`                  
 */
 	
+		
+	@Override
+	// <=>  <mvc:interceptors>
+	public void addInterceptors(InterceptorRegistry interceptorRegistry) {
+		
+		LocaleChangeInterceptor localeChangeInterceptor = 
+				new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName("lang");
+		interceptorRegistry.addInterceptor(localeChangeInterceptor);
+	}
+	
+	@Bean
+	public LocaleResolver localeResolver(){
+		
+		CookieLocaleResolver cookieLocaleResolver =
+				new CookieLocaleResolver();
+		return cookieLocaleResolver;
+	}
+		
 	@Bean
 	public MessageSource messageSource(){
 		ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource = 

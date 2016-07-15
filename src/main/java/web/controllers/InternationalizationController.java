@@ -16,13 +16,18 @@ public class InternationalizationController {
 	@Autowired
 	MessageSource messageSource;
 	
+	@RequestMapping(method=RequestMethod.GET, path="/e")
+	public String byCookieLocaleResolver(){
+		return "i18n/i18n_cookie_locale";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/d")
-	public String byModelD(){
+	public String byJstlD(){
 		return "i18n/i18n_jstl_locale";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/c")
-	public String byModelC(){
+	public String byJstlC(){
 		return "i18n/i18n_jstl";
 	}
 	

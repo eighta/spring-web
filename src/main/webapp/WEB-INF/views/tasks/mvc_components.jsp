@@ -127,7 +127,7 @@
 	
 	<div>
 		<span class="title">LocaleResolver's</span>
-		<span>org.springframework.web.servlet.LocaleResolver</span>
+		<span>org.springframework.web.servlet.<span class="neon">LocaleResolver</span></span>
 	</div>
 	<table class="pure-table">
 		<thead>
@@ -142,7 +142,7 @@
 				<tr>
 					<td>${localeResolver.key}</td>
 					<td>${localeResolver.value.getClass().getCanonicalName()}</td>
-					<td>${localeResolver.value.getOrder()}</td>
+					<td>NO ORDER</td>
 				</tr>
 			</c:forEach>
 		

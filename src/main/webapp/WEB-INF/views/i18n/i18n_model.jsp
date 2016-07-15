@@ -14,7 +14,7 @@
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
 
 	<div class="bigtitle">i18n</div>
-	<div class="box">views/tasks/i18n_model.jsp</div>
+	<div class="box">views/i18n/i18n_model.jsp</div>
 	
 	<h1>Model: ${modelAttribute}!</h1>
 	

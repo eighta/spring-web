@@ -17,6 +17,7 @@
 	<div class="box">views/tasks/i18n.jsp</div>
 	
 	<ul class="rounded-list">
+		<li><a href="/spring-web/s/tasks/i18n/e">/spring-web/s/tasks/i18n/e</a> <span class="resalt">(CookieLocaleResolver)</span></li>
 		<li><a href="/spring-web/s/tasks/i18n/d">/spring-web/s/tasks/i18n/d</a> <span class="resalt">(JSTL)<span class="yellow">&lt;fmt:setLocale value="de_DE"/&gt;</span></span></li>	
 		<li><a href="/spring-web/s/tasks/i18n/c">/spring-web/s/tasks/i18n/c</a> <span class="resalt">(JSTL)<span class="yellow">DEFAULT</span></span></li>
 		<li><a href="/spring-web/s/tasks/i18n/b">/spring-web/s/tasks/i18n/b</a> <span class="resalt">messageSource.getMessage(..)<span class="yellow">Locale.GERMAN</span></span></li>

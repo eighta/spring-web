@@ -15,21 +15,16 @@
 <body>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
 
-	<div class="bigtitle">i18n</div>
-	<div class="box">views/i18n/i18n_jstl_locale.jsp</div>
+	<div class="bigtitle">CookieLocaleResolver</div>
+	<div class="box">views/i18n/i18n_cookie_locale.jsp</div>
 	
-	<fmt:setLocale value="de"/>
-	<fmt:bundle basename="bundles.greetings">
-		<h1>Jstl(&lt;fmt:message/&gt;): <fmt:message key="welcome"/>!</h1>
-	</fmt:bundle>
+	<div><span class="t3">Choose language:</span> 
+		<a href="?lang=es">es</a> 
+		| 
+		<a href="?lang=de">de</a>
+	</div>
 	
-	<!-- XXX TODO nose como cambiar el Locale en el contexto de spring, investigar -->
 	<h1>Spring(&lt;spring:message/&gt;): <spring:message code="welcome" />!</h1>
-	
-	<h1>Spring(&lt;spring:message text='Default Message'/&gt;): <spring:message code="welcome_a" text="Default Message"/>!</h1>
-	
-	
-	
 	
 </body>
 </html>

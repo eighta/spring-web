@@ -98,3 +98,21 @@ ReloadableResourceBundleMessageSource (util para cambiar mensajes en RunTime)
 OJO: al definir el bean MessageSource, el nombre debe ser: "messageSource" porque de lo contrario,
 se crea implicitamente uno del tipo: DelegatingMessageSource y este se encuentra vacio
  
+LocaleResolver
+==============
+The bean resolving the locale must be named localeResolver and
+it must implement the LocaleResolver interface
+
+In Spring, there are three types of locale resolvers defined:
+-AcceptHeaderLocaleResolver: Reads the locale from the request
+-CookieLocaleResolver: Reads/writes the locale from/to a cookie named org.
+ springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE (unless
+ named otherwise in the bean definition using property cookieName)
+-SessionLocaleResolver: Reads/writes the locale from/to an HTTP session
+
+When a specific LocaleResolver is not defined, AcceptHeaderLocaleResolver is used as
+default.
+
+In order for Spring to be notified of the changes in the locale, a bean of type LocaleChangeInterceptor
+needs to be configured. This ensures that the locale interceptor will be applied to all handler mappings.
+

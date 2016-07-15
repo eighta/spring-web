@@ -16,7 +16,7 @@
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
 
 	<div class="bigtitle">i18n</div>
-	<div class="box">views/tasks/i18n_jstl.jsp</div>
+	<div class="box">views/i18n/i18n_jstl.jsp</div>
 	
 	<h1>Jstl(&lt;fmt:message/&gt;): <fmt:message key="welcome"/>!</h1>
 	<h1>Spring(&lt;spring:message/&gt;): <spring:message code="welcome"/>!</h1>
