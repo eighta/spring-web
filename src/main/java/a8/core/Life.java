@@ -1,8 +1,11 @@
 package a8.core;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.FlashMapManager;
@@ -24,6 +27,20 @@ public class Life {
 	private CommonsUtils commonsUtils = CommonsUtils.getInstance();
 	
 	private Heart heart = Heart.getInstance(); 
+	
+	public Map<String,Object> getSessionAttributeNames(HttpSession session){
+		Map<String,Object> sessionAttributeMap = new HashMap<>();
+		
+		if(session!=null){
+			Enumeration<String> attributeNamesEnumeration = session.getAttributeNames();
+			while(attributeNamesEnumeration.hasMoreElements()){
+				String attributeName = attributeNamesEnumeration.nextElement();
+				Object attributeValue = session.getAttribute(attributeName);
+				sessionAttributeMap.put(attributeName, attributeValue);
+			}
+		}
+		return sessionAttributeMap;
+	}
 	
 	public Map<String, FlashMapManager> getFlashMapManagers(){
 		

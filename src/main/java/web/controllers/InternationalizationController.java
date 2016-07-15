@@ -16,6 +16,11 @@ public class InternationalizationController {
 	@Autowired
 	MessageSource messageSource;
 	
+	@RequestMapping(method=RequestMethod.GET, path="/f")
+	public String bySessionLocaleResolver(){
+		return "i18n/i18n_session_locale";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/e")
 	public String byCookieLocaleResolver(){
 		return "i18n/i18n_cookie_locale";
