@@ -151,7 +151,7 @@
 	
 	<div>
 		<span class="title">ThemeResolver's</span>
-		<span>org.springframework.web.servlet.ThemeResolver</span>
+		<span>org.springframework.web.servlet.<span class="neon">ThemeResolver</span></span>
 	</div>
 	<table class="pure-table">
 		<thead>

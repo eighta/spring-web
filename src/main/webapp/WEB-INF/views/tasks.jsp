@@ -23,6 +23,7 @@
 	<ul class="rounded-list">
 	  <li><a href="tasks/mvc_components">Ver MVC Components</a></li>
 	  <li><a href="tasks/i18n">Internationalization (i18n)</a></li>
+	  <li><a href="tasks/themes">Themes</a></li>
 	</ul>
 	
 </body>

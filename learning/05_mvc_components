@@ -126,4 +126,23 @@ y se decide cambiar el LOCALE, el sistema lanzara una Exception,
 ya que la naturaleza de AcceptHeaderLocaleResolver, es tomar el accept-language HEADER
 UnsupportedOperationException: Cannot change HTTP accept header - use a different locale resolution strategy
 
+ThemeResolver
+=============
+In Spring there are three types of theme resolvers defined:
+-FixedThemeResolver: The default implementation uses a configured default theme
+-CookieThemeResolver: Reads/writes the theme attribute from/to a cookie named
+	org.springframework.web.servlet.theme.cookieThemeResolver.THEME
+(unless named otherwise in the bean definition using property cookieName)
+-SessionThemeResolver: Reads/writes the theme attribute from/to a HTTP session
+
+XXX: NO PUEDE CAMBIAR LA LOCACION DE LOS ARCHIVOS DE LOS THEMES
+FUNCIONAN EN LA RAIZ DEL CLASSPATH: Y SON DEFINOS POR EL VALOR 
+DE DE LA VARIABLE QUE LE DA EL USUARIO AL REQUEST: ?tematica=blue
+
+OJO: Por defecto, si no se especifica un LocaleResolver, se utiliza FixedThemeResolver,
+si el ThemeChangeInterceptor (el que identifica el parametro para cambiar el Theme (i.e. ?theme=dark_blue) 
+	esta registrado en los Interceptores de la web-app,
+y se decide cambiar el THEME, el sistema lanzara una Exception,
+ya que por la naturaleza de FixedThemeResolver solo exitira un THEME 
+UnsupportedOperationException: Cannot change theme - use a different theme resolution strategy
 

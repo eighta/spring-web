@@ -1,5 +1,6 @@
 package a8.utils;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Collection;
@@ -30,6 +31,20 @@ import org.springframework.context.ApplicationContext;
 public class CommonsUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonsUtils.class);
+	
+	public <T> T getPrivateAttribute(Object object, String attName,Class<T> requiredType){
+		
+		try{
+			Class<?> theClass = object.getClass();
+			Field field = theClass.getDeclaredField(attName);
+			field.setAccessible(true); //<<<< AQUI ESTA LA CLAVE
+			Object value = field.get(object);
+			return (T) value;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public void printMap(Map<?,?> map){
 		

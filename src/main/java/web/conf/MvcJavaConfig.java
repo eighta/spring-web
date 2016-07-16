@@ -6,7 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
+import org.springframework.ui.context.ThemeSource;
+import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -18,6 +21,9 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.theme.CookieThemeResolver;
+import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
@@ -115,6 +121,49 @@ public class MvcJavaConfig
 	*/
 
 /*
+TTTTTTTTTTTTTTTTTTTTTTThhhhhhh                                                                                              
+T:::::::::::::::::::::Th:::::h                                                                                              
+T:::::::::::::::::::::Th:::::h                                                                                              
+T:::::TT:::::::TT:::::Th:::::h                                                                                              
+TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmmmmmm       eeeeeeeeeeee        ssssssssss   
+        T:::::T         h::::hh:::::hhh      ee::::::::::::ee   mm:::::::m  m:::::::mm   ee::::::::::::ee    ss::::::::::s  
+        T:::::T         h::::::::::::::hh   e::::::eeeee:::::eem::::::::::mm::::::::::m e::::::eeeee:::::eess:::::::::::::s 
+        T:::::T         h:::::::hhh::::::h e::::::e     e:::::em::::::::::::::::::::::me::::::e     e:::::es::::::ssss:::::s
+        T:::::T         h::::::h   h::::::he:::::::eeeee::::::em:::::mmm::::::mmm:::::me:::::::eeeee::::::e s:::::s  ssssss 
+        T:::::T         h:::::h     h:::::he:::::::::::::::::e m::::m   m::::m   m::::me:::::::::::::::::e    s::::::s      
+        T:::::T         h:::::h     h:::::he::::::eeeeeeeeeee  m::::m   m::::m   m::::me::::::eeeeeeeeeee        s::::::s   
+        T:::::T         h:::::h     h:::::he:::::::e           m::::m   m::::m   m::::me:::::::e           ssssss   s:::::s 
+      TT:::::::TT       h:::::h     h:::::he::::::::e          m::::m   m::::m   m::::me::::::::e          s:::::ssss::::::s
+      T:::::::::T       h:::::h     h:::::h e::::::::eeeeeeee  m::::m   m::::m   m::::m e::::::::eeeeeeee  s::::::::::::::s 
+      T:::::::::T       h:::::h     h:::::h  ee:::::::::::::e  m::::m   m::::m   m::::m  ee:::::::::::::e   s:::::::::::ss  
+      TTTTTTTTTTT       hhhhhhh     hhhhhhh    eeeeeeeeeeeeee  mmmmmm   mmmmmm   mmmmmm    eeeeeeeeeeeeee    sssssssssss    
+*/		
+		@Bean
+		public ThemeResolver themeResolver (){
+			CookieThemeResolver cookieThemeResolver = 
+					new CookieThemeResolver();
+			cookieThemeResolver.setDefaultThemeName("base");
+			cookieThemeResolver.setCookieName("myWebApp.THEME"); //BY DEFAULT IS: org.springframework.web.servlet.theme.cookieThemeResolver.THEME
+			return cookieThemeResolver;
+		}
+		
+		@Bean
+		public ThemeSource themeSource(){
+			ResourceBundleThemeSource resourceBundleThemeSource = 
+					new ResourceBundleThemeSource();
+			//XXX NO LOGRE QUE EL ARCHIVO SE PUEDA ACCEDER EN UNA CARPETA DEL CLASS-PATH
+			//COMO LO HACE 
+			//INTENTARLO EN ESTA CLASE (here.ClassPathThemeSource)
+
+			//la idea era tener en los archivos del theme en una carpeta de los
+			//resources llamada themes (i.e. classpath:/themes),
+			//como mas abajo la uso en 
+			//reloadableResourceBundleMessageSource.setBasename("classpath:/bundles/greetings");
+			resourceBundleThemeSource.setBasenamePrefix("themes-");
+			return resourceBundleThemeSource;
+		}
+		
+/*
    .                                              
   @88>        oe       u+=~~~+u.                  
   %8P       .@88     z8F      `8N.     u.    u.   
@@ -133,11 +182,19 @@ public class MvcJavaConfig
 	@Override
 	// <=>  <mvc:interceptors>
 	public void addInterceptors(InterceptorRegistry interceptorRegistry) {
+
+		//THEMES
+		ThemeChangeInterceptor themeChangeInterceptor  =
+				new ThemeChangeInterceptor();
+		themeChangeInterceptor.setParamName("tematica"); //DEFAULT: theme 
+		interceptorRegistry.addInterceptor(themeChangeInterceptor);
 		
+		//LOCALE
 		LocaleChangeInterceptor localeChangeInterceptor = 
 				new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName("lang");	//DEFAULT: locale 
 		interceptorRegistry.addInterceptor(localeChangeInterceptor);
+		
 	}
 
 	@Bean
@@ -222,7 +279,16 @@ public class MvcJavaConfig
 		viewResolverRegistry.beanName();
 		viewResolverRegistry.velocity();
 		viewResolverRegistry.freeMarker();
-		viewResolverRegistry.jsp("/WEB-INF/views/", ".jsp");
+		
+		//viewResolverRegistry.jsp("/WEB-INF/views/", ".jsp");
+		//explicitamente:
+		InternalResourceViewResolver internalResourceViewResolver =
+				new InternalResourceViewResolver();
+		internalResourceViewResolver.setPrefix("/WEB-INF/views/");
+		internalResourceViewResolver.setSuffix(".jsp");
+		
+		internalResourceViewResolver.setRequestContextAttribute("requestContext");
+		viewResolverRegistry.viewResolver(internalResourceViewResolver);
 		
 		
 	}

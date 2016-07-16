@@ -20,7 +20,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		printMap();
+		messageSourceTest();
+//		printMap();
 //		testPrintConsoleTable();
 //		retrieveResourceFromClasspath();
 //		testClassPathXmlApplicationContext();
@@ -28,6 +29,12 @@ public class Main {
 //		testLogLevel();
 	}
 	
+	private static void messageSourceTest() {
+		
+		//MessageSource messageSource
+		
+	}
+
 	private static void printMap(){
 		Map<String,String> map = new HashMap<>();
 		map.put("HEY", "YOU");
@@ -108,5 +115,7 @@ System.out.println("END LEVELS");
 		//System.out.println(">>>"+ simpleBean);
 		
 		context.close();
+		
+		context.getBean(String.class);
 	}
 }
