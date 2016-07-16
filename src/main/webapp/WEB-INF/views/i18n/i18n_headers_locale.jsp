@@ -15,10 +15,10 @@
 <body>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
 
-	<div class="bigtitle">CookieLocaleResolver</div>
-	<div class="box">views/i18n/i18n_cookie_locale.jsp</div>
+	<div class="bigtitle">AcceptHeaderLocaleResolver</div>
+	<div class="box">views/i18n/i18n_headers_locale.jsp</div>
 	
-	<div><span class="t3">Choose language:</span> 
+	<div><span class="t3">Choose language in Session:</span> 
 		<a href="?lang=es">es</a> 
 		| 
 		<a href="?lang=de">de</a>
@@ -26,7 +26,25 @@
 	
 	<h1>Spring(&lt;spring:message/&gt;): <spring:message code="welcome" />!</h1>
 	
-	<a class="neon-text" href="simple">Let me See</a>
+	<span class="title">Header's</span>
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Header Name</th>
+	            <th>Header Value </th>
+        	</tr>
+    	</thead>
+    	
+		<tbody>
+			<c:forEach items="${headers}" var="h">
+				<tr>
+					<td>${h.key}</td>
+					<td>${h.value}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+		
+	</table>
 	
 </body>
 </html>

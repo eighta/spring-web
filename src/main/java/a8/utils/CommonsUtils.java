@@ -23,15 +23,32 @@ import org.springframework.context.ApplicationContext;
 
 /*
  * XXX TODO XXX TODO
- * 
  * TIRE LOS GUANTES: NO PUDE HACER UNA ORDENACION DE UN MAPA CON REFLECTION, ES COMPLICADO
- * 
  */
 
 
 public class CommonsUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonsUtils.class);
+
+	public void printMap(Map<?,?> map){
+		
+		ConsoleStringTable table= new ConsoleStringTable();
+		Set<?> keySet = map.keySet();
+		
+		int currentRow = -1;
+		for(Object key: keySet){ //NOT SUITABLE POR INDEX
+		//for(int i=0; i<allRows ;i++){
+			currentRow++;
+			Object value = map.get(key);
+			
+			table.addString(currentRow, 0, key.toString());
+			table.addString(currentRow, 1, value.toString());
+		}
+		System.out.println(table.toString());
+		
+		
+	}
 	
 	public Object callMethod(Object target, String methodName){
 		

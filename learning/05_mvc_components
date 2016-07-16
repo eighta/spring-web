@@ -105,6 +105,9 @@ it must implement the LocaleResolver interface
 
 In Spring, there are three types of locale resolvers defined:
 -AcceptHeaderLocaleResolver: Reads the locale from the request
+	javadoc:LocaleResolver implementation that simply uses the primary locale 
+		specified in the "accept-language" header of the HTTP request 
+		(that is, the locale sent by the client browser, normally that of the client's OS).
 -CookieLocaleResolver: Reads/writes the locale from/to a cookie named org.
  springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE (unless
  named otherwise in the bean definition using property cookieName)
@@ -115,4 +118,12 @@ default.
 
 In order for Spring to be notified of the changes in the locale, a bean of type LocaleChangeInterceptor
 needs to be configured. This ensures that the locale interceptor will be applied to all handler mappings.
+
+OJO: Por defecto, si no se especifica un LocaleResolver, se utiliza AcceptHeaderLocaleResolver,
+si el LocaleChangeInterceptor (el que identifica el parametro para cambiar el Locale (i.e. ?locale=de) 
+	esta registrado en los Interceptores de la web-app,
+y se decide cambiar el LOCALE, el sistema lanzara una Exception,
+ya que la naturaleza de AcceptHeaderLocaleResolver, es tomar el accept-language HEADER
+UnsupportedOperationException: Cannot change HTTP accept header - use a different locale resolution strategy
+
 

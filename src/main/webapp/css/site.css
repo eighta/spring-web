@@ -36,6 +36,19 @@ a{
 	font-family: "Open Sans";
 }
 /*customs*/
+.over_black { 
+  background-color: black;
+  color: #fff; 
+  display: inline;
+  padding: 0.5rem;
+  font-family: "Open Sans";
+  font-size: 20px;
+  
+  /* Needs prefixing */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 .neon-text {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;

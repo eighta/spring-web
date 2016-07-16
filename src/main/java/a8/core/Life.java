@@ -30,7 +30,7 @@ public class Life {
 	
 	public Map<String,Object> getSessionAttributeNames(HttpSession session){
 		Map<String,Object> sessionAttributeMap = new HashMap<>();
-		
+
 		if(session!=null){
 			Enumeration<String> attributeNamesEnumeration = session.getAttributeNames();
 			while(attributeNamesEnumeration.hasMoreElements()){

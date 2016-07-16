@@ -63,11 +63,12 @@ cfg.setDirectoryForTemplateLoading(new File("/p_wrk1/2016/workspace/eclipseNeon/
 	// BEGIN: SINGLETON
 	private static FreeMarkerUtil INSTANCE = null;
 	private FreeMarkerUtil(){
-		try {
-			this.createFreeMarkerConfiguration();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//XXX Exception por fixed path 		
+//		try {
+//			this.createFreeMarkerConfiguration();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	private synchronized static void createInstance() {
 		if (INSTANCE == null) {

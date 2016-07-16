@@ -16,8 +16,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
@@ -136,25 +136,26 @@ public class MvcJavaConfig
 		
 		LocaleChangeInterceptor localeChangeInterceptor = 
 				new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("lang");
+		localeChangeInterceptor.setParamName("lang");	//DEFAULT: locale 
 		interceptorRegistry.addInterceptor(localeChangeInterceptor);
 	}
 
 	@Bean
 	public LocaleResolver localeResolver(){
-		SessionLocaleResolver sessionLocaleResolver =
-				new SessionLocaleResolver();
-		return sessionLocaleResolver;
+		
+		//SessionLocaleResolver
+		//=====================
+//		SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+		//XXX NO SE COMO CAMBIAR EL NOMBRE DEL ATTRIBUTO QUE QUEDA EN SESSION: //DEFAULT: org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE
+//		return sessionLocaleResolver;
+		
+		//CookieLocaleResolver
+		//====================
+		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+		cookieLocaleResolver.setCookieName("myWebApp.LOCALE"); 	//DEFAULT: springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE
+		//cookieLocaleResolver.setCookieMaxAge(-1);
+		return cookieLocaleResolver;
 	}
-	
-//LOCALE with Cookies	
-//	
-//	@Bean
-//	public LocaleResolver localeResolver(){
-//		CookieLocaleResolver cookieLocaleResolver =
-//				new CookieLocaleResolver();
-//		return cookieLocaleResolver;
-//	}
 		
 	@Bean
 	public MessageSource messageSource(){

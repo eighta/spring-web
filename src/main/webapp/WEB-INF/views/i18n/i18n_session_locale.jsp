@@ -26,9 +26,13 @@
 	
 	<h1>Spring(&lt;spring:message/&gt;): <spring:message code="welcome" />!</h1>
 	
-	<a class="neon-text" href="">Let me See</a>
+	<a class="neon-text" href="simple">Let me See</a>
 	
-	<div class="neon2">Current Locale : ${pageContext.response.locale}</div>
+	<c:set var="laSession" value="<%=session%>" />
+	
+	<br/><br/><span class="neon2">Session : </span> <span class="over_black">${laSession}</span>
+	<br/><br/><span class="neon2">Current Locale : </span> <span class="over_black">${pageContext.response.locale}</span>
+	<br/><br/><span class="neon2">Current Locale (Spring way):  </span> <span class="over_black">${pageContext.response.locale}</span>
 	
 	<table class="pure-table">
 		<thead>
@@ -38,7 +42,7 @@
         	</tr>
     	</thead>
 		<tbody>
-			<c:forEach items="${global.getSessionAttributeNames(session)}" var="attr">
+			<c:forEach items="${global.getSessionAttributeNames(laSession)}" var="attr">
 				<tr>
 					<td>${attr.key}</td>
 					<td>${attr.value}</td>
