@@ -1,13 +1,17 @@
 package web.conf;
 
+import java.util.Properties;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.View;
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
@@ -120,6 +125,45 @@ public class MvcJavaConfig
 	}
 	*/
 
+		
+/*
+ █████ ▒██   ██▒ ▄████▄  ▓█████  ██▓███  ▄▄▄█████▓ ██▓ ▒█████   ███▄    █   ██████ 
+▓█   ▀ ▒▒ █ █ ▒░▒██▀ ▀█  ▓█   ▀ ▓██░  ██▒▓  ██▒ ▓▒▓██▒▒██▒  ██▒ ██ ▀█   █ ▒██    ▒ 
+▒███   ░░  █   ░▒▓█    ▄ ▒███   ▓██░ ██▓▒▒ ▓██░ ▒░▒██▒▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄   
+▒▓█  ▄  ░ █ █ ▒ ▒▓▓▄ ▄██▒▒▓█  ▄ ▒██▄█▓▒ ▒░ ▓██▓ ░ ░██░▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒
+░▒████▒▒██▒ ▒██▒▒ ▓███▀ ░░▒████▒▒██▒ ░  ░  ▒██▒ ░ ░██░░ ████▓▒░▒██░   ▓██░▒██████▒▒
+░░ ▒░ ░▒▒ ░ ░▓ ░░ ░▒ ▒  ░░░ ▒░ ░▒▓▒░ ░  ░  ▒ ░░   ░▓  ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░
+ ░ ░  ░░░   ░▒ ░  ░  ▒    ░ ░  ░░▒ ░         ░     ▒ ░  ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░
+   ░    ░    ░  ░           ░   ░░         ░       ▒ ░░ ░ ░ ▒     ░   ░ ░ ░  ░  ░  
+   ░  ░ ░    ░  ░ ░         ░  ░                   ░      ░ ░           ░       ░  
+	*/	
+		
+		@Bean
+		public SimpleMappingExceptionResolver simpleMappingExceptionResolver(){
+			SimpleMappingExceptionResolver simpleMappingExceptionResolver =
+					new SimpleMappingExceptionResolver();
+//			
+//			
+			Properties mappings = new Properties();
+			//EL VALUE significa nombre de vista logica
+//			mappings.put("DataAccessException", "errors/databaseError"); 
+			mappings.put("EightaException", "errors/business_error");
+			simpleMappingExceptionResolver.setExceptionMappings(mappings);
+			
+			simpleMappingExceptionResolver.setDefaultStatusCode(405); //DEFAULT IS 200
+			//simpleMappingExceptionResolver.setDefaultStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			
+			//VISTA QUE AGARRA CUALQUIER EXCEPTION LANZADA Y NO ESTEN MAPEADAS
+			//OJO: 
+			//-Request no mapeados NO los atrapa (404)
+			//-Si en el HttpServletResponse se coloca un status code 404 por ejemplo, tampoco lo mapea
+			//-Es posible acceder a la exception desde la pagina setDefaultErrorView(...)
+			//-ni las mappings, ni en las @ExceptionHandler se puede acceder a la exception lanzada
+			simpleMappingExceptionResolver.setDefaultErrorView("errors/any_error");
+			
+			return simpleMappingExceptionResolver;
+		}
+		
 /*
 TTTTTTTTTTTTTTTTTTTTTTThhhhhhh                                                                                              
 T:::::::::::::::::::::Th:::::h                                                                                              
@@ -222,7 +266,7 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 		reloadableResourceBundleMessageSource.setCacheSeconds(5);
 		return reloadableResourceBundleMessageSource;
 	}
-		
+
 //	@Bean
 //	public MessageSource messageSource(){
 //		ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();

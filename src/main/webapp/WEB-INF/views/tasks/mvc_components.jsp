@@ -102,8 +102,8 @@
 	</table>
 	
 	<div>
-		<span class="title">HandlerExceptionResolver's</span>
-		<span>org.springframework.web.servlet.HandlerExceptionResolver</span>
+		<a href="errors" class="title">HandlerExceptionResolver's</a>
+		<span>org.springframework.web.servlet.<span class="neon">HandlerExceptionResolver</span></span>
 	</div>
 	<table class="pure-table">
 		<thead>
@@ -166,7 +166,7 @@
 				<tr>
 					<td>${themeResolver.key}</td>
 					<td>${themeResolver.value.getClass().getCanonicalName()}</td>
-					<td>${themeResolver.value.getOrder()}</td>
+					<td>NOT ORDER</td>
 				</tr>
 			</c:forEach>
 		
