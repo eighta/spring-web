@@ -2,6 +2,7 @@ package a8.core;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -16,6 +17,9 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.handler.HandlerExceptionResolverComposite;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.ViewResolverComposite;
 
 import a8.utils.CommonsUtils;
 
@@ -69,13 +73,42 @@ public class Life {
 	public Map<String, HandlerExceptionResolver> getHandlerExceptionResolvers(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		return commonsUtils.getBeansOfType(frontendApplicationContext, HandlerExceptionResolver.class);
+		Map<String, HandlerExceptionResolver> handlerExceptionResolverMap = commonsUtils.getBeansOfType(frontendApplicationContext, HandlerExceptionResolver.class);
+		
+		//Composite
+		HandlerExceptionResolverComposite herComposite = frontendApplicationContext.getBean(HandlerExceptionResolverComposite.class);
+		List<HandlerExceptionResolver> innerExceptionResolvers = herComposite.getExceptionResolvers();
+		
+		for(HandlerExceptionResolver her:innerExceptionResolvers){
+			handlerExceptionResolverMap.put("inComposite::"+her.getClass().getSimpleName(), her);
+		}
+		
+		return handlerExceptionResolverMap;
 	}
 	
 	public Map<String, ViewResolver> getViewResolvers(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
-		return commonsUtils.getBeansOfType(frontendApplicationContext, ViewResolver.class);
+		Map<String, ViewResolver> viewResolverMap = commonsUtils.getBeansOfType(frontendApplicationContext, ViewResolver.class);
+		
+		//Composite
+		ViewResolverComposite vrComposite = frontendApplicationContext.getBean(ViewResolverComposite.class);
+		List<ViewResolver> innerViewResolvers = vrComposite.getViewResolvers();
+		
+		for(ViewResolver vr:innerViewResolvers){
+			viewResolverMap.put("inComposite::"+vr.getClass().getSimpleName(), vr);
+			
+			if(vr instanceof ContentNegotiatingViewResolver){
+				ContentNegotiatingViewResolver cnvr = (ContentNegotiatingViewResolver) vr;
+				List<ViewResolver> cnvrViewResolvers = cnvr.getViewResolvers();
+				for(ViewResolver innerCnvr:cnvrViewResolvers){
+					viewResolverMap.put("inNegotiation::"+innerCnvr.getClass().getSimpleName(), vr);
+				}
+			}
+			
+		}
+		
+		return viewResolverMap;
 	}
 	
 	public Map<String, HandlerAdapter> getHandlerAdapters(){

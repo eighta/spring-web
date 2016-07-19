@@ -146,3 +146,17 @@ y se decide cambiar el THEME, el sistema lanzara una Exception,
 ya que por la naturaleza de FixedThemeResolver solo exitira un THEME 
 UnsupportedOperationException: Cannot change theme - use a different theme resolution strategy
 
+HandlerExceptionResolver
+========================
+
+OJO: Una forma de manejar las exceptions es utilizar dentro de un
+Controller, un metodo que se encuentre anotado con: @ExceptionHandler,
+pero si en sus atributos, no se especifica la exception que se va manejar,
+este atrapara todas las excepciones lanzadas (y no agarradas) desde este mismo
+Controlador
+
+Por otro lado, si se llega anotar con @ExceptionHandler sin una exception 
+definida explicitamente, un metodo de una clase anotada con: 
+@ControllerAdvice, en el despliegue  
+ 
+Un clase @ControllerAdvice tiene mas prioridad que SimpleMappingExceptionResolver
