@@ -36,6 +36,16 @@ a{
 	font-family: "Open Sans";
 }
 /*customs*/
+.text-green{
+	font-size: 30px;
+	color: #00B233;
+	font-family: "Ubuntu";
+}
+.text-yellow-small{
+	font-size: 10px;
+	color: #FFCC00;
+	font-family: "Ubuntu";
+}
 .text-yellow{
 	font-size: 30px;
 	color: #FFCC00;

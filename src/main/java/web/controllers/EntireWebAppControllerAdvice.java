@@ -3,7 +3,7 @@ package web.controllers;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class EntireWebAppControllerAdvice {
 
 	/*
@@ -17,7 +17,7 @@ public class EntireWebAppControllerAdvice {
 	@InitBinder.
 	*/
 	
-	@ExceptionHandler
+//	@ExceptionHandler
 	public String exceptionHandlerMethod(){
 		return ""; //XXX IR A UNA PAGINA DE ERROR
 	} 

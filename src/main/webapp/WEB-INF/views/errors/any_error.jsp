@@ -13,17 +13,18 @@
 </head>
 <body>
 
+	<div class="bigtitle">ANY-ERROR</div>
+	<div class="box">views/errors/any_error.jsp</div>
+
 	<div class="clearfix float-my-children">
 		<img id="banner" src="http://localhost:8080/spring-web/images/error_icon.png" 
 		 	width="20%" />
 		 
 		 <div>
-			 <span class="text-yellow-big"><%=response.getStatus() %></span>
-			 <div class="text-yellow"><%=exception.getMessage()%></div>
+			 <span class="text-green">Response Status-Code: </span><span class="text-yellow-big"><%=response.getStatus() %></span>
+			 <br><span class="text-green">Exception: </span><span class="text-yellow"><%=exception.getClass().getCanonicalName() %></span>
+			<br><span class="text-green">Message: </span><span class="text-yellow"><%=exception.getMessage() %></span>
 		 </div>
 	 </div>
-	 
-	 
-
 </body>
 </html>

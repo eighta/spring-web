@@ -23,8 +23,9 @@
 		 	width="20%" />
 		 
 		 <div>
-			 <span class="text-yellow-big"><%=response.getStatus() %></span>
-			 <div class="text-yellow"><%=exception.getMessage()%></div>
+			<span class="text-green">Response Status-Code: </span><span class="text-yellow-big"><%=response.getStatus() %></span>
+			<br><span class="text-green">Exception: </span><span class="text-yellow"><%=exception.getClass().getCanonicalName() %></span>
+			<br><span class="text-green">Message: </span><span class="text-yellow"><%=exception.getMessage() %></span>
 		 </div>
 	 </div>
 	
