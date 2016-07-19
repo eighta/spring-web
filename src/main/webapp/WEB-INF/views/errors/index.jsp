@@ -19,6 +19,7 @@
 	<h1><%=response.getStatus() %></h1>
 	
 	<ul class="rounded-list">
+		<li><a href="/spring-web/s/tasks/errors/f">/spring-web/s/tasks/errors/f</a> <span class="resalt">Lanzar ResponseStatusException</span><span class="yellow">(desde Controller)</span></li>
 		<li><a href="/spring-web/s/tasks/errors/none">/spring-web/s/tasks/errors/none</a> <span class="resalt">Ir a una pagina que no tiene request mapping</span></li>
 		<li><a href="/spring-web/s/tasks/errors/c">/spring-web/s/tasks/errors/c</a> <span class="resalt">Lanzar Error 404</span><span class="yellow">(desde Controller)</span></li>
 		<li><a href="/spring-web/s/tasks/errors/b">/spring-web/s/tasks/errors/b</a> <span class="resalt">Lanzar Error 407</span><span class="yellow">(desde JSP)</span></li>

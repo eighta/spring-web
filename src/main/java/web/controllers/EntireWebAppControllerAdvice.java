@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import a8.exceptions.DummyDataAccessException;
+import a8.exceptions.EightaException;
 
 @ControllerAdvice
 public class EntireWebAppControllerAdvice {
@@ -23,9 +24,9 @@ public class EntireWebAppControllerAdvice {
 	@InitBinder.
 	*/
 	
-	@ExceptionHandler(DummyDataAccessException.class)
-	public String exceptionHandlerMethod(){
-		return "entire_webapp_error";
+	@ExceptionHandler//(DummyDataAccessException.class) in arg can too
+	public String exceptionHandlerMethod(DummyDataAccessException ddae){
+		return "errors/entire_webapp_error";
 	} 
 	
 }

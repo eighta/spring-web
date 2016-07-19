@@ -149,6 +149,10 @@ UnsupportedOperationException: Cannot change theme - use a different theme resol
 HandlerExceptionResolver
 ========================
 
+Spring MVC internal exceptions raised while processing a request are translated by a class named
+DefaultHandlerExceptionResolver to specific error codes: a client error (4xx) or a server error (5xx), which
+is set on the response. This class is registered by default with the MVC namespace and @EnableWebMVC.
+
 OJO: Una forma de manejar las exceptions es utilizar dentro de un
 Controller, un metodo que se encuentre anotado con: @ExceptionHandler,
 pero si en sus atributos, no se especifica la exception que se va manejar,
@@ -160,3 +164,4 @@ definida explicitamente, un metodo de una clase anotada con:
 @ControllerAdvice, en el despliegue  
  
 Un clase @ControllerAdvice tiene mas prioridad que SimpleMappingExceptionResolver
+

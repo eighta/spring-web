@@ -11,12 +11,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import a8.exceptions.DummyDataAccessException;
 import a8.exceptions.EightaException;
+import a8.exceptions.ResponseStatusException;
 import a8.exceptions.SophieException;
 
 @Controller
 @RequestMapping("/tasks/errors")
 public class ExceptionsController {
 
+	@RequestMapping(method=RequestMethod.GET, path="/f")
+	public String throwResponseStatusException(){
+		
+		if(true){
+			throw new ResponseStatusException();
+		}
+		
+		return "NO ALCANZA A LLEGAR ACA";
+	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/c")
 	public String sendError404(HttpServletResponse response) throws IOException{
