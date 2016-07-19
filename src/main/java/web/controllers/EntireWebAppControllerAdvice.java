@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import a8.exceptions.DummyDataAccessException;
-import a8.exceptions.EightaException;
 
 @ControllerAdvice
 public class EntireWebAppControllerAdvice {
@@ -22,11 +21,24 @@ public class EntireWebAppControllerAdvice {
 	
 	-Binder initialization methods (used for configuring form-handling) annotated with
 	@InitBinder.
+	
+	A class annotated with @ControllerAdvice allows you to use the same exception 
+	handling techniques across the whole application, not just a single controller. 
+	
+	Three types of methods are supported inside a class annotated with 
+		@ControllerAdvice:
+
+	-Methods annotated with @ExceptionHandler that are used to handle exceptions
+	-Methods annotated with @ModelAttribute that are used to add data to the model
+	-Methods annotated with @InitBinder that are used for configuring form-handling
+	
 	*/
 	
 	@ExceptionHandler//(DummyDataAccessException.class) in arg can too
 	public String exceptionHandlerMethod(DummyDataAccessException ddae){
 		return "errors/entire_webapp_error";
-	} 
+	}
+	
+	
 	
 }

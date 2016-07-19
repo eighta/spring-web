@@ -19,6 +19,17 @@ import a8.exceptions.SophieException;
 public class ExceptionsController {
 
 	@RequestMapping(method=RequestMethod.GET, path="/f")
+	public String throwException4ControllerAdvice(){
+		
+		/* XXX CONTINUAR LA IMPLMENTACION: PAGINA: 106
+		if(true){
+			throw new ResponseStatusException();
+		}*/
+		
+		return "NO ALCANZA A LLEGAR ACA";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/f")
 	public String throwResponseStatusException(){
 		
 		if(true){
