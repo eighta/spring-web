@@ -1,0 +1,61 @@
+Controllers
+===========
+
+Controllers are POJOs—simple beans annotated with the @Controller annotation—that are used 
+to handle requests. Each controller class contains methods that are mapped to a 
+request URL via the @RequestMapping annotation. 
+
+These methods are used to handle different requests. Each method executes three steps:
+1. Invoke services.
+2. Populate a model.
+3. Select a view.
+
+Con los argumentos de un metodo de controlador con @RequestParam,
+se pueden leer por parametros enviados en un request.
+@RequestParam("id") Long id
+Sin embargo, hay que tener cuidado con los tipos de datos,
+por naturaleza la url es una cadena , por ende los parametros tambien son string
+al declararlo de un tipo especifico, como Long, en el ejemplo anterior,
+la maquina virtual intentara convertir el parametro al tipo de dato.
+String to Long >>>OK!!!
+String to Date >>>ERROR!
+
+URL: 
+	/ctrls/f/1?dateOfBirth=1982-10-01
+MAPING:
+	@RequestParam("dateOfBirth") 
+	Date date
+
+Este error se da porque Spring no conoce como realizar dicha conversion, lanzando:
+Caused by: org.springframework.core.convert.ConversionFailedException: 
+Failed to convert from type [java.lang.String] to type 
+[@org.springframework.web.bind.annotation.RequestParam java.util.Date] 
+for value '1982-10-01'; nested exception is java.lang.IllegalArgumentException
+
+Bueno, en realidad si sabe como convertir un String a un Date, la anterior excepcion
+sale, es porque al intentar hacer dicha conversion, falla por formato fecha que 
+por defecto en ese instante tiene la maquina virtual,
+En mi caso, fallo porque la maquina virtual esta configurada con el patron: dd/MM/yyyy
+Si la URL es:
+	/ctrls/f/1?dateOfBirth=01/10/1982
+Se responde (convierte) correctamente
+
+En caso tal, que se desee un formato en especifico, pero si tener que 
+cambiar el patron por defecto de la maquina virtual, se puede
+especificar el patron de fecha asi:
+
+@RequestParam("dateOfBirth") 
+@DateTimeFormat(pattern = "yyyy-MM-dd")
+Date date,
+ 
+
+NOTA: de casualidad me doy cuenta que:
+-en los controladores los paths: 
+".../personas" (sin el slash final) y
+".../personas/" (con el slash final)
+Responden al mismo requestMapping method,
+diferente a los ViewController que registran
+url->vista,
+ni tampoco en el context de spring
+para mi ejemplo, no es lo mismo /s/ que /s (sin slash final)
+

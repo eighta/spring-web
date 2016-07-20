@@ -90,10 +90,11 @@ public class MvcJavaConfig
 			registry.addResourceHandler("/fonts/**").addResourceLocations("/fonts//").setCachePeriod(31556926);;
 		}
 		
+	// <=> <mvc:view-controller path="/" view-name="welcome"/>		
 		@Override
 		public void addViewControllers(ViewControllerRegistry registry) {
 			registry.addViewController("/").setViewName("bienvenido");
-			registry.addViewController("/tasks").setViewName("tasks");
+			registry.addViewController("tasks").setViewName("tasks");
 			registry.addViewController("/tasks/mvc_components").setViewName("tasks/mvc_components");
 			
 			//XXX TODO cual sera la forma de mapear TODAS LA URLs  a vistas?
