@@ -1,9 +1,15 @@
 package web.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import a8.exceptions.DummyDataAccessException;
+import a8.exceptions.ModelException;
 
 @ControllerAdvice
 public class EntireWebAppControllerAdvice {
@@ -34,9 +40,31 @@ public class EntireWebAppControllerAdvice {
 	
 	*/
 	
-	@ExceptionHandler//(DummyDataAccessException.class) in arg can too
+	
+	
+	@ExceptionHandler//(DummyDataAccessException.class) in args can too
 	public String exceptionHandlerMethod(DummyDataAccessException ddae){
 		return "errors/entire_webapp_error";
+	}
+	
+	@ExceptionHandler(ModelException.class)
+	public ModelAndView defaultErrorHandler(
+			HttpServletRequest req, Exception e) throws Exception{
+	
+		if (AnnotationUtils.findAnnotation(e.getClass(),ResponseStatus.class) != null){
+			// we test to see if the exception is annotated with @ResponseStatus
+			// if it is, we will re-throw it and let Spring handle it.
+			throw e;
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		//set exception details to be displayed in the page
+		mav.addObject("exception", e);
+		//set request URL to be displayed in the page, so the request causing
+		//the problem can be identified
+		mav.addObject("url", req.getRequestURL());
+		mav.setViewName("errors/entire_webapp_error");
+		return mav;
 	}
 	
 	

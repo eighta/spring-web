@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import a8.exceptions.DummyDataAccessException;
 import a8.exceptions.EightaException;
+import a8.exceptions.ModelException;
 import a8.exceptions.ResponseStatusException;
 import a8.exceptions.SophieException;
 
@@ -18,13 +19,12 @@ import a8.exceptions.SophieException;
 @RequestMapping("/tasks/errors")
 public class ExceptionsController {
 
-	@RequestMapping(method=RequestMethod.GET, path="/f")
+	@RequestMapping(method=RequestMethod.GET, path="/g")
 	public String throwException4ControllerAdvice(){
 		
-		/* XXX CONTINUAR LA IMPLMENTACION: PAGINA: 106
 		if(true){
-			throw new ResponseStatusException();
-		}*/
+			throw new ModelException("LANZADA PROGRAMATICAMENTE");
+		}
 		
 		return "NO ALCANZA A LLEGAR ACA";
 	}

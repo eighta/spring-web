@@ -37,7 +37,7 @@ a{
 }
 /*customs*/
 .text-green{
-	font-size: 30px;
+	font-size: 20px;
 	color: #00B233;
 	font-family: "Ubuntu";
 }
@@ -47,7 +47,7 @@ a{
 	font-family: "Ubuntu";
 }
 .text-yellow{
-	font-size: 30px;
+	font-size: 20px;
 	color: #FFCC00;
 	font-family: "Ubuntu";
 }
@@ -169,6 +169,15 @@ a{
     font-family: Anime;
     margin-left: 20px;
     margin-bottom: 10px;
+}
+
+.bigtitle-medium{
+	margin-left: 20px;
+	color: #393939;
+    font-size: 50px;
+    text-shadow: 3px 3px 0 #FFF, -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+    text-transform: uppercase;
+	font-family: Anime;
 }
 
 .bigTitle{
