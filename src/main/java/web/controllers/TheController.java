@@ -27,7 +27,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import a8.business.PersonManager;
 import a8.data.Person;
 import a8.data.SomeValue;
-import web.interceptors.AuditInterceptor;
 
 
 //The @SessionAttributes is used on a controller class to designate which model attributes 
@@ -73,7 +72,7 @@ public class TheController {
 	public String flashAttributes(
 			final RedirectAttributes redirectAttributes){
 		
-		redirectAttributes.addFlashAttribute("anotherPerson", new Person() );
+		redirectAttributes.addFlashAttribute("anotherPerson", new Person("Sophie","Ochoa","2013-03-21") );
 		return "redirect:s";
 	}
 	
@@ -84,7 +83,7 @@ public class TheController {
 	
 	@RequestMapping("/p")
 	public String setSessionAttirubte(Model model){
-		model.addAttribute(new Person() );
+		model.addAttribute(new Person("Javier","Ochoa","1982-09-29") );
 		return "controllers/simple";
 	}
 	

@@ -11,8 +11,8 @@ public class PersonManagerImpl implements PersonManager{
 	public List<Person> findAll() {
 		
 		List<Person> personList = new ArrayList<>();
-		personList.add(new Person() );
-		personList.add(new Person() );
+		personList.add(new Person("Javier","Ochoa","1982-09-29") );
+		personList.add(new Person("Sophie","Ochoa","2013-03-21") );
 		
 		return personList;
 	}

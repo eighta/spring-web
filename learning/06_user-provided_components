@@ -93,4 +93,12 @@ ResponseBodyInterceptor and provide an implementation for the beforeBodyWrite me
 
 View Technologies
 =================
+Based on the type of content being generated, the views can be categorized as follows:
+- Display views: The response is an HTML page generated using a template: JSP, Tiles,
+Thymeleaf, FreeMarker, or Velocity.
+- File-generating views: The response is an output file when rendered and it is
+automatically downloaded by the browser: Apache POI, JExcelApi (Excel), IText
+(PDF), JasperReports, or XSLT transformation.
+- Data-delivery views: The response is actually just data and it is meant to be used
+with AJAX and web services: JSON, Java-XML Marshalling, Atom, and RSS.
 
