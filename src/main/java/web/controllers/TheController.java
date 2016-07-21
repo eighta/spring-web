@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.stereotype.Controller;
@@ -21,8 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import a8.business.PersonManager;
 import a8.data.Person;
 import a8.data.SomeValue;
+import web.interceptors.AuditInterceptor;
 
 
 //The @SessionAttributes is used on a controller class to designate which model attributes 
@@ -33,6 +38,22 @@ import a8.data.SomeValue;
 @RequestMapping("/tasks/ctrls")
 public class TheController {
 
+	private static final Logger logger = LoggerFactory.getLogger(TheController.class);
+	
+	private PersonManager personManager;
+	
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public String list(Model model) {
+		model.addAttribute("persons", personManager.findAll());
+		return "persons/list";
+	}
+	
+	
+	@Autowired
+	public TheController(PersonManager personManager){
+		this.personManager=personManager;
+	}
+	
 	
 	@RequestMapping("/s")
 	public String getFlashAttribute(
@@ -253,6 +274,8 @@ public class TheController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String index(Model model){
+		logger.info("METHOD: index");
+		
 		model.addAttribute("modelId",987654321);
 		return "controllers/index";
 	}

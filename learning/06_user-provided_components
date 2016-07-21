@@ -59,3 +59,38 @@ url->vista,
 ni tampoco en el context de spring
 para mi ejemplo, no es lo mismo /s/ que /s (sin slash final)
 
+Testing Controllers
+===================
+
+When testing controllers, the focus is to check that handler methods return the expected logical view name
+and that the expected data has been placed in the model as an attribute. When doing unit testing, the
+manager does not need to be involved, as saving data to the database defeats the purpose of testing a small
+unit. So managers used in the controllers can be replaced with skeleton objects with simulated functionality.
+This can be done by creating skeleton objects, called stubs, or mocking libraries can be used, to pass to them
+the responsibility of implementing the objects according to the desired functionality.
+
+Handler Interceptors
+====================
+
+Handler interceptors are very useful for adding common functionality for all controllers inside an
+application. For example, a handler interceptor in an application could be used to audit requests, or to
+monitor the execution time of handler methods, or to generate performance reports. The most obvious
+examples for the use of an interceptor are internationalization, validation of data in the request, and request
+data convertors.
+
+The handler interceptors are beans in the application context. A handler interceptor class must
+implement the HandlerInterceptor interface and provide concrete implementation for any of the methods
+that the user is interested in:
+- preHandle: Called after the HandlerAdapter has identified the handler method and
+before its invocation. This method controls the execution of other interceptors in the
+chain and the handler method by returning a Boolean value.
+- postHandle: Called after the HandlerAdapter invokes the handler method and
+before the DispatcherServlet renders the view (can add extra objects to the model).
+- afterCompletion: Called after the request has processed and the view has rendered.
+
+The interceptors that modify the response before serialization must implement
+ResponseBodyInterceptor and provide an implementation for the beforeBodyWrite method.
+
+View Technologies
+=================
+

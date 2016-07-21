@@ -7,11 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.View;
@@ -33,8 +31,11 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 
+import a8.business.PersonManager;
+import a8.business.PersonManagerImpl;
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
+import web.interceptors.AuditInterceptor;
 import web.view_resolvers.JsonViewResolver;
 import web.view_resolvers.PdfViewResolver;
 import web.view_resolvers.XlsViewResolver;
@@ -228,6 +229,9 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	// <=>  <mvc:interceptors>
 	public void addInterceptors(InterceptorRegistry interceptorRegistry) {
 
+		//MY-CUSTOM
+		interceptorRegistry.addInterceptor(new AuditInterceptor());
+		
 		//THEMES
 		ThemeChangeInterceptor themeChangeInterceptor  =
 				new ThemeChangeInterceptor();
@@ -569,5 +573,10 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 		return new MyAbstractController();
 	}
 	
+	//BUSINESS
+	@Bean
+	public PersonManager getPersonManager(){
+		return new PersonManagerImpl();
+	}
 	
 }
