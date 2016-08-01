@@ -1,4 +1,4 @@
-package web.views;
+package web.views.pdf;
 
 import java.util.Map;
 

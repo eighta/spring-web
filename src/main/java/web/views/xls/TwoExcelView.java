@@ -1,4 +1,4 @@
-package web.views;
+package web.views.xls;
 
 import java.awt.print.Book;
 import java.util.Map;

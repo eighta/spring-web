@@ -17,6 +17,12 @@ public class ViewTechController {
 	@Autowired
 	private PersonManager personManager;
 	
+	@RequestMapping("/b")
+    public String tiles(Model model,HttpServletRequest rq) {
+        
+        return "view_tech/tiles";
+    }
+	
 	@RequestMapping("/a")
     public String list(Model model,HttpServletRequest rq) {
         model.addAttribute("persons", personManager.findAll() );

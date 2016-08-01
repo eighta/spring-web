@@ -39,8 +39,8 @@ import web.interceptors.AuditInterceptor;
 import web.view_resolvers.JsonViewResolver;
 import web.view_resolvers.PdfViewResolver;
 import web.view_resolvers.XlsViewResolver;
-import web.views.CustomPdfView;
-import web.views.OneExcelView;
+import web.views.pdf.CustomPdfView;
+import web.views.xls.OneExcelView;
 
 //This is a JavaConfiguration File
 @Configuration
@@ -295,8 +295,8 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	public void configureContentNegotiation(ContentNegotiationConfigurer contentNegotiationConfigurer) {
 		contentNegotiationConfigurer.useJaf(false).
 				ignoreAcceptHeader(true).	//IGNORAR EL ACEPT HEADER
-				favorPathExtension(false).	//NO IDENTIFICAR POR EXTENSION
-				favorParameter(true).		//IDENTIFICAR POR PARAMETRO
+				favorPathExtension(true).	//IDENTIFICAR POR EXTENSION
+				favorParameter(false).		//IDENTIFICAR POR PARAMETRO
 				parameterName("formatType").//NOMBRE DEL PARAMETRO PARA IDENTIFICAR EL FORMATO SOLICITADO
 				
 				mediaType("xls", new MediaType("application","vnd.ms-excel")).
