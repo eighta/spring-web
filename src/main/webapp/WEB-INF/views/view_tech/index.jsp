@@ -21,6 +21,7 @@
 	
 	<ul class="rounded-list">
 		
+		<li><a href="/spring-web/s/tasks/view_tech/b">/spring-web/s/tasks/view_tech/b</a> <span class="resalt">TILES</span><span class="yellow">template</span></li>
 		<li><a href="/spring-web/s/tasks/view_tech/a.json">/spring-web/s/tasks/view_tech/a.json</a> <span class="resalt">JSON</span><span class="yellow">.json</span></li>
 		<li><a href="/spring-web/s/tasks/view_tech/a.pdf">/spring-web/s/tasks/view_tech/a.pdf</a> <span class="resalt">PDF</span><span class="yellow">.pdf</span></li>
 		<li><a href="/spring-web/s/tasks/view_tech/a.xls">/spring-web/s/tasks/view_tech/a.xls</a> <span class="resalt">XLS</span><span class="yellow">.xls</span></li>

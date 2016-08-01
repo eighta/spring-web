@@ -102,4 +102,12 @@ automatically downloaded by the browser: Apache POI, JExcelApi (Excel), IText
 - Data-delivery views: The response is actually just data and it is meant to be used
 with AJAX and web services: JSON, Java-XML Marshalling, Atom, and RSS.
 
-page: 123
+Tiles and Thymeleaf another view technology
+
+Forms
+=====
+
+When it comes to using Spring forms, three key subjects must be well understood to use them like
+an expert: formatting, data binding, and validation;
+
+Data Formatting continuar en la pagina 138 de 433

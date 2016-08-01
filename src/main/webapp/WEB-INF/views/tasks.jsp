@@ -21,6 +21,7 @@
 	</div>
 	
 	<ul class="rounded-list">
+		<li><a href="tasks/forms">Forms</a></li>
 		<li><a href="tasks/view_tech">View Technologies</a></li>
 		<li><a href="tasks/ctrls">Controllers</a></li>
 		<li><a href="tasks/themes">Themes</a></li>

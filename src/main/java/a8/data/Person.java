@@ -14,11 +14,17 @@ public class Person {
 
 	private static final String DATE_PATTERN= "yyyy-MM-dd";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+
+	private int id;
 	
     public String firstName;
+    private String secondName;
     public String lastName;
     @DateTimeFormat(pattern = DATE_PATTERN)
     private Date dateOfBirth;
+    
+    private String gender;
+    private String hospital;
 
     public Person(String firstName, String lastName, String dob) {
         this.firstName = firstName;
@@ -43,4 +49,36 @@ public class Person {
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
+
+	public String getSecondName() {
+		return secondName;
+	}
+
+	public void setSecondName(String secondName) {
+		this.secondName = secondName;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(String hospital) {
+		this.hospital = hospital;
+	}
 }
