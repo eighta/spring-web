@@ -20,6 +20,7 @@
 	
 	<ul class="rounded-list">
 		<li><a href="/spring-web/s/tasks/forms/a">/spring-web/s/tasks/forms/a</a> <span class="resalt">Go to Form</span></li>
+		<li><a href="/spring-web/s/tasks/forms/b">/spring-web/s/tasks/forms/b</a> <span class="resalt">Go to Form Validations</span></li>
 	</ul>
 	
 </body>

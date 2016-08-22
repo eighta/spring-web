@@ -22,8 +22,7 @@ public class EntireWebAppControllerAdvice {
 	
 	-Model enhancement methods (for adding additional data to the model) 
 	annotated with @ModelAttribute. 
-	
-	Note that these attributes are not available to the exception handling views.
+	(Note that these attributes are not available to the exception handling views.)
 	
 	-Binder initialization methods (used for configuring form-handling) annotated with
 	@InitBinder.
@@ -39,8 +38,6 @@ public class EntireWebAppControllerAdvice {
 	-Methods annotated with @InitBinder that are used for configuring form-handling
 	
 	*/
-	
-	
 	
 	@ExceptionHandler//(DummyDataAccessException.class) in args can too
 	public String exceptionHandlerMethod(DummyDataAccessException ddae){

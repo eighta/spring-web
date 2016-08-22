@@ -294,7 +294,7 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer contentNegotiationConfigurer) {
 		contentNegotiationConfigurer.useJaf(false).
-				ignoreAcceptHeader(true).	//IGNORAR EL ACEPT HEADER
+				ignoreAcceptHeader(true).	//IGNORAR EL ACCEPT HEADER
 				favorPathExtension(true).	//IDENTIFICAR POR EXTENSION
 				favorParameter(false).		//IDENTIFICAR POR PARAMETRO
 				parameterName("formatType").//NOMBRE DEL PARAMETRO PARA IDENTIFICAR EL FORMATO SOLICITADO
@@ -307,6 +307,8 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry viewResolverRegistry) {
+		
+		//En el oden en que se van adicionando, asi mismo son evaluados
 		
 		// <=><mvc:annotation-driven content-negotiation-manager="cnm"/>
 		viewResolverRegistry.enableContentNegotiation();
@@ -327,9 +329,9 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 		viewResolverRegistry.tiles();
 		viewResolverRegistry.beanName();
 		viewResolverRegistry.velocity();
-		viewResolverRegistry.freeMarker();
-		
+		viewResolverRegistry.freeMarker();		
 		//viewResolverRegistry.jsp("/WEB-INF/views/", ".jsp");
+		
 		//explicitamente:
 		InternalResourceViewResolver internalResourceViewResolver =
 				new InternalResourceViewResolver();

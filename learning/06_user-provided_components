@@ -135,3 +135,13 @@ pero este no escala muy bien, ya que este colapsa la session)
 por Spring MVC)
 
 
+*Form's Validators
+(org.springframework.validation.Validator)
+(javadoc:  it is not coupled to validating only objects in the web tier, the data-access tier, 
+or the whatever-tier. As such it is amenable to being used in any layer of an application, 
+and supports the encapsulation of validation logic as a first-class citizen in its own right.)
+
+There are three things which you need to do in order to start using the Validator:
+-Create a validator class for some domain model and implement the Validator interface.
+-Override supports(Class clazz) method.
+-Override validate(Object target, Errors errors) method.

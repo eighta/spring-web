@@ -46,6 +46,9 @@
 -->      
 <!-- http://patorjk.com/software/taag/ -->
 
+	<!-- Component-scan -->
+	<context:component-scan base-package="a8.validators" />
+
 	<!-- listeners -->
 		<!-- @EventListener -->
 	<bean class="a8.listeners.HardHouseListener" />

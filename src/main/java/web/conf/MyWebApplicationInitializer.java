@@ -1,6 +1,5 @@
 package web.conf;
 
-import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
@@ -20,11 +19,13 @@ public class MyWebApplicationInitializer
 
 //[[[the Spring way's]]]
 	
-	//extends org.springframework.web.servlet.support.AbstractDispatcherServletInitializer{	<- returning a WebApplicationContext 
+	//extends org.springframework.web.servlet.support.AbstractDispatcherServletInitializer{	<- returning a WebApplicationContext
+	//	protected WebApplicationContext createRootApplicationContext() {return null;}
 	//	protected WebApplicationContext createServletApplicationContext() {return null;}
 	//	protected String[] getServletMappings() {return null;}
-	//	protected WebApplicationContext createRootApplicationContext() {return null;}
+
 //or
+
 	//extends org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer{ <- returning a JavaClasses for Conf! (implicit Context)
 	//	protected Class<?>[] getRootConfigClasses() {return null;}
 	//	protected Class<?>[] getServletConfigClasses() {return null;}
