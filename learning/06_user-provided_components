@@ -145,3 +145,10 @@ There are three things which you need to do in order to start using the Validato
 -Create a validator class for some domain model and implement the Validator interface.
 -Override supports(Class clazz) method.
 -Override validate(Object target, Errors errors) method.
+
+on Spring MVC controller:
+@InitBinder
+private void initBinder(WebDataBinder binder) {
+	binder.setValidator(shopValidator);
+}
+
