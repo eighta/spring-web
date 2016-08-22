@@ -1,7 +1,7 @@
 Controllers
 ===========
 
-Controllers are POJOs�simple beans annotated with the @Controller annotation�that are used 
+Controllers are POJOs (simple beans) annotated with the @Controller annotation that are used 
 to handle requests. Each controller class contains methods that are mapped to a 
 request URL via the @RequestMapping annotation. 
 
@@ -110,4 +110,4 @@ Forms
 When it comes to using Spring forms, three key subjects must be well understood to use them like
 an expert: formatting, data binding, and validation;
 
-Data Formatting continuar en la pagina 138 de 433 (12 AGO 2016 AUN NO CONTInuO :-( )
+
