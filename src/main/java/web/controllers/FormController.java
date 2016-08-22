@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,11 +32,6 @@ public class FormController {
 	@RequestMapping("/a")
 	public String goToForm(Model model){
 		
-		List<Hospital> listaDeHospitales = new ArrayList<>();
-		listaDeHospitales.add(new Hospital("1","Cardio Infantil") );
-		listaDeHospitales.add(new Hospital("2","Madre Bernarda") );
-		model.addAttribute(listaDeHospitales);
-		
 		Person person = new Person("","","1982-09-29");
 		model.addAttribute(person);
 		
@@ -45,5 +41,16 @@ public class FormController {
 	@RequestMapping
 	public String index(){
 		return "forms/index";
+	}
+	
+	@ModelAttribute
+	//Este metodo que se encuentra anotado con @ModelAttribute, 
+	//siempre es llamado, al momento en el que este mismo Controlador,
+	//recibe una peticion
+	public List<Hospital> cargarListaDeHospitales(){
+		List<Hospital> listaDeHospitales = new ArrayList<>();
+		listaDeHospitales.add(new Hospital("1","Cardio Infantil") );
+		listaDeHospitales.add(new Hospital("2","Madre Bernarda") );
+		return listaDeHospitales;
 	}
 }

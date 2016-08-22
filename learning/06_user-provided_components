@@ -110,4 +110,28 @@ Forms
 When it comes to using Spring forms, three key subjects must be well understood to use them like
 an expert: formatting, data binding, and validation;
 
+*Managing the Form Object
+Using a form implies multiple requests, which means that the form object has to be the same
+across two or more requests (when validations fail, for example).
+
+Ways:
+-The Object is created on every request 
+(recomendado cuando el nuevo objeto y el "form" contiene toda la data requerida)
+
+-The Object is retrieved on every request using a @ModelAttribute annotated method
+(esta estrategia funciona muy bien para editar objetos existentes. Escala muy bien, y
+es muy sencillo. La desventaja es que antes de cada request, el metodo para recuperar el objeto
+es llamado, consiguiendo asi, que Spring MVC debe bind cada parametro al mismo. Para formularios
+inmensos es mejor utilizar data transfer objects (DTO) que viene a repreentar una agregacion de 
+objetos de dominio, este producir puede ocacionar cierta latencia porque los objetos de dominio
+deben ser recuperados desde una base de datos para luegos ser agregados)
+
+-The Object is stored in the session between requests. 
+(Esta estrategia funciona para ambos escenearios mostrados anteriormente. Su rendimiendo es mejor,
+pero este no escala muy bien, ya que este colapsa la session)
+
+-The Object is managed by using flash attributes
+(esta es la mejor solucion para ambos escenarios, ya que el objeto es pasado de un request a otro
+por Spring MVC)
+
 
