@@ -24,6 +24,7 @@ public class AnimalValidator implements Validator{
 		ValidationUtils.rejectIfEmpty(errors,"age","animal.age.empty",EMPTY_FIELD_DEFAULT_MSG);
 		
 		Animal animal = (Animal) target;
+		//XXX MORE SPECIFIC VALIDATIONS...
 	}
 
 }

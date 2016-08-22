@@ -18,6 +18,7 @@
 	<div class="box">views/errors/simple.jsp</div>
 	
 	<h1><%=response.getStatus() %></h1>
+	<h3><%= org.apache.commons.httpclient.HttpStatus.getStatusText(response.getStatus()) %></h3>
 	
 </body>
 </html>

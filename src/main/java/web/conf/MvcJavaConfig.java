@@ -51,7 +51,7 @@ import web.views.xls.OneExcelView;
 @EnableWebMvc
 
 //<context:component-scan />.
-@ComponentScan(basePackages={"web.beans","web.controllers"})
+@ComponentScan(basePackages={"web.beans","web.controllers","web.rest.controllers"})
 public class MvcJavaConfig 
 	
 	//implements WebMvcConfigurer {
