@@ -1,0 +1,50 @@
+www.masterzen.fr/2013/01/13/the-10-commandments-of-logging
+
+Los 10 mandamientos de Logging!
+
+Saber que es y como hacer un log, es para mi, una de las tareas mas dificiles que un ingeniero de software debe solventar. Sobre todo porque esta tarea es similar a la adivinación. Es muy dificil saber que tipo de información se necesitará durante la solucion a una eventualidad (un problema). Esa es la razón por la que espero que estos 10 mandamientos ayuden a mejorar tu application logging  para obtener grandes beneficios.
+
+1 No realizar (escribir) el log por uno mismo
+
+Nunca, pero nunca utilizar el printf o escribir las entradas al log por uno mismo, o manejar la rotación de los archivos logs por uno mismo. Utilizar una libreria standar o System API para esta labor.
+
+(SEGUIR TRADUCIENDO...)
+
+2 Colocar un registro al nivel apropiado
+
+Si sigues el primer mandamiento, entonces puedes utilizar un level diferente del log por sentencia de tu aplicación. Una de las tareas mas dificiles es encontrar a que nivel una entrada al log debería estar.
+
+Acá doy algunos concejos:
+
+TRACE level: this is a code smell si es utilizado en produción. Este debe ser utilizado durante el desarrollo para rastrear bugs, pero nunca commited yo your VCS.
+
+DEBUG level: registrar en este level todo lo que sucede en el programa. Este se usa sobre todo durante una depuración, y me gustaría abogar por el número de registros de debug antes de entrar a la fase de producción, de manera que solo las entradas mas significativas se dejan, y estas pueden ser activadas en caso de problemas.
+
+INFO level: Este level será certeramente el level que el programa correrá cuado se encuentre en produción. Se debe registrar en este level todos los eventos notables que no son considerados un error.
+
+WARN level: registrar en este level todos los eventos que potencialmente pueden convertirse en un error. Por ejemplo, si una llamada a la base de datos toma más tiempo de lo esperado, o si un cache en memoria
+está por alcanzar su capacidad maxima. Esto permitira apropiadamente alertar automaticamente, y durante la solucion a problemas permitira un entendimiento mejor de como es el comportamiento del sistema antes del fallo.
+
+ERROR level: registrar en este level condiciones de error. Estos pueden ser llamadas a un API que retorne errores o condiciones de error interno.
+
+FATAL level: tan malo es como el fin del mundo. Utilice este level muy escasamente, esto no debería ocurrir mucho en un programa real. Normalmente registrar logs a este level significa el fin del programa. Por ejemplo, si un demonio que funciona sobre la red, no puede conectarse a un socket, log at this level and exit is the only sensible thing to do.
+
+Note que el default running level en tu programa o servicio puede variar ampliamente. Por ejemplo, yo corro mi servidor a INFO level normalmente, pero mis desktop programas corren a DEBUG level. Esto es, porque es muy dificil de solucionar un problema en un equipo que no se tiene acceso, y es mas facil cuando se hace soporte o servicio al cliente, solicitar al usuario que se envien los logs, que enseñarles a cambiar el log level y luego enviar el log.
+
+3 Honor the log category
+
+La mayoria de las librerias de logging citadas en el primer mandamiento, permiten especificar una categoria de logging. Esta categoria permite clasificar los mensajes de logs, y en ultima instancia, basado en la configuracion del framework de logging, be logged in a distinct way or not logged at all.
+
+La mayoria del tiempo los desarrolladores de java utilizan el fully qualified class name 
+(SEGUIR TRADUCIENDO)
+
+4 Escribir registros significativos
+
+Esto probablemente podría ser el mandamiento más importante. No hay nada peor que ...
+(SEGUIR TRADUCIENDO)
+
+5 Los registros deben ser escritos en Ingles
+(SEGUIR TRADUCIENDO)
+
+
+Y LOS DEMAS MANDAMIENTOS
