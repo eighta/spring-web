@@ -155,6 +155,7 @@ By adding @EnableWebMvc respectively <mvc:annotation-driven />, spring registers
 predefined messageconverters for JSON/XML and so on.
 
 **************************
-ESTA PONIENDO PROBLEMAS EL CSV
+ESTA PONIENDO PROBLEMAS EL CSV, luego seguir en la pagina 206 @Controller and @ResponseBody, which practically means
+
 
 SEGUIR EN: COMO IMPLEMENTAR (PAGE: 217PDF) Y LUEGO SEGUIR CON EL CLIENT: (PAGE: 212PDF) 
