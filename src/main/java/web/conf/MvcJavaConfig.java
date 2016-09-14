@@ -1,5 +1,6 @@
 package web.conf;
 
+import java.util.List;
 import java.util.Properties;
 
 import org.springframework.context.MessageSource;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.servlet.LocaleResolver;
@@ -35,6 +37,7 @@ import a8.business.PersonManager;
 import a8.business.PersonManagerImpl;
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
+import web.converters.PersonMessageConverter;
 import web.interceptors.AuditInterceptor;
 import web.view_resolvers.JsonViewResolver;
 import web.view_resolvers.PdfViewResolver;
@@ -127,6 +130,17 @@ public class MvcJavaConfig
 	}
 	*/
 
+/*
+HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConverter
+HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConverter
+HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConverter
+HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConverter
+*/		
+		@Override
+		public void configureMessageConverters(List<HttpMessageConverter<?>> httpMessageConverterList) {
+			httpMessageConverterList.add(new PersonMessageConverter() );
+		}
+		
 		
 /*
  █████ ▒██   ██▒ ▄████▄  ▓█████  ██▓███  ▄▄▄█████▓ ██▓ ▒█████   ███▄    █   ██████ 

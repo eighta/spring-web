@@ -13,32 +13,39 @@ Core REST Concepts
 
 The REST architectural style describes six constraints:
 
-1. Uniform interface: Defines the interface between client and server. Rest uses HTTP
-as an "application protocol", "as a platform", not just a transport protocol. 
+1. Uniform interface: Defines the interface between client and server. 
+Rest uses HTTP as an "application protocol", "as a platform", not just a transport protocol. 
+
 The following HTTP specifications are used:
 
->>HTTP verbs are used as actions to execute on the resources (GET, PUT, PATCH,
-POST, DELETE, HEAD, and OPTIONS)
+>>HTTP verbs are used as actions to execute on the resources 
+(GET, PUT, PATCH, POST, DELETE, HEAD, and OPTIONS)
 
 (Although REST seems strongly connected to HTTP, REST principles can be followed using other protocols too,
 for example: POP, IMAP, and any protocol that uses URL-like paths and supports GET and POST methods)
 
->>URIs are used to identify resource names. The resources are conceptually
-separate from representations. Representations of the resources are returned
-from the server to the client, after a client request (typically JSON or XML).
+>>URIs are used to identify resource names. 
+The resources are conceptually separate from representations. 
+Representations of the resources are returned from the server to the client, 
+after a client request (typically JSON or XML).
+
 Representations contain metadata that can be used by the client to modify or
 delete the resource on the server, provided it has permission to do so.
 
->>HTTP response: Response codes, the body, and headers are used to deliver state
-to clients. Clients deliver state using body content, query-string parameters,
+>>HTTP response: 
+Response codes, the body, and headers are used to deliver state to clients. 
+Clients deliver state using body content, query-string parameters,
 request headers, and the URI.
 
 2. Statelessness: The server should contain no client state. Each request has enough
-context for the server to process the message. The URI uniquely identifies the
-resource, and the body contains the state (or state change) of that resource if the
-request is one that has a body (PUT, POST, PATCH). When working with a specific
-container, a session is used to preserve state across multiple HTTP requests. When
-using REST, there is no need for this, which increases the scalability because the
+context for the server to process the message. 
+The URI uniquely identifies the resource, and the body contains the state (or state change) 
+of that resource if the request is one that has a body (PUT, POST, PATCH). 
+
+When working with a specific container, a session is used to preserve state 
+across multiple HTTP requests. 
+
+When using REST, there is no need for this, which increases the scalability because the
 server does not have to maintain, update, or communicate the session state.
 
 3. Client-server: A RESTful architecture is a client-server architecture, so the system
@@ -52,13 +59,13 @@ conditions), or negotiated(the client and the server negotiate caching condition
 5. Layered system: The client cannot assume direct connection to the server.
 Sometimes a requested resource can be cached, and some other unknown software
 and hardware layers are interposed between the client and the server. Intermediary
-servers may improve system scalability and/or security by
+servers may improve system scalability and/or security
 
 6. Code on demand: Executable code can be transferred as a representation to the
 client (usually JavaScript or compiled Java applications known as applets).
 
 (The last constraint is optional; a REST application can be built without
-code being transferred to clients, if there is no need for such operations.)
+code being transferred to clients, if there is no need for such operations)
 
 The main REST HTTP methods are presented in the next Table:
 
@@ -79,7 +86,6 @@ PUT 	Update 				Most often used for update capabilities. It is not safe, because
 DELETE 	Delete 				Used to delete resources. Not safe, but can be considered idempotent
 							because requests to delete a resource that no longer exists will always
 							return a 404 (not found).
-							
 
 HTTP Response Codes
 ===================
@@ -90,11 +96,11 @@ HTTP Response Codes
 404: When a resource is not found
 409: When an identical resource already exists
 
-
 See
 ===
 When it comes to REST, everything is about resource states and transferring them between 
 a client and a server, in different forms. 
+
 The request specifies the representation type using the Accept HTTP header for GET 
 and the Content-Type HTTP header for PUT and POST, because when the client is not a browser, 
 the Accept header is taken into consideration.
@@ -116,9 +122,13 @@ Definicion bastante clara en PDF (PAGE 208)
 REST Security
 =============
 REST services can be secured, but as the interaction between the client and server is stateless,
-credentials have to be embedded in every request header. Basic authentication is the easiest to implement
-without additional libraries (HTTP Basic, HTTP Digest, XML-DSIG, or XML-Encryption), but it guarantees
-the lowest level of security. Basic authentication should never be used without TLS (formerly known as
+credentials have to be embedded in every request header. 
+
+Basic authentication is the easiest to implement without additional libraries 
+(HTTP Basic, HTTP Digest, XML-DSIG, or XML-Encryption), but it guarantees
+the lowest level of security. 
+
+Basic authentication should never be used without TLS (formerly known as
 SSL) encryption because the credentials can be easily decoded otherwise
 
 Implementing REST with Spring MVC
@@ -126,6 +136,25 @@ Implementing REST with Spring MVC
 There are multiple Java frameworks available for implementing RESTful applications: Spark, Restlet,
 JAX-RS(Java EE), and RESTEasy, but Spring MVC is the easiest to use
 
+En Spring 3.0 los metodos de los Controllers debian ser anotados con: @ResponseBody
+para que la respuesta (normalmente un objeto) sea colocada en el 
+Body del response
 
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+public @ResponseBody Person getPersonById(@PathVariable Long id){
+	return personManager.findById(id);
+}
+
+https://www.javacodegeeks.com/2013/07/spring-mvc-requestbody-and-responsebody-demystified.html
+(behind the scenes)
+HttpMessageConverters responsibility is to convert the request body to a specific class 
+and back to the response body again, depending on a predefined mime type. 
+
+By adding @EnableWebMvc respectively <mvc:annotation-driven />, spring registers a bunch of 
+predefined messageconverters for JSON/XML and so on.
+
+**************************
+ESTA PONIENDO PROBLEMAS EL CSV
 
 SEGUIR EN: COMO IMPLEMENTAR (PAGE: 217PDF) Y LUEGO SEGUIR CON EL CLIENT: (PAGE: 212PDF) 

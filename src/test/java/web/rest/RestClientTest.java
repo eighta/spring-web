@@ -1,18 +1,57 @@
 package web.rest;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import a8.data.Person;
+import web.converters.PersonMessageConverter;
 
-public class RestCientTest {
-
+public class RestClientTest {
+	
+	/*
+	RestTemplate restTemplate = new RestTemplate();
+	
+	Si no se especifican argumentos en el constructor, Por defecto las peticiones (REQUEST)
+	que se realicen se especificara:
+	Accept header to [application/xml, text/xml, application/json, application/*+xml, application/*+json]
+	
+	Si se especifican en el constructor un List<HttpMessageConverter<?>> messageConverters, 
+	en las peticiones que se realicen se incluiran en el Accept header, todos los MediaType definidos en los
+	messageConverters
+	
+	*/
 	@Test
 	public void probarRestTemplate(){
 		
+		String url = "http://localhost:8080/spring-web/s/rest/me";
+		
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+		messageConverters.add(new PersonMessageConverter() );
+		
+		RestTemplate restTemplate = new RestTemplate(messageConverters);
+		//RestTemplate restTemplate = new RestTemplate();
+		//by default: Accept header to [application/xml, text/xml, application/json, application/*+xml, application/*+json]
+		
+		//restTemplate.getForObject(...)
+		Person getForObject = restTemplate.getForObject(url,Person.class);
+		String firstName = getForObject.getFirstName();
+		System.out.println(firstName);
+		
+		//restTemplate.getForEntity(...)
+//		ResponseEntity<Person> getForEntity = restTemplate.getForEntity(url, Person.class);
+	}
+
+	@Ignore
+	@Test
+	public void probarNoRestTemplate(){
+		
+		//http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html
 		RestTemplate restTemplate = new RestTemplate();
 		
 		//XXX TODO ACTIVAR (PROBAR) TODOS LOS LLAMADOS
@@ -56,6 +95,7 @@ public class RestCientTest {
 		
 	}
 	
+	@Ignore
 	@Test
 	public void probarExecuteMethodRequestCallback(){
 		
@@ -78,6 +118,12 @@ put("id", "1");
 		 
 		 
 		 */
+	}
+	
+	@Ignore
+	@Test
+	public void probarAsyncRestTemplate(){
+		
 	}
 	
 }

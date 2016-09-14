@@ -1,3 +1,9 @@
+Links (urls)
+============
+www.yegor256.com/2015/11/16/json-vs-xml.html
+https://en.wikipedia.org/wiki/Comparison_of_data_serialization_formats
+
+
 Type Parameter Naming Conventions
 
 By convention, type parameter names are single, uppercase letters. This stands in sharp contrast to the variable naming conventions that you already know about, and with good reason: Without this convention, it would be difficult to tell the difference between a type variable and an ordinary class or interface name.

@@ -18,14 +18,19 @@ public class Person {
 	private int id;
 	
     public String firstName;
+	
     private String secondName;
+    
     public String lastName;
+    
     @DateTimeFormat(pattern = DATE_PATTERN)
     private Date dateOfBirth;
     
     private String gender;
     private String hospital;
 
+    public Person(){}
+    
     public Person(String firstName, String lastName, String dob) {
         this.firstName = firstName;
         this.lastName = lastName;
