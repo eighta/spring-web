@@ -15,13 +15,13 @@ public class Person {
 	private static final String DATE_PATTERN= "yyyy-MM-dd";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
 
-	private int id;
+	private Integer id;
 	
-    public String firstName;
+	private String firstName;
 	
     private String secondName;
     
-    public String lastName;
+    private String lastName;
     
     @DateTimeFormat(pattern = DATE_PATTERN)
     private Date dateOfBirth;
@@ -31,7 +31,8 @@ public class Person {
 
     public Person(){}
     
-    public Person(String firstName, String lastName, String dob) {
+    public Person(Integer id, String firstName, String lastName, String dob) {
+    	this.id=id;
         this.firstName = firstName;
         this.lastName = lastName;
         try {
@@ -41,49 +42,75 @@ public class Person {
 		}
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
     //Specialized JSON annotation in order to describe how the date will be formatted in the JSON output
     @JsonSerialize(using=JsonDateSerializer.class)
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-	public String getSecondName() {
-		return secondName;
+	public static final SimpleDateFormat getDateFormat() {
+		return dateFormat;
 	}
 
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
+	public static final void setDateFormat(SimpleDateFormat dateFormat) {
+		Person.dateFormat = dateFormat;
 	}
 
-	public int getId() {
+	public final Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public final void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getGender() {
+	public final String getFirstName() {
+		return firstName;
+	}
+
+	public final void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public final String getSecondName() {
+		return secondName;
+	}
+
+	public final void setSecondName(String secondName) {
+		this.secondName = secondName;
+	}
+
+	public final String getLastName() {
+		return lastName;
+	}
+
+	public final void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public final String getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public final void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public String getHospital() {
+	public final String getHospital() {
 		return hospital;
 	}
 
-	public void setHospital(String hospital) {
+	public final void setHospital(String hospital) {
 		this.hospital = hospital;
 	}
+
+	public static final String getDatePattern() {
+		return DATE_PATTERN;
+	}
+
+	public final void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+
 }

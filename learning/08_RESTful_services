@@ -154,8 +154,16 @@ and back to the response body again, depending on a predefined mime type.
 By adding @EnableWebMvc respectively <mvc:annotation-driven />, spring registers a bunch of 
 predefined messageconverters for JSON/XML and so on.
 
+Every time a request is mapped to a handler method that has
+parameters annotated with @RequestBody, or the method is annotated with @ResponseBody, 
+Spring loops over all HttpMessageConverters
+
+In Spring MVC 4.0 the @RestController was introduced, This annotation is conveniently annotated with
+@Controller and @ResponseBody, which practically means that if you annotate a class with it, all handler
+methods are transparently annotated with @ResponseBody.
+
 **************************
-ESTA PONIENDO PROBLEMAS EL CSV, luego seguir en la pagina 206 @Controller and @ResponseBody, which practically means
+despues del client continuar en 207
 
 
 SEGUIR EN: COMO IMPLEMENTAR (PAGE: 217PDF) Y LUEGO SEGUIR CON EL CLIENT: (PAGE: 212PDF) 

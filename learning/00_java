@@ -1,8 +1,14 @@
 Links (urls)
 ============
+#DATA FORMATS
 www.yegor256.com/2015/11/16/json-vs-xml.html
 https://en.wikipedia.org/wiki/Comparison_of_data_serialization_formats
 
+#MAVEN - Resolucion de Depedencias incompatibles
+https://tedvinke.wordpress.com/2013/12/17/mixing-junit-hamcrest-and-mockito-explaining-nosuchmethoderror/
+
+#SPRING - REST
+https://spring.io/guides/tutorials/bookmarks/
 
 Type Parameter Naming Conventions
 

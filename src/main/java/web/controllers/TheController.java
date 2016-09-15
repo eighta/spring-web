@@ -72,7 +72,7 @@ public class TheController {
 	public String flashAttributes(
 			final RedirectAttributes redirectAttributes){
 		
-		redirectAttributes.addFlashAttribute("anotherPerson", new Person("Sophie","Ochoa","2013-03-21") );
+		redirectAttributes.addFlashAttribute("anotherPerson", new Person(2,"Sophie","Ochoa","2013-03-21") );
 		return "redirect:s";
 	}
 	
@@ -83,7 +83,7 @@ public class TheController {
 	
 	@RequestMapping("/p")
 	public String setSessionAttirubte(Model model){
-		model.addAttribute(new Person("Javier","Ochoa","1982-09-29") );
+		model.addAttribute(new Person(1,"Javier","Ochoa","1982-09-29") );
 		return "controllers/simple";
 	}
 	
@@ -131,7 +131,7 @@ public class TheController {
 	@RequestMapping("/l")
 	@ModelAttribute("someValue")
 	public Character returningObjectModelAttribute(){
-		return new Character('Ñ');
+		return new Character('ï¿½');
 	}
 	
 //	When only one object needs to be added to the model, the object can simply be returned by the method

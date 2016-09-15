@@ -1,10 +1,24 @@
 package web.rest;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +27,9 @@ import a8.data.Person;
 import web.converters.PersonMessageConverter;
 
 public class RestClientTest {
+
+	//XXX Using Hamcrest matcher framework
+	//http://www.vogella.com/tutorials/Hamcrest/article.html
 	
 	/*
 	RestTemplate restTemplate = new RestTemplate();
@@ -26,27 +43,129 @@ public class RestClientTest {
 	messageConverters
 	
 	*/
+	
 	@Test
-	public void probarRestTemplate(){
+	public void EXCHANGE(){
+		
+		String url = "http://localhost:8080/spring-web/s/rest/me";
+		RestTemplate restTemplate = this.getRestTemplateWithConverters();
+		
+		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, URI.create(url) );
+		
+		//String
+		ResponseEntity<Person> exchangeFromString = restTemplate.exchange(url,HttpMethod.GET, requestEntity, Person.class);
+		Person personFromString = exchangeFromString.getBody();
+		assertNotNull(personFromString);
+		assertThat(personFromString.getFirstName(), is(equalTo("Milton")));
+		
+		//URI
+		
+		//RequestEntity
+	}
+	
+	
+	@Test
+	@Ignore
+	public void OPTIONS(){
+		String url = "http://localhost:8080/spring-web/s/rest";
+		RestTemplate restTemplate = this.getRestTemplateWithConverters();
+		Set<HttpMethod> options = restTemplate.optionsForAllow(url);
+		for(HttpMethod httpMethod: options){
+			System.out.println(httpMethod);
+		}
+	}
+	
+	@Test
+	@Ignore
+	public void HEAD(){
+		String url = "http://localhost:8080/spring-web/s/rest";
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = restTemplate.headForHeaders(url);
+		MediaType contentType = headers.getContentType();
+		assertThat(contentType, is(equalTo(MediaType.TEXT_MARKDOWN)));
+	}
+	
+	@Test
+	@Ignore
+	public void DELETE(){
+		
+		String url = "http://localhost:8080/spring-web/s/rest/{id}";
+		RestTemplate restTemplate = this.getRestTemplateWithConverters();
+		restTemplate.delete(url,"987");
+	}
+	
+	@Test
+	@Ignore
+	public void PUT(){
+		
+		String url = "http://localhost:8080/spring-web/s/rest";
+		
+		RestTemplate restTemplate = this.getRestTemplateWithConverters();
+		
+		Person personTorequest = new Person();
+		personTorequest.setId(102030);
+		
+		restTemplate.put(url, personTorequest);
+	}
+	
+	@Test
+	@Ignore
+	public void POST(){
+		
+		String url = "http://localhost:8080/spring-web/s/rest";
+		Integer expectedId = 55;
+		URI expectedURI = URI.create(url+"/"+expectedId);
+		
+		RestTemplate restTemplate = this.getRestTemplateWithConverters();
+		
+		Person personTorequest = new Person();
+		personTorequest.setFirstName("Otto");
+		personTorequest.setLastName("Normalverbraucher");
+		
+		//POST 4 OBJECT
+		Person personFromResponse = restTemplate.postForObject(url, personTorequest, Person.class);
+		assertThat(personTorequest, is(not(equalTo(personFromResponse))));
+		assertThat(personFromResponse.getId(), is(equalTo(expectedId)));
+		
+		//POST 4 ENTITY
+		ResponseEntity<Person> postForEntity = restTemplate.postForEntity(url, personTorequest, Person.class);
+		Person personFromEntity = postForEntity.getBody(); 
+		assertThat(personTorequest, is(not(equalTo(personFromEntity))));
+		assertThat(personFromEntity.getId(), is(equalTo(expectedId)));
+		
+		//POST 4 LOCATION
+		URI postLocation = restTemplate.postForLocation(url, personTorequest);
+		assertThat(postLocation, is(equalTo(expectedURI)));
+	}
+	
+	@Test
+	@Ignore
+	public void GET(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest/me";
 		
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-		messageConverters.add(new PersonMessageConverter() );
-		
-		RestTemplate restTemplate = new RestTemplate(messageConverters);
 		//RestTemplate restTemplate = new RestTemplate();
 		//by default: Accept header to [application/xml, text/xml, application/json, application/*+xml, application/*+json]
 		
-		//restTemplate.getForObject(...)
-		Person getForObject = restTemplate.getForObject(url,Person.class);
-		String firstName = getForObject.getFirstName();
-		System.out.println(firstName);
+		RestTemplate restTemplate = this.getRestTemplateWithConverters();
 		
-		//restTemplate.getForEntity(...)
-//		ResponseEntity<Person> getForEntity = restTemplate.getForEntity(url, Person.class);
+		//GET 4 OBJECT
+		Person getForObject = restTemplate.getForObject(url,Person.class);
+		assertEquals(getForObject.getFirstName(),"Milton");
+		
+		//GET 4 ENTITY
+		ResponseEntity<Person> getForEntity = restTemplate.getForEntity(url, Person.class);
+		assertEquals(getForEntity.getBody().getLastName(),"Ochoa");
 	}
 
+	private RestTemplate getRestTemplateWithConverters(){
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+		messageConverters.add(new PersonMessageConverter() );
+		return new RestTemplate(messageConverters);
+	}
+	
+	//===============
+	
 	@Ignore
 	@Test
 	public void probarNoRestTemplate(){

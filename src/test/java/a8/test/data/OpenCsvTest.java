@@ -9,12 +9,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -43,8 +41,8 @@ However I don’t want to use OpenCSV annotations because then my code will beco
 	
 	private static final String CVS_FILE_PATH = "a8/test/cvs/emps.csv"; 
 	
-	@Ignore
 	@Test
+	@Ignore
 	public void writeCsvFile() throws IOException{
 		
 		StringWriter writer = new StringWriter();
@@ -92,29 +90,17 @@ However I don’t want to use OpenCSV annotations because then my code will beco
 		List<Person> emps = csvToBean.parse(beanStrategy, theStringReader);
 		System.out.println(emps);
 		System.out.println(emps.get(0).getId());
-		
-		/*
-		String theString = "Javier,Larios";
-		
-		CsvToBean<Person> csvToBean = new CsvToBean<>();
-		
-		ColumnPositionMappingStrategy<Person> mapper = new ColumnPositionMappingStrategy<>();
-		mapper.setType(Person.class);
-		mapper.setColumnMapping("firstName","lastName");
-		
-		String[] columnMapping = mapper.getColumnMapping();
-		for (String string : columnMapping) {
-			System.out.println(string);
-		}
-		
-		StringReader theStringReader = new StringReader(theString);
-		CSVReader csvReader = new CSVReader(theStringReader);
-		List<Person> parse = csvToBean.parse(mapper, csvReader);
-		*/
 	}
 	
 	@Test
-	public void testCsvUtils(){
+	public void testCsvUtilsConvertBean2Cvs(){
+		Person person = new Person(1,"Javier", "Larios","2016-01-01");
+		String csvString = CsvUtils.convertBean2Csv(person, Person.class,new String[] {"firstName","lastName"});
+		System.out.println(csvString);
+	}
+	
+	@Test
+	public void testCsvUtilsConvertCsv2Bean(){
 		String firstName = "Javier";
 		String theString = firstName+",Larios";
 		Person personConverted = CsvUtils.convertCsv2Bean(theString, Person.class, new String[] {"firstName","lastName"});

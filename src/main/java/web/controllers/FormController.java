@@ -77,7 +77,7 @@ System.out.println("POST");
 			Model model
 			){
 		
-		Person person = new Person("","","1982-09-29");
+		Person person = new Person(0,"","","1982-09-29");
 		model.addAttribute(person);
 		
 		return "forms/the_form";
