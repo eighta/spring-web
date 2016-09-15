@@ -58,7 +58,7 @@ public class RestClientTest {
 		
 		//URI
 		URI uri = URI.create(url);
-		restTemplate.
+//		restTemplate. XXX SEGUIR ACA
 		
 		//RequestEntity
 		//RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, URI.create(url) ); //COLOCAR HEADERS
