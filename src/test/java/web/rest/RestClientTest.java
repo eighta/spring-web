@@ -50,17 +50,18 @@ public class RestClientTest {
 		String url = "http://localhost:8080/spring-web/s/rest/me";
 		RestTemplate restTemplate = this.getRestTemplateWithConverters();
 		
-		RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, URI.create(url) );
-		
 		//String
-		ResponseEntity<Person> exchangeFromString = restTemplate.exchange(url,HttpMethod.GET, requestEntity, Person.class);
+		ResponseEntity<Person> exchangeFromString = restTemplate.exchange(url,HttpMethod.GET, /*requestEntity*/null, Person.class);
 		Person personFromString = exchangeFromString.getBody();
 		assertNotNull(personFromString);
 		assertThat(personFromString.getFirstName(), is(equalTo("Milton")));
 		
 		//URI
+		URI uri = URI.create(url);
+		restTemplate.
 		
 		//RequestEntity
+		//RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, URI.create(url) ); //COLOCAR HEADERS
 	}
 	
 	
