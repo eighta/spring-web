@@ -38,6 +38,7 @@ import a8.business.PersonManagerImpl;
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
 import web.converters.PersonMessageConverter;
+import web.converters.SeveralPersonMessageConverter;
 import web.interceptors.AuditInterceptor;
 import web.view_resolvers.JsonViewResolver;
 import web.view_resolvers.PdfViewResolver;
@@ -139,6 +140,7 @@ HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConver
 		@Override
 		public void configureMessageConverters(List<HttpMessageConverter<?>> httpMessageConverterList) {
 			httpMessageConverterList.add(new PersonMessageConverter() );
+			httpMessageConverterList.add(new SeveralPersonMessageConverter() );
 		}
 		
 		

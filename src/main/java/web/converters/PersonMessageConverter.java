@@ -18,7 +18,7 @@ import a8.utils.CsvUtils;
 
 public class PersonMessageConverter extends AbstractHttpMessageConverter<Person> {
 
-	private String [] columnMapping =  new String[] {"id","firstName","lastName"};
+	public static final String [] columnMapping =  new String[] {"id","firstName","lastName"};
 	
 	public PersonMessageConverter(){
 		super(MediaType.TEXT_HTML);

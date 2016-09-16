@@ -74,6 +74,14 @@
 		</dependency>
 
 		<!-- UTILITARIOS -->
+
+		<!-- Apache httpclient (used 4 test with RestTemplate) -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+
 		<!-- HTTP CLIENT (used 4 HttpStatus.getStatusText(int)) -->
 		<dependency>
 			<groupId>commons-httpclient</groupId>
@@ -215,14 +223,14 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-			
+
 			<exclusions>
 				<exclusion>
 					<groupId>org.hamcrest</groupId>
 					<artifactId>hamcrest-core</artifactId>
 				</exclusion>
 			</exclusions>
-			
+
 		</dependency>
 
 		<!-- HAMCREST (junit) -->

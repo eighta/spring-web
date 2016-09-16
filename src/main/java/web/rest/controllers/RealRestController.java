@@ -62,4 +62,14 @@ public class RealRestController {
 	public Person getMePerson(){
 		return new Person(1,"Milton", "Ochoa","1982-01-01");
 	}
+	
+	@RequestMapping(value = "/family", method = RequestMethod.GET)
+	public Person [] getFamily(){
+		
+		return new Person[] { 
+				new Person(1,"Milton", "Ochoa","1982-01-01"),
+				new Person(2,"Sophie", "Ochoa","2013-03-21")
+				
+		};
+	}
 }

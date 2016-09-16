@@ -7,11 +7,16 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
@@ -20,11 +25,43 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequest;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.client.HttpMessageConverterExtractor;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import a8.data.Person;
+import a8.utils.CsvUtils;
 import web.converters.PersonMessageConverter;
+import web.converters.SeveralPersonMessageConverter;
+
+class MyRequestCallBack implements RequestCallback{
+
+	@Override
+	public void doWithRequest(ClientHttpRequest request) throws IOException {
+		System.out.println("doWithRequest...");
+		
+		//from javadoc:
+		//http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RequestCallback.html
+		//
+		//Callback interface for code that operates on a ClientHttpRequest. Allows to manipulate the request headers, and write to the request body.
+	}
+}
+
+class MyResponseExtractor implements ResponseExtractor<Person>{
+
+	@Override
+	public Person extractData(ClientHttpResponse response) throws IOException {
+		InputStream bodyInputStream = response.getBody();
+		String theString = IOUtils.toString(bodyInputStream, StandardCharsets.UTF_8.name());
+		bodyInputStream.close();
+		
+		return CsvUtils.convertCsv2Bean(theString, Person.class, PersonMessageConverter.columnMapping);
+	}}
 
 public class RestClientTest {
 
@@ -41,8 +78,63 @@ public class RestClientTest {
 	Si se especifican en el constructor un List<HttpMessageConverter<?>> messageConverters, 
 	en las peticiones que se realicen se incluiran en el Accept header, todos los MediaType definidos en los
 	messageConverters
-	
 	*/
+	
+	@Test
+	public void restTemplatePlusApacheHttpClient(){
+	
+		/*
+		highly recommended for production applications when authentication 
+		and HTTP connection pooling are usually needed
+		*/
+		HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory 
+			= new HttpComponentsClientHttpRequestFactory();
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setRequestFactory(httpComponentsClientHttpRequestFactory);
+		restTemplate.setMessageConverters(this.getMessageConverters());
+		
+		String url = "http://localhost:8080/spring-web/s/rest/family";
+		Person[] persons = restTemplate.getForObject(url,Person[].class);
+		assertNotNull(persons);
+		assertThat(persons.length, is(equalTo(2)));
+		assertThat(persons[0].getFirstName(), is(equalTo("Milton")));
+		assertThat(persons[1].getFirstName(), is(equalTo("Sophie")));
+		
+	}
+	
+	@Ignore
+	@Test
+	public void asyncRestTemplate(){
+		//XXX CREAR UNA PRUEBA ASYNCRONA!
+	}
+
+	@Ignore
+	public void EXECUTE(){
+		
+		String url = "http://localhost:8080/spring-web/s/rest/me";
+		URI uri = URI.create(url);
+		RestTemplate restTemplate = this.getRestTemplateWithConverters();
+		
+		Person person = restTemplate.execute(uri, HttpMethod.GET, new MyRequestCallBack(), new MyResponseExtractor() );
+		assertNotNull(person);
+		assertThat(person.getFirstName(), is(equalTo("Milton")));
+		assertThat(person.getLastName(), is(equalTo("Ochoa")));
+		
+		//ANOTHER TEST!!!
+		restTemplate = new RestTemplate(); //<<< DEFAULT
+		List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
+		messageConverters.add(new PersonMessageConverter() );
+		
+		Person person2 = restTemplate.execute(uri, HttpMethod.GET, new MyRequestCallBack(), 
+				new HttpMessageConverterExtractor<Person>(
+						Person.class,
+						messageConverters )
+				 );
+		assertNotNull(person2);
+		assertThat(person2.getFirstName(), is(equalTo("Milton")));
+		assertThat(person2.getLastName(), is(equalTo("Ochoa")));
+	}
 	
 	@Test
 	public void EXCHANGE(){
@@ -58,15 +150,25 @@ public class RestClientTest {
 		
 		//URI
 		URI uri = URI.create(url);
-//		restTemplate. XXX SEGUIR ACA
+		ResponseEntity<Person> exchangeFromURI = restTemplate.exchange(uri, HttpMethod.GET, /*requestEntity*/null, Person.class);
+		Person personFromURI = exchangeFromURI.getBody();
+		assertNotNull(personFromURI);
+		assertThat(personFromURI.getLastName(), is(equalTo("Ochoa")));
 		
 		//RequestEntity
-		//RequestEntity<?> requestEntity = new RequestEntity<>(HttpMethod.GET, URI.create(url) ); //COLOCAR HEADERS
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON }  ));
+		headers.setContentType(MediaType.APPLICATION_ATOM_XML);
+		
+		RequestEntity<?> requestEntity = new RequestEntity<>(headers, HttpMethod.GET, URI.create(url) );
+		
+		ResponseEntity<Person> exchangeFromRequestEntity = restTemplate.exchange(requestEntity, Person.class);
+		Person personFromRequestEntity = exchangeFromRequestEntity.getBody();
+		assertNotNull(personFromRequestEntity);
+		assertThat(personFromRequestEntity.getId(), is(equalTo(1)));
 	}
 	
-	
 	@Test
-	@Ignore
 	public void OPTIONS(){
 		String url = "http://localhost:8080/spring-web/s/rest";
 		RestTemplate restTemplate = this.getRestTemplateWithConverters();
@@ -77,7 +179,6 @@ public class RestClientTest {
 	}
 	
 	@Test
-	@Ignore
 	public void HEAD(){
 		String url = "http://localhost:8080/spring-web/s/rest";
 		RestTemplate restTemplate = new RestTemplate();
@@ -87,7 +188,6 @@ public class RestClientTest {
 	}
 	
 	@Test
-	@Ignore
 	public void DELETE(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest/{id}";
@@ -96,7 +196,6 @@ public class RestClientTest {
 	}
 	
 	@Test
-	@Ignore
 	public void PUT(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest";
@@ -110,7 +209,6 @@ public class RestClientTest {
 	}
 	
 	@Test
-	@Ignore
 	public void POST(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest";
@@ -128,6 +226,11 @@ public class RestClientTest {
 		assertThat(personTorequest, is(not(equalTo(personFromResponse))));
 		assertThat(personFromResponse.getId(), is(equalTo(expectedId)));
 		
+		//POST 4 OBJECT (within HttpEntity)
+		HttpEntity<Person> personRequest = new HttpEntity<>(personTorequest);
+		Person personWithinEntityFromResponse = restTemplate.postForObject(url, personRequest, Person.class);
+		assertThat(personWithinEntityFromResponse.getId(), is(equalTo(expectedId)));
+		
 		//POST 4 ENTITY
 		ResponseEntity<Person> postForEntity = restTemplate.postForEntity(url, personTorequest, Person.class);
 		Person personFromEntity = postForEntity.getBody(); 
@@ -140,7 +243,6 @@ public class RestClientTest {
 	}
 	
 	@Test
-	@Ignore
 	public void GET(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest/me";
@@ -157,93 +259,23 @@ public class RestClientTest {
 		//GET 4 ENTITY
 		ResponseEntity<Person> getForEntity = restTemplate.getForEntity(url, Person.class);
 		assertEquals(getForEntity.getBody().getLastName(),"Ochoa");
+		
+		//>>>SeveralPerson
+		url = "http://localhost:8080/spring-web/s/rest/family";
+		Person[] persons = restTemplate.getForObject(url,Person[].class);
+		assertNotNull(persons);
+		assertThat(persons.length, is(equalTo(2)));
+		
 	}
 
 	private RestTemplate getRestTemplateWithConverters(){
+		return new RestTemplate(getMessageConverters() );
+	}
+	
+	private List<HttpMessageConverter<?>> getMessageConverters(){
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
 		messageConverters.add(new PersonMessageConverter() );
-		return new RestTemplate(messageConverters);
+		messageConverters.add(new SeveralPersonMessageConverter() );
+		return messageConverters;
 	}
-	
-	//===============
-	
-	@Ignore
-	@Test
-	public void probarNoRestTemplate(){
-		
-		//http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html
-		RestTemplate restTemplate = new RestTemplate();
-		
-		//XXX TODO ACTIVAR (PROBAR) TODOS LOS LLAMADOS
-		
-		//GET
-		String url4uniqueObject = "http://localhost:8080/spring-web/s/rest-false/1";
-//		Person person = restTemplate.getForObject("http://localhost:8080/spring-web/s/rest-false/1", Person.class);
-//		assertNotNull(person);
-		ResponseEntity<Person> responseEntityPerson = restTemplate.getForEntity(url4uniqueObject, Person.class);
-//		assertNotNull(responseEntityPerson);
-		
-		//POST
-//		restTemplate.postForObject(url, request, responseType, uriVariables);
-//		restTemplate.postForEntity(url, request, responseType);
-//		restTemplate.postForLocation(url, request);
-		
-		//PUT
-//		restTemplate.put(url, request, urlVariables);
-		
-		//DELETE
-//		restTemplate.delete(url);
-		
-		//HEAD
-//		restTemplate.headForHeaders(url);
-		
-		//OPTIONS
-//		restTemplate.optionsForAllow(url);
-		
-		//OTHERS (any type of REST calls)
-//		restTemplate.exchange(requestEntity, responseType);
-//		restTemplate.execute(url, method, requestCallback, responseExtractor);
-		
-		/*
-		//using URI Template
-		String url = "http://localhost:8080/mvc-rest/rest-person/id/{id}"; PARAMETER AS TEMPLATE
-		Person person = restTemplate.getForObject(url, Person.class, "1");
-		// using URI
-		String url = "http://localhost:8080/mvc-rest/rest-personid/1";
-		Person person = restTemplate.getForObject(url, Person.class);
-		*/
-		
-	}
-	
-	@Ignore
-	@Test
-	public void probarExecuteMethodRequestCallback(){
-		
-		/*
-		 String url ="http://localhost:8080/mvc-rest/rest-person/id/{id}";
-Person person = restTemplate.execute(url, HttpMethod.GET,
-new RequestCallback() {
-@Override
-public void doWithRequest(ClientHttpRequest request)
-throws IOException {
-HttpHeaders headers = request.getHeaders();
-headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
-System.out.println("Request headers = " + headers);
-}
-}, new HttpMessageConverterExtractor<Person>(Person.class,
-restTemplate.getMessageConverters())
-, new HashMap<String, Object>() {{
-put("id", "1");
-}});
-		 
-		 
-		 */
-	}
-	
-	@Ignore
-	@Test
-	public void probarAsyncRestTemplate(){
-		
-	}
-	
 }

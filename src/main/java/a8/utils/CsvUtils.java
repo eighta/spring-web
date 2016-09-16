@@ -25,7 +25,7 @@ public class CsvUtils {
 		beanToCsv.write(beanStrategy,csvWriter,Arrays.asList( new Object[] {o} ));
 		
 		String[] lines = writer.toString().split(System.getProperty("line.separator"));
-		return lines[1];
+		return lines[1]+System.getProperty("line.separator");
 	}
 	
 	public static <T> T convertCsv2Bean(String theString, Class<T> requiredType, String [] columnMapping){

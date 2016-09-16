@@ -162,6 +162,28 @@ In Spring MVC 4.0 the @RestController was introduced, This annotation is conveni
 @Controller and @ResponseBody, which practically means that if you annotate a class with it, all handler
 methods are transparently annotated with @ResponseBody.
 
+Message Converters (included by default)
+----------------------------------------
+-StringHttpMessageConverter 
+text/plain 
+
+-MappingJackson2HttpMessageConverter 
+application/*+json 
+Only if Jackson 2 is present on the classpath
+
+-AtomFeedHttpMessageConverter
+ application/atom+xml 
+ Only if Rome is present on the classpath
+
+-RssChannelHttpMessageConverter 
+application/rss+xml 
+Only if Rome is present on the classpath
+
+-MappingJackson2XmlHttpMessageConverter 
+application/*+xml 
+Only if Jackson 2 is present on the classpath
+
+
 **************************
 despues del client continuar en 207
 
