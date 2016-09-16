@@ -183,9 +183,16 @@ Only if Rome is present on the classpath
 application/*+xml 
 Only if Jackson 2 is present on the classpath
 
+REST services are used most commonly by AJAX components in a web application, and currently all
+HTTP methods are supported in AJAX. But most browsers do not support any other methods besides GET
+and POST in HTML forms. To use them in a form, Spring has introduced hidden methods. Basically, a
+hidden input is added to a form with a regular POST method.
+
+A filter interceptor intercepts the request, searches for that parameter, 
+and modifies the request accordingly before sending it to the appropriate handler.
 
 **************************
-despues del client continuar en 207
+continuar en 203
 
 
 SEGUIR EN: COMO IMPLEMENTAR (PAGE: 217PDF) Y LUEGO SEGUIR CON EL CLIENT: (PAGE: 212PDF) 
