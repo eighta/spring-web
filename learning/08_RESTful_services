@@ -198,12 +198,20 @@ el "RequestBody" se pierde, por ejemplo al hacer un:
 <sf:form method="put" ... /> con los parametros del form, al ser interceptado, 
 el "RequestBody" pasa a ser NULL, toca ver que paso en el camino XXX TODO XXX
 
-Asynchronous REST Calls
-------------------------
+>>>Asynchronous REST Calls (ok)
+
+@RequestMapping
+Normally, void or null returning methods result in a default view name determined by the request’s path
+information (from @RequestMapping annotations on the class and method).
+The @ResponseStatus overrides the default behavior, causing a null ModelAndView to be used, which indicates
+that the response has been handled by the controller method already. 
+So, obviously the @ResponseStatus is mandatory for a RESTful handler method returning void or null.
+
+>>>Exception Handling (ok)
+
+>>>The 'produces' and 'consumes' Properties
 
 
 **************************
-continuar con el ejemplo del future: pag 204
-
-Future<ResponseEntity<Person>> futurePerson = 
+continuar: pag 210 >>> produces no esta funcionado!!!! 
 

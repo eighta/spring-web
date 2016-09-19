@@ -7,5 +7,9 @@ public class EightaException extends RuntimeException{
 	public EightaException(String message) {
 		super(message);
 	}
+	
+	public EightaException(Exception e) {
+		super(e);
+	}
 
 }
