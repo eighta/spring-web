@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import web.utils.ServletContextUtil;
 
@@ -66,6 +67,11 @@ public class MyWebApplicationInitializer
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
 		servletContext.addFilter("characterEncodingFilter", characterEncodingFilter);
+		
+		//XXX NO ME FUNCIONO REGISTRARLO POR ACA, PERO SI DESDE EL web.xml
+		//The filter interceptor that takes care of intercepting requests and modifying the methods is the
+		//HiddenHttpMethodFilter
+		//servletContext.addFilter("httpMethodFilter", new HiddenHttpMethodFilter() );
 	}
 	
 }

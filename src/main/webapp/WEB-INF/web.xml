@@ -19,7 +19,7 @@
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/errors/simple.jsp</location>
 	</error-page>
-	
+
 	<error-page>
 		<error-code>407</error-code>
 		<location>/WEB-INF/views/errors/simple.jsp</location>
@@ -29,10 +29,29 @@
 		<error-code>410</error-code>
 		<location>/WEB-INF/views/errors/simple.jsp</location>
 	</error-page>
-	
+
 	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/views/errors/simple.jsp</location>
 	</error-page>
-	
+
+	<!-- FILTERS -->
+	<filter>
+		<filter-name>multipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>multipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>httpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>httpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 </web-app>

@@ -29,27 +29,35 @@ ol {
         
 }
 
+.rounded-list div{
+	height:10px; float: left; padding-top: 5px;
+}
+
+.rounded-list form input[type="submit"]{
+	background-color: transparent;
+	border: none;
+	padding: 0px;
+	color: #c6c8ca;
+	font-family: "Open Sans";
+}
+
 .rounded-list a{
 	text-decoration: none;
-	transition: all .3s ease-out;
-	
+/*	transition: all .3s ease-out; */
 	color: #c6c8ca;
 }
+
  
 .rounded-list li:hover{
     background: #eee;
     color: #393939;
 }
- 
-.rounded-list a:hover:before{
-    transform: rotate(360deg);  
-    color: #1e9600;
-}
- 
-.rounded-list a:before{
+
+
+/*BULLET ICON*/
+.rounded-list li div:BEFORE, .rounded-list li a:BEFORE  {
 	color: yellow;
     content: counter(li);
-    /*counter-increment: li;*/
     position: absolute; 
     left: -1.3em;
     top: 50%;
@@ -63,4 +71,8 @@ ol {
     font-weight: bold;
     border-radius: 2em;
     transition: all .3s ease-out;
+}
+.rounded-list li div:HOVER:BEFORE, .rounded-list li a:HOVER:BEFORE{
+	transform: rotate(360deg);  
+    color: #1e9600;
 }

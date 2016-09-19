@@ -36,18 +36,55 @@ public class RealRestController {
 		
 	}
 	
+//	@RequestMapping(method = RequestMethod.PUT
+//			//,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+//			)
+//	public void putPersonFromForm(
+//			@RequestBody
+//			Person person){
+//		
+//		putPerson(person);
+//	}
+	
+	
 	@RequestMapping(method = RequestMethod.PUT)
 	public void putPerson(
 			@RequestBody
 			Person person){
 		System.out.println("HTTP PUT: " + person.getId());
 	}
+	/*
+	@RequestMapping(method = RequestMethod.POST, path="/post")
+	public ResponseEntity<Person> postPersonFromForm(
+			@RequestBody
+			Person person){
+		
+		Integer settedId = 77;
+//		String firstName = "POST-PERSON";
+//		
+//		person.setId(settedId);
+//		person.setFirstName(firstName);
+
+		URI newLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + settedId).build().toUri();
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setLocation(newLocation);
+		
+		ResponseEntity<Person> response = new ResponseEntity<Person>(person,headers,HttpStatus.CREATED);
+		return response;
+	}
+	*/
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Person> postPerson(Person person){
+	public ResponseEntity<Person> postPerson(
+			@RequestBody
+			Person person){
 		
-		Integer settedId = 55; 
+		Integer settedId = 55;
+//		String firstName = "POST-PERSON";
+		
 		person.setId(settedId);
+//		person.setFirstName(firstName);
 
 		URI newLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + settedId).build().toUri();
 		
@@ -72,4 +109,5 @@ public class RealRestController {
 				
 		};
 	}
+	
 }

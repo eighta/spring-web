@@ -1,5 +1,6 @@
 package a8.utils;
 
+import java.io.BufferedReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -24,8 +25,19 @@ public class CsvUtils {
 		BeanToCsv<T> beanToCsv = new BeanToCsv<>();
 		beanToCsv.write(beanStrategy,csvWriter,Arrays.asList( new Object[] {o} ));
 		
-		String[] lines = writer.toString().split(System.getProperty("line.separator"));
-		return lines[1]+System.getProperty("line.separator");
+		Integer lineaNro = 0;
+		BufferedReader bufferedReader = new BufferedReader (new StringReader(writer.toString())); 
+		try{
+		String line=null;
+		while( (line=bufferedReader.readLine()) != null ){
+			lineaNro++;
+			if(lineaNro==2){
+				return line;
+			}
+		}
+		}catch(Exception e){e.printStackTrace();}
+		
+		return null;
 	}
 	
 	public static <T> T convertCsv2Bean(String theString, Class<T> requiredType, String [] columnMapping){

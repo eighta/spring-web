@@ -131,7 +131,7 @@ public class TheController {
 	@RequestMapping("/l")
 	@ModelAttribute("someValue")
 	public Character returningObjectModelAttribute(){
-		return new Character('�');
+		return new Character('-');
 	}
 	
 //	When only one object needs to be added to the model, the object can simply be returned by the method

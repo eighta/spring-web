@@ -188,11 +188,22 @@ HTTP methods are supported in AJAX. But most browsers do not support any other m
 and POST in HTML forms. To use them in a form, Spring has introduced hidden methods. Basically, a
 hidden input is added to a form with a regular POST method.
 
-A filter interceptor intercepts the request, searches for that parameter, 
-and modifies the request accordingly before sending it to the appropriate handler.
+A filter interceptor (HiddenHttpMethodFilter) intercepts the request, 
+searches for that parameter, and modifies the request accordingly before sending it to 
+the appropriate handler.
+
+NOTA IMPORTANTE: (BUG)
+cuando el HiddenHttpMethodFilter se pone en marcha y hace la redireccion al metodo adecuado,
+el "RequestBody" se pierde, por ejemplo al hacer un:
+<sf:form method="put" ... /> con los parametros del form, al ser interceptado, 
+el "RequestBody" pasa a ser NULL, toca ver que paso en el camino XXX TODO XXX
+
+Asynchronous REST Calls
+------------------------
+
 
 **************************
-continuar en 203
+continuar con el ejemplo del future: pag 204
 
+Future<ResponseEntity<Person>> futurePerson = 
 
-SEGUIR EN: COMO IMPLEMENTAR (PAGE: 217PDF) Y LUEGO SEGUIR CON EL CLIENT: (PAGE: 212PDF) 

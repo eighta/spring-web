@@ -1,0 +1,10 @@
+package a8.data;
+
+option java_package = "a8.data";
+option java_outer_classname = "Person";
+
+message Person {
+  required string id = 1;
+  optional string firstName = 2;
+  optional string secondName = 3;
+}

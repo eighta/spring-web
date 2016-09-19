@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
@@ -29,6 +31,7 @@ import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
@@ -36,6 +39,7 @@ import org.springframework.web.client.RestTemplate;
 
 import a8.data.Person;
 import a8.utils.CsvUtils;
+import web.converters.HtmlFormPersonMessageConverter;
 import web.converters.PersonMessageConverter;
 import web.converters.SeveralPersonMessageConverter;
 
@@ -81,6 +85,7 @@ public class RestClientTest {
 	*/
 	
 	@Test
+	@Ignore
 	public void restTemplatePlusApacheHttpClient(){
 	
 		/*
@@ -103,12 +108,59 @@ public class RestClientTest {
 		
 	}
 	
-	@Ignore
 	@Test
-	public void asyncRestTemplate(){
-		//XXX CREAR UNA PRUEBA ASYNCRONA!
+	public void asyncRestTemplate() throws InterruptedException, ExecutionException{
+		
+		//return Future<T> wrappers (or ListenableFuture<F>
+		//that extends Future<T> when a callback method is needed
+		
+		String url = "http://localhost:8080/spring-web/s/rest";
+		URI uri = URI.create(url);
+		
+		Person requestPerson = new Person();
+		requestPerson.setFirstName("Javier");
+		requestPerson.setLastName("Larios");
+		
+		AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+		asyncRestTemplate.setMessageConverters(this.getMessageConverters());
+		
+		//RequestEntity
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON }  ));
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED); //<<< WTF?
+//		
+//		RequestEntity<?> requestEntity = new RequestEntity<>(headers, HttpMethod.GET, URI.create(url) );
+		
+		RequestEntity<Person> requestEntity = new RequestEntity<>(requestPerson,headers,HttpMethod.POST,uri);
+		
+		
+		Future<ResponseEntity<Person>> asyncExchange = 
+				asyncRestTemplate.exchange(uri,HttpMethod.POST,requestEntity, Person.class);
+		
+		////other computation ...
+		
+		ResponseEntity<Person> responseEntity = asyncExchange.get();
+		
+		Person responsePerson = responseEntity.getBody();
+		
+		assertThat(responsePerson, is(not(equalTo(requestPerson))));
+		assertThat(responsePerson.getId(), is(equalTo(55)));
+		
+//		Person personFromRequestEntity = exchangeFromRequestEntity.getBody();
+//		assertNotNull(personFromRequestEntity);
+//		assertThat(personFromRequestEntity.getId(), is(equalTo(1)));
+		
+		
+//		RequestEntity<T>
+		
+//		Future<ResponseEntity<Person>> exchange = 
+//				asyncRestTemplate.exchange(
+//						url,HttpMethod.POST, /*requesEntity*/null, Person.class);
+		
+		
 	}
 
+	@Test
 	@Ignore
 	public void EXECUTE(){
 		
@@ -137,6 +189,7 @@ public class RestClientTest {
 	}
 	
 	@Test
+	@Ignore
 	public void EXCHANGE(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest/me";
@@ -169,6 +222,7 @@ public class RestClientTest {
 	}
 	
 	@Test
+	@Ignore
 	public void OPTIONS(){
 		String url = "http://localhost:8080/spring-web/s/rest";
 		RestTemplate restTemplate = this.getRestTemplateWithConverters();
@@ -179,6 +233,7 @@ public class RestClientTest {
 	}
 	
 	@Test
+	@Ignore
 	public void HEAD(){
 		String url = "http://localhost:8080/spring-web/s/rest";
 		RestTemplate restTemplate = new RestTemplate();
@@ -188,6 +243,7 @@ public class RestClientTest {
 	}
 	
 	@Test
+	@Ignore
 	public void DELETE(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest/{id}";
@@ -196,6 +252,7 @@ public class RestClientTest {
 	}
 	
 	@Test
+	@Ignore
 	public void PUT(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest";
@@ -209,6 +266,7 @@ public class RestClientTest {
 	}
 	
 	@Test
+	@Ignore
 	public void POST(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest";
@@ -243,6 +301,7 @@ public class RestClientTest {
 	}
 	
 	@Test
+	@Ignore
 	public void GET(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest/me";
@@ -276,6 +335,7 @@ public class RestClientTest {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
 		messageConverters.add(new PersonMessageConverter() );
 		messageConverters.add(new SeveralPersonMessageConverter() );
+		messageConverters.add(new HtmlFormPersonMessageConverter() );
 		return messageConverters;
 	}
 }

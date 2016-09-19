@@ -1,8 +1,19 @@
 Links (urls)
 ============
+
+#Java 8 Predicate
+http://howtodoinjava.com/java-8/how-to-use-predicate-in-java-8/
+https://dzone.com/articles/writing-clean-predicates-java
+
+#FUTURES
+http://www.nurkiewicz.com/2013/02/javautilconcurrentfuture-basics.html
+
 #DATA FORMATS
 www.yegor256.com/2015/11/16/json-vs-xml.html
 https://en.wikipedia.org/wiki/Comparison_of_data_serialization_formats
+http://maxondev.com/serialization-performance-comparison-c-net-formats-frameworks-xmldatacontractserializer-xmlserializer-binaryformatter-json-newtonsoft-servicestack-text/
+https://dzone.com/articles/human-readable-vs-machine
+http://www.baeldung.com/java-convert-byte-array-to-reader
 
 #MAVEN - Resolucion de Depedencias incompatibles
 https://tedvinke.wordpress.com/2013/12/17/mixing-junit-hamcrest-and-mockito-explaining-nosuchmethoderror/

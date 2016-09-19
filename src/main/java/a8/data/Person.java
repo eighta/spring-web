@@ -4,12 +4,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.msgpack.annotation.Message;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import a8.utils.JsonDateSerializer;
 
+@Message
 public class Person {
 
 	private static final String DATE_PATTERN= "yyyy-MM-dd";

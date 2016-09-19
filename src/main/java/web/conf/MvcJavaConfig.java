@@ -37,6 +37,7 @@ import a8.business.PersonManager;
 import a8.business.PersonManagerImpl;
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
+import web.converters.HtmlFormPersonMessageConverter;
 import web.converters.PersonMessageConverter;
 import web.converters.SeveralPersonMessageConverter;
 import web.interceptors.AuditInterceptor;
@@ -132,15 +133,19 @@ public class MvcJavaConfig
 	*/
 
 /*
-HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConverter
-HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConverter
-HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConverter
-HttpMessageConverter HttpMessageConverter HttpMessageConverter HttpMessageConverter
+██╗  ██╗████████╗████████╗██████╗ ███╗   ███╗███████╗███████╗███████╗ █████╗  ██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██╗   ██╗███████╗██████╗ ████████╗███████╗██████╗ ███████╗
+██║  ██║╚══██╔══╝╚══██╔══╝██╔══██╗████╗ ████║██╔════╝██╔════╝██╔════╝██╔══██╗██╔════╝ ██╔════╝██╔════╝██╔═══██╗████╗  ██║██║   ██║██╔════╝██╔══██╗╚══██╔══╝██╔════╝██╔══██╗██╔════╝
+███████║   ██║      ██║   ██████╔╝██╔████╔██║█████╗  ███████╗███████╗███████║██║  ███╗█████╗  ██║     ██║   ██║██╔██╗ ██║██║   ██║█████╗  ██████╔╝   ██║   █████╗  ██████╔╝███████╗
+██╔══██║   ██║      ██║   ██╔═══╝ ██║╚██╔╝██║██╔══╝  ╚════██║╚════██║██╔══██║██║   ██║██╔══╝  ██║     ██║   ██║██║╚██╗██║╚██╗ ██╔╝██╔══╝  ██╔══██╗   ██║   ██╔══╝  ██╔══██╗╚════██║
+██║  ██║   ██║      ██║   ██║     ██║ ╚═╝ ██║███████╗███████║███████║██║  ██║╚██████╔╝███████╗╚██████╗╚██████╔╝██║ ╚████║ ╚████╔╝ ███████╗██║  ██║   ██║   ███████╗██║  ██║███████║
+╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝     ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝
 */		
 		@Override
 		public void configureMessageConverters(List<HttpMessageConverter<?>> httpMessageConverterList) {
 			httpMessageConverterList.add(new PersonMessageConverter() );
 			httpMessageConverterList.add(new SeveralPersonMessageConverter() );
+			
+			httpMessageConverterList.add(new HtmlFormPersonMessageConverter() );
 		}
 		
 		
