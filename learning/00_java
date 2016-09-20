@@ -1,9 +1,18 @@
 Links (urls)
 ============
 
+#Maven - Release
+https://maven.apache.org/guides/mini/guide-releasing.html
+http://maven.apache.org/maven-release/maven-release-plugin/index.html
+https://www.adictosaltrabajo.com/tutoriales/release-maven/
+https://axelfontaine.com/blog/final-nail.html
+https://axelfontaine.com/blog/maven-releases-steroids.html (la idea seria mejor usar un: continuous integration server)
+
+
 #Java 8 Predicate
 http://howtodoinjava.com/java-8/how-to-use-predicate-in-java-8/
 https://dzone.com/articles/writing-clean-predicates-java
+http://stackoverflow.com/questions/22635945/adding-up-bigdecimals-using-streams (EN LA PREGUNTA COLOCO LA RESPUESTA)
 
 #FUTURES
 http://www.nurkiewicz.com/2013/02/javautilconcurrentfuture-basics.html

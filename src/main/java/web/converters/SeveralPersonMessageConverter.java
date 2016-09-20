@@ -1,13 +1,8 @@
 package web.converters;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpInputMessage;
@@ -18,7 +13,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import a8.data.Person;
-import a8.utils.CsvUtils;
 import a8.utils.MessagePackUtils;
 
 public class SeveralPersonMessageConverter extends AbstractHttpMessageConverter<Person[]> {
