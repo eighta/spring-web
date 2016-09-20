@@ -1,6 +1,8 @@
 package web.servlets;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +35,7 @@ public class MyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		logger.info("doGet(...)");
+		printHeaders(request);
 		
 		ServletContext servletContext = request.getServletContext();
 		Life life = (Life)servletContext.getAttribute("GLOBAL");
@@ -66,4 +69,27 @@ public class MyServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	private void printHeaders(HttpServletRequest req){
+		
+		PrintStream out = System.out;
+		
+		Enumeration<String> headerNames = req.getHeaderNames();
+
+		while (headerNames.hasMoreElements()) {
+
+			String headerName = headerNames.nextElement();
+			out.println(headerName);
+			//out.println("\n");
+
+			Enumeration<String> headers = req.getHeaders(headerName);
+			while (headers.hasMoreElements()) {
+				String headerValue = headers.nextElement();
+				out.println("\t" + headerValue);
+				//out.println("\n");
+			}
+
+		}
+		
+	}
+	
 }

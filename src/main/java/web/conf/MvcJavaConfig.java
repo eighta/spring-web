@@ -323,7 +323,7 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer contentNegotiationConfigurer) {
 		contentNegotiationConfigurer.useJaf(false).
-				ignoreAcceptHeader(true).	//IGNORAR EL ACCEPT HEADER
+				ignoreAcceptHeader(false).	//IGNORAR EL ACCEPT HEADER
 				favorPathExtension(true).	//IDENTIFICAR POR EXTENSION
 				favorParameter(false).		//IDENTIFICAR POR PARAMETRO
 				parameterName("formatType").//NOMBRE DEL PARAMETRO PARA IDENTIFICAR EL FORMATO SOLICITADO

@@ -113,7 +113,7 @@ System.out.println("handleError(...)");
 public class RestClientTest {
 
 	
-	private boolean everythingOk = Boolean.FALSE;
+	private boolean everythingOk = Boolean.TRUE;
 	
 	//XXX Using Hamcrest matcher framework
 	//http://www.vogella.com/tutorials/Hamcrest/article.html
@@ -130,8 +130,25 @@ public class RestClientTest {
 	messageConverters
 	*/
 	
+	
+	@Test
+	@Ignore
+	public void servlet(){
+		
+		String url = "http://localhost:8080/spring-web/servlet";
+		URI uri = URI.create(url);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		RequestEntity<Void> requestEntity = RequestEntity.get(uri)
+				.accept(MediaType.APPLICATION_JSON)
+				.build();
+		ResponseEntity<Void> responseEntity = restTemplate.exchange(requestEntity,Void.class);
+		
+	}
+	
 	@Test
 	public void getJson(){
+		assumeTrue(everythingOk);
 		
 		String url = "http://localhost:8080/spring-web/s/rest/json";
 		URI uri = URI.create(url);
@@ -140,32 +157,35 @@ public class RestClientTest {
 		
 		//on-the-fly
 		//http://stackoverflow.com/questions/852822/java-arraylist-and-hashmap-on-the-fly
-		/*
 		restTemplate.setMessageConverters(
 					new ArrayList<HttpMessageConverter<?>>(){
 						{
 							add(new JsonPersonMessageConverter());
+							
 						}
 					}
 				);
-		*/
 		
-//		HttpHeaders requestHeaders = new HttpHeaders();
-//		requestHeaders.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON} ));
+		/*		
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON} ));
 		
-//		RequestEntity<?> requestEntity = new RequestEntity<>(requestHeaders, HttpMethod.GET, uri);
+		RequestEntity<Void> requestEntity = new RequestEntity<>(requestHeaders, HttpMethod.GET, uri);
+or
+*/		
+		RequestEntity<Void> requestEntity = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
 		
-		RequestEntity<?> requestEntity = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
 		ResponseEntity<Void> responseEntity = restTemplate.exchange(requestEntity,Void.class);
 		
 		HttpHeaders responseHeaders = responseEntity.getHeaders();
 		MediaType responseContentType = responseHeaders.getContentType();
-		System.out.println(responseHeaders);
+		
+		assertThat(responseContentType, is(equalTo(MediaType.APPLICATION_JSON)));
 	}
 	
 	@Test
-	@Ignore
 	public void testConsumeAttribute(){
+		assumeTrue(everythingOk);
 		
 		String url = "http://localhost:8080/spring-web/s/rest";
 		URI uri = URI.create(url);
@@ -177,7 +197,7 @@ public class RestClientTest {
 		personTorequest.setLastName("Normalverbraucher");
 		
 		HttpHeaders requestHeaders = new HttpHeaders();
-//		requestHeaders.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON} ));
+		requestHeaders.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON} ));
 		requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		RequestEntity<Person> requestEntity = new RequestEntity<>(personTorequest, requestHeaders,HttpMethod.POST, uri, Person.class);
