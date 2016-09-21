@@ -11,6 +11,7 @@ import static org.junit.Assume.assumeTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.AbstractClientHttpRequest;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -43,6 +45,7 @@ import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import a8.data.Person;
+import a8.utils.JsonUtils;
 import a8.utils.YamlUtils;
 import web.converters.HtmlFormPersonMessageConverter;
 import web.converters.JsonPersonMessageConverter;
@@ -50,14 +53,43 @@ import web.converters.PersonMessageConverter;
 import web.converters.SeveralPersonMessageConverter;
 class MyRequestCallBack implements RequestCallback{
 
+	//from javadoc:
+	//http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RequestCallback.html
+	//Callback interface for code that operates on a ClientHttpRequest. Allows to manipulate the request headers, and write to the request body.
+	
 	@Override
 	public void doWithRequest(ClientHttpRequest request) throws IOException {
 		System.out.println("doWithRequest...");
+	}
+}
+class MyRequestCallBack4postForLocationWithServletResponse implements RequestCallback{
+
+	//RequestCallback
+	//Callback interface for code that operates on a ClientHttpRequest. Allows to manipulate the request headers, and write to the request body.
+	
+	@Override
+	public void doWithRequest(ClientHttpRequest request) throws IOException {
 		
-		//from javadoc:
-		//http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RequestCallback.html
-		//
-		//Callback interface for code that operates on a ClientHttpRequest. Allows to manipulate the request headers, and write to the request body.
+		System.out.println("ClientHttpRequest...");
+		
+		//HEADERS
+		HttpHeaders headers = request.getHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		//BODY
+		Person person = new Person();
+		person.setFirstName("Alonso");
+		person.setLastName("Punk");
+		byte[] raw = JsonUtils.convertFromBean(person);
+		
+		OutputStream bodyOutputStream = request.getBody();
+		bodyOutputStream.write(raw);
+		bodyOutputStream.flush();
+//		JAVADOC: Does not need to care about closing the request or about handling errors: this will all be handled by the RestTemplate.
+//		bodyOutputStream.close(); 
+		
+		
+		
 	}
 }
 
@@ -113,7 +145,7 @@ System.out.println("handleError(...)");
 public class RestClientTest {
 
 	
-	private boolean everythingOk = Boolean.TRUE;
+	private boolean everythingOk = Boolean.FALSE;
 	
 	//XXX Using Hamcrest matcher framework
 	//http://www.vogella.com/tutorials/Hamcrest/article.html
@@ -143,6 +175,67 @@ public class RestClientTest {
 				.accept(MediaType.APPLICATION_JSON)
 				.build();
 		ResponseEntity<Void> responseEntity = restTemplate.exchange(requestEntity,Void.class);
+	}
+	
+	@Test
+	public void postForLocationWithServletResponse(){
+		
+		String url = "http://localhost:8080/spring-web/s/rest";
+		
+		RestTemplate restTemplate = new RestTemplate(); //<<< DEFAULT
+		restTemplate.setMessageConverters(
+				new ArrayList<HttpMessageConverter<?>>(){
+					{
+						add(new JsonPersonMessageConverter());
+						
+					}
+				}
+			);
+		
+		//POST 4 LOCATION
+		Person person = restTemplate.execute(
+				url, 
+				HttpMethod.POST, 
+				new MyRequestCallBack4postForLocationWithServletResponse(),
+				new HttpMessageConverterExtractor<Person>(
+						Person.class,
+						restTemplate.getMessageConverters() )
+				 );
+		assertNotNull(person);
+//		assertThat(person.getLastName(), is(equalTo(MediaType.APPLICATION_JSON_VALUE)));
+	}
+	
+	@Test
+	public void executeLambda(){
+		assumeTrue(everythingOk);
+		
+		String url = "http://localhost:8080/spring-web/s/rest/json";
+		
+		//Java8 - lambda
+		RestTemplate restTemplate = new RestTemplate(); //<<< DEFAULT
+		restTemplate.setMessageConverters(
+				new ArrayList<HttpMessageConverter<?>>(){
+					{
+						add(new JsonPersonMessageConverter());
+						
+					}
+				}
+			);
+		
+		Person person = restTemplate.execute(url, HttpMethod.GET, 
+				
+				//lambda junto con headers
+				request -> {
+					HttpHeaders headerss = request.getHeaders();
+					headerss.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+				},
+				
+				new HttpMessageConverterExtractor<Person>(
+						Person.class,
+						restTemplate.getMessageConverters() )
+				 );
+		assertNotNull(person);
+		assertThat(person.getLastName(), is(equalTo(MediaType.APPLICATION_JSON_VALUE)));
 		
 	}
 	
@@ -379,6 +472,7 @@ or
 	}
 
 	@Test
+	//EXECUTE solo retorna un Pojo (un entity, T), en cambio el EXCHANGE devuelve ResponseEntity<T>
 	public void EXECUTE(){
 		assumeTrue(everythingOk);
 		
@@ -407,6 +501,7 @@ or
 	}
 	
 	@Test
+	//EXCHANGE es mas poderoso que EXECUTE
 	public void EXCHANGE(){
 		assumeTrue(everythingOk);
 		

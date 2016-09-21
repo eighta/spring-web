@@ -3,6 +3,8 @@ package web.rest.controllers;
 import java.net.URI;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +31,7 @@ public class RealRestController {
 			)
 	public Person getJsonPerson(){
 System.out.println("getJsonPerson()");		
-		return new Person(54,"Monsieur","X","2016-01-01");
+		return new Person(54,"Monsieur",MediaType.APPLICATION_JSON_VALUE,"2016-01-01");
 	}
 	
 	@RequestMapping(path="/json"
@@ -37,16 +39,21 @@ System.out.println("getJsonPerson()");
 			)
 	public Person getPersonTextHtml(){ //<<< XXX DELETE METHOD
 System.out.println("getPersonTextHtml()");
-		return new Person(54,"Monsieur","X","2016-01-01");
+		return new Person(54,"Monsieur",MediaType.TEXT_HTML_VALUE,"2016-01-01");
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, 
 			consumes=MediaType.APPLICATION_JSON_VALUE
-//			,produces=MediaType.APPLICATION_JSON_VALUE
+			//,produces=MediaType.APPLICATION_JSON_VALUE //SINO SE ESPECIFICA POR DEFECTO ES: [text/html]
 			)
 	public Person postPersonJson(
 			@RequestBody
-			Person person){
+			Person person,
+			HttpServletResponse response){
+		
+		Integer settedId = 55;
+		String newLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + settedId).build().toUriString();
+		response.setHeader(HttpHeaders.LOCATION, newLocation);
 		
 		person.setSecondName("SECONDNAME-JSON");
 		return person;
@@ -109,6 +116,30 @@ System.out.println("getPersonTextHtml()");
 			Person person){
 		System.out.println("HTTP PUT: " + person.getId());
 	}
+	
+//	@RequestMapping(method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+//	public void postPersonResponseUsingServlet(
+//			@RequestBody
+//			Person person,
+//			HttpServletResponse response){
+//		
+//				
+//		Integer settedId = 55;
+//		String newLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + settedId).build().toUriString();
+//		
+////		person.setId(settedId);
+////
+//		
+////		
+////		HttpHeaders headers = new HttpHeaders();
+////	    headers.setLocation(newLocation);
+////		
+////		ResponseEntity<Person> response = new ResponseEntity<Person>(person,headers,HttpStatus.CREATED);
+////		return response;
+//		
+//		response.setHeader(HttpHeaders.LOCATION, newLocation);
+//	}
+//	
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Person> postPerson(
