@@ -145,7 +145,7 @@ System.out.println("handleError(...)");
 public class RestClientTest {
 
 	
-	private boolean everythingOk = Boolean.FALSE;
+	private boolean everythingOk = Boolean.TRUE;
 	
 	//XXX Using Hamcrest matcher framework
 	//http://www.vogella.com/tutorials/Hamcrest/article.html
@@ -181,6 +181,7 @@ public class RestClientTest {
 	public void postForLocationWithServletResponse(){
 		
 		String url = "http://localhost:8080/spring-web/s/rest";
+		URI uri = URI.create(url);
 		
 		RestTemplate restTemplate = new RestTemplate(); //<<< DEFAULT
 		restTemplate.setMessageConverters(
@@ -192,17 +193,45 @@ public class RestClientTest {
 				}
 			);
 		
-		//POST 4 LOCATION
-		Person person = restTemplate.execute(
-				url, 
-				HttpMethod.POST, 
-				new MyRequestCallBack4postForLocationWithServletResponse(),
-				new HttpMessageConverterExtractor<Person>(
-						Person.class,
-						restTemplate.getMessageConverters() )
-				 );
-		assertNotNull(person);
+//		//POST 4 LOCATION
+//		Person person = restTemplate.execute(
+//				url, 
+//				HttpMethod.POST, 
+//				new MyRequestCallBack4postForLocationWithServletResponse(),
+//				new HttpMessageConverterExtractor<Person>(
+//						Person.class,
+//						restTemplate.getMessageConverters() )
+//				 );
+//		assertNotNull(person);
 //		assertThat(person.getLastName(), is(equalTo(MediaType.APPLICATION_JSON_VALUE)));
+		
+		//Entity (to Request)
+		Person personTorequest = new Person();
+		personTorequest.setFirstName("Alonso");
+		personTorequest.setLastName("Punk");
+		
+		//Headers (to Request)
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON} ));
+		requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+		
+		//Request Entity
+		RequestEntity<Person> requestEntity = new RequestEntity<>(personTorequest, requestHeaders,HttpMethod.POST, uri, Person.class);
+		
+		//Response Entity
+		ResponseEntity<Person> responseEntity = restTemplate.exchange(requestEntity, Person.class);
+		
+		//Entity (from Response)
+		Person personFromResponse = responseEntity.getBody();
+		assertNotNull(personFromResponse);
+		
+		//Headers (from Response)
+		HttpHeaders responseHeaders = responseEntity.getHeaders();
+		URI location = responseHeaders.getLocation();
+		
+		Integer expectedId = 88;
+		URI expectedURI = URI.create(url+"/"+expectedId);
+		assertThat(location, is(equalTo(expectedURI)));
 	}
 	
 	@Test
