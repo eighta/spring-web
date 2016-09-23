@@ -12,6 +12,9 @@ import static org.junit.Assume.assumeTrue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Proxy.Type;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,10 +33,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.AbstractClientHttpRequest;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -45,6 +48,7 @@ import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import a8.data.Person;
+import a8.data.User;
 import a8.utils.JsonUtils;
 import a8.utils.YamlUtils;
 import web.converters.HtmlFormPersonMessageConverter;
@@ -145,7 +149,7 @@ System.out.println("handleError(...)");
 public class RestClientTest {
 
 	
-	private boolean everythingOk = Boolean.TRUE;
+	private boolean everythingOk = Boolean.FALSE;
 	
 	//XXX Using Hamcrest matcher framework
 	//http://www.vogella.com/tutorials/Hamcrest/article.html
@@ -178,7 +182,64 @@ public class RestClientTest {
 	}
 	
 	@Test
+	@Ignore
+	public void githubApi(){
+		
+		String url = "https://api.github.com/users/eighta";
+		
+		SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+		Proxy proxy= new Proxy(Type.HTTP, new InetSocketAddress("10.1.0.194", 3128));
+	    requestFactory.setProxy(proxy);
+		
+		RestTemplate restTemplate = new RestTemplate(requestFactory);
+		
+		RequestEntity<Void> requestEntity = RequestEntity.get(URI.create(url))
+				.accept(MediaType.APPLICATION_JSON)
+				.build(); 
+		
+		//User user = restTemplate.getForObject(url, User.class);
+		ResponseEntity<User> responseEntity = restTemplate.exchange(requestEntity, User.class);
+		
+		HttpHeaders responseHeaders = responseEntity.getHeaders();
+		MediaType responseContentType = responseHeaders.getContentType();
+		assertThat(responseContentType.includes(MediaType.APPLICATION_JSON) , is(equalTo(Boolean.TRUE)));
+		
+		User user = responseEntity.getBody();
+		assertThat(user.getName() , is(equalTo("Javier Larios")));
+	}
+	
+	@Test
+	public void testAsyncAnnotation(){
+	
+		String url = "http://localhost:8080/spring-web/s/rest/async";
+		RestTemplate restTemplate = new RestTemplate(); //<<< DEFAULT
+		
+		ResponseEntity<Void> responseEntity = restTemplate.getForEntity(URI.create(url), Void.class);
+	}
+	
+	@Test
+	public void customHeader(){
+		assumeTrue(everythingOk);
+
+		String url = "http://localhost:8080/spring-web/s/rest/headers";
+		String customHeaderValueIn = "Sophie";
+		
+		RestTemplate restTemplate = new RestTemplate(); //<<< DEFAULT
+		
+		
+		RequestEntity<Void> requestEntity = RequestEntity.get(URI.create(url) )
+											.header("CUSTOM-HEADER-IN", customHeaderValueIn).build();
+		
+		ResponseEntity<Void> responseEntity = restTemplate.exchange(requestEntity, Void.class);
+		
+		String customHeaderValueOut = responseEntity.getHeaders().getFirst("CUSTOM-HEADER-OUT");
+		assertThat(customHeaderValueOut, is(equalTo(customHeaderValueIn+"Ochoa")));
+		
+	}
+	
+	@Test
 	public void postForLocationWithServletResponse(){
+		assumeTrue(everythingOk);
 		
 		String url = "http://localhost:8080/spring-web/s/rest";
 		URI uri = URI.create(url);
@@ -193,18 +254,6 @@ public class RestClientTest {
 				}
 			);
 		
-//		//POST 4 LOCATION
-//		Person person = restTemplate.execute(
-//				url, 
-//				HttpMethod.POST, 
-//				new MyRequestCallBack4postForLocationWithServletResponse(),
-//				new HttpMessageConverterExtractor<Person>(
-//						Person.class,
-//						restTemplate.getMessageConverters() )
-//				 );
-//		assertNotNull(person);
-//		assertThat(person.getLastName(), is(equalTo(MediaType.APPLICATION_JSON_VALUE)));
-		
 		//Entity (to Request)
 		Person personTorequest = new Person();
 		personTorequest.setFirstName("Alonso");
@@ -217,6 +266,10 @@ public class RestClientTest {
 		
 		//Request Entity
 		RequestEntity<Person> requestEntity = new RequestEntity<>(personTorequest, requestHeaders,HttpMethod.POST, uri, Person.class);
+		
+//		RequestEntity<Person> requestEntity2 = RequestEntity.post(uri)
+//													.accept(MediaType.APPLICATION_JSON)
+//													.contentType(MediaType.APPLICATION_JSON)
 		
 		//Response Entity
 		ResponseEntity<Person> responseEntity = restTemplate.exchange(requestEntity, Person.class);

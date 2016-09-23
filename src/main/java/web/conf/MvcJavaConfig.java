@@ -2,7 +2,9 @@ package web.conf;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.servlet.LocaleResolver;
@@ -56,6 +61,18 @@ import web.views.xls.OneExcelView;
 //it is equivalent to <mvc:annotation-driven/>
 @EnableWebMvc
 
+//<task:annotation-driven/>
+//The Spring Task namespace was introduced in Spring 3.0 to help
+//configure TaskExecutor and TaskScheduler instances.
+//<task:annotation-driven executor="prExecutor"/>
+//<task:executor id="prExecutor" pool-size="100"/>
+
+//like in the XML configuration, the class must implement 
+//org.springframework.scheduling.annotation.AsyncConfigurer 
+//and provide a concrete implementation for the getAsyncExecutor method.
+@EnableAsync
+
+
 //<context:component-scan />.
 @ComponentScan(basePackages={"web.beans","web.controllers","web.rest.controllers"})
 public class MvcJavaConfig 
@@ -80,7 +97,8 @@ public class MvcJavaConfig
 //	public MessageCodesResolver getMessageCodesResolver() {return ;}
 //	public Validator getValidator() { return ;}
 
-	extends WebMvcConfigurerAdapter { // <- better than WebMvcConfigurer (interface)
+	extends WebMvcConfigurerAdapter  // <- better than WebMvcConfigurer (interface)
+	implements AsyncConfigurer{ // <<< this is for use @EnableAsync, @Async
 	
 	// <=> <mvc:default-servlet-handler/>
 		@Override
@@ -133,6 +151,33 @@ public class MvcJavaConfig
 	}
 	*/
 
+	//AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX
+	//AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX
+	//AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX AJAX 
+	@Override //Default Async Executor
+	public Executor getAsyncExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(100);
+		executor.initialize();
+		return executor;
+	}
+	
+	//Custom Async Executor
+	@Bean(name="otherExecutor", destroyMethod = "shutdown",
+			initMethod = "initialize")
+	public ThreadPoolTaskExecutor getExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(100);
+		return executor;
+	}
+
+	@Override
+	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+		// TODO Auto-generated method stub
+		System.out.println("METHOD: getAsyncUncaughtExceptionHandler()");
+		return null;
+	}
+		
 /*
 ██╗  ██╗████████╗████████╗██████╗ 
 ██║  ██║╚══██╔══╝╚══██╔══╝██╔══██╗
@@ -609,5 +654,4 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	public PersonManager getPersonManager(){
 		return new PersonManagerImpl();
 	}
-	
 }

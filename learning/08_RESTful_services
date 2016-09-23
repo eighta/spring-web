@@ -209,8 +209,15 @@ So, obviously the @ResponseStatus is mandatory for a RESTful handler method retu
 
 >>>Exception Handling (ok)
 
->>>The 'produces' and 'consumes' Properties
+>>>The 'produces' and 'consumes' Properties (ok)
 
+>>>Asynchronous REST Services Using @Async Annotated Methods
+This annotation marks a method as a candidate for asynchronous execution.
+It can also be used at type level;in this case, all methods in the class are considered asynchronous.
+the return type is restricted to void and Future (and implementations of this interface).
+
+Immediately after a client calls an asynchronous method, 
+the invocation returns and the execution of the method is submitted to a Spring TaskExecutor
 
 **************************
-continuar: pag 212  
+continuar: pag 214, la prueba del @Async creo que no me esta funcionando! verificar 

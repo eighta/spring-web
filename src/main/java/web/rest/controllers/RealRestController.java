@@ -1,14 +1,22 @@
 package web.rest.controllers;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URI;
+import java.net.Proxy.Type;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -16,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import a8.data.Person;
+import a8.data.User;
 import web.rest.exceptions.RestException;
 import web.rest.exceptions.RestNoBodyException;
 
@@ -26,6 +36,42 @@ import web.rest.exceptions.RestNoBodyException;
 @RequestMapping("/rest")
 public class RealRestController {
 
+	@RequestMapping(path="/async")
+	public void doAsyncRequest() throws InterruptedException{
+System.out.println("METHOD: doAsyncRequest(...) ");
+		findUser("eighta");
+System.out.println("METHOD: doAsyncRequest(...) END");
+	}
+	
+	@Async
+    public Future<User> findUser(String user) throws InterruptedException {
+System.out.println("METHOD: findUser(..)");
+        String url = String.format("https://api.github.com/users/%s", user);
+        
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+		Proxy proxy= new Proxy(Type.HTTP, new InetSocketAddress("10.1.0.194", 3128));
+	    requestFactory.setProxy(proxy);
+		
+		RestTemplate restTemplate = new RestTemplate(requestFactory);
+        User results = restTemplate.getForObject(url, User.class);
+        // Artificial delay of 1s for demonstration purposes
+        Thread.sleep(1000L);
+System.out.println("METHOD: findUser(..) END");        
+        return new AsyncResult<>(results);
+    }
+	
+	@RequestMapping(path="/headers")
+	public ResponseEntity<Void> getCustomHeader(
+			HttpEntity<Void> requestEntity){
+		
+		//REQUEST
+		HttpHeaders requestHeaders = requestEntity.getHeaders();
+		String customHeaderValue = requestHeaders.getFirst("CUSTOM-HEADER-IN");
+		
+		//RESPONSE
+		return ResponseEntity.ok().header("CUSTOM-HEADER-OUT", customHeaderValue + "Ochoa").build();
+	}
+	
 	@RequestMapping(path="/json"
 			, produces=MediaType.APPLICATION_JSON_VALUE
 			)
