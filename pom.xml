@@ -30,6 +30,7 @@
 		<spring-test.version>4.3.0.RELEASE</spring-test.version>
 		<spring-web.version>4.3.0.RELEASE</spring-web.version>
 		<spring-webmvc.version>4.3.0.RELEASE</spring-webmvc.version>
+		<spring-webflow.version>2.4.4.RELEASE</spring-webflow.version>
 
 		<!-- java-web -->
 		<servlet.version>3.1.0</servlet.version>
@@ -395,6 +396,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring-webmvc.version}</version>
+		</dependency>
+
+		<!-- SPRING WEBFLOW -->
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-webflow</artifactId>
+			<version>${spring-webflow.version}</version>
 		</dependency>
 
 	</dependencies>

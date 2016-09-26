@@ -23,5 +23,86 @@ Web Flow Architecture
 ---------------------
 In Spring Web Flow, flows are defined using an XML-based flow definition language.
 
+>The FlowController(1) class is the adapter between the Spring MVC Controller layer and the Spring Web
+Flow engine. Its responsibility is to provide implementation so that Spring Web Flow can run embedded as a
+controller within a DispatcherServlet. So basically, the FlowController is itself a front controller for Spring
+Web Flow.
 
+>The FlowHandlerMapping(2) maps all flow requests to the appropriate handlers using
+FlowDefinitionRegistry(3).
 
+>The FlowHandlerAdapter(4) takes care of executing the flow handler methods in a
+servlet environment using the FlowExecutor(5) implementation.
+
+After they do their jobs, the DispatcherServlet(0) uses the FlowViewResolver(6) interface to resolve a view
+from the state of an executing flow.
+
+When working with flows, each flow definition is declared in a specific configuration (XML) file and is
+registered in the system by the FlowDefinitionRegistry
+
+The flows are exposed to the client as web resources. The client starts flows by accessing these resources. 
+For example, accessing http://localhost:8080/webflow-basic/persons/newPerson 
+starts the newPerson flow.
+
+Starting a flow actually means starting a new flow execution, meaning an execution context for the task 
+currently in progress is created
+
+The execution context is user session-scoped, meaning all the variables and data needed for the
+execution of the task is kept in the user session, unless an execution step requires otherwise. (Sometimes
+data can be saved to the database and removed from the session.)
+
+Web Flow Internal Logic
+-----------------------
+When the flow starts executing, you can use the URL changing to
+http://localhost:8080/webflow-basic/persons/newPerson?execution=e1s1
+
+The parameter execution is the session-scoped execution key. Its value contains the flow execution
+identifier (e1) and the identifier of the execution step that is currently in progress (s1). Every time the
+flow progresses a step, the step identifier is incremented. Every time a new flow execution is started, the
+execution identifier is incremented.
+
+A user resumes flow executions by clicking buttons in the interface—buttons (or links) that have events
+associated with them using the name property. For example:
+
+<button id="newPersonButton" name=" eventId proceed" type="submit">
+	<spring:message code="command.proceed" />
+</button>
+
+So when the button with the newPersonButton id is clicked, a request is sent to the URL.
+.../persons/newPerson?execution=e1s1&_event_id=proceed
+
+The data provided by the user is bound to the flow context. The flow handles the event, processes the
+data as defined, and decides what to do next based on the definition of the flow: display a new view to the
+user, display the same view, and remain in the same step of execution if validation failed or ends the flow.
+When a flow execution has ended, the execution cannot be resumed; this implies that the transaction cannot
+be completed multiple times. After a flow execution ends, the flow state is automatically cleaned.
+
+The interaction between a client and a flow always consists of two separate steps: the client will request
+a resource or activate (trigger) an event and the flow will redirect to the appropriate state. This means that
+each web flow interaction involves two requests: 
+	the client request and the flow redirect request. 
+
+This has another implication: the data submitted by the initial request will not be available after 
+the redirecting is done and the next view has already been rendered. 
+But there are ways of persisting the data across requests when using web flows.
+
+IMAGEN: interaction_between_client_and_flow.png
+
+Configuration and Infrastructure Beans
+--------------------------------------
+
+When configuring an application that uses Web Flow, there are roughly three steps that have to be
+covered:
+
+1. A flow executor and a flow registry bean have to be defined and configured to
+match the structure of the application so that the flows can be executed correctly
+by Spring Web Flow.
+
+2. A flow adapter and a flow mapping bean have to be defined and added to the
+list of existing handler mapping and handler adapter beans for the Spring MVC
+configuration to enable flow handling by Spring MVC
+
+3. An MvcViewFactoryCreator bean has to be created and configured to use the
+bean view resolvers already defined in the application.
+
+CONTINUAR PAGINA: 264
