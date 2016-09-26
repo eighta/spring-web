@@ -219,5 +219,12 @@ the return type is restricted to void and Future (and implementations of this in
 Immediately after a client calls an asynchronous method, 
 the invocation returns and the execution of the method is submitted to a Spring TaskExecutor
 
+NOTA ESPECIAL: el metodo anotado con @Async, debe estar en una clase (Bean) aparte del Caller (llamador)
+de lo contrario, se ejecutara en el mismo hilo 
+
+>>>Intercepting REST Calls (ok)
+
+>>>Spring HATEOAS
+
 **************************
-continuar: pag 214, la prueba del @Async creo que no me esta funcionando! verificar 
+continuar: pag 216

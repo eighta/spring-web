@@ -47,6 +47,8 @@ import web.converters.JsonPersonMessageConverter;
 import web.converters.PersonMessageConverter;
 import web.converters.SeveralPersonMessageConverter;
 import web.interceptors.AuditInterceptor;
+import web.rest.interceptors.RestAuditInterceptor;
+import web.rest.interceptors.RestJsonInterceptor;
 import web.view_resolvers.JsonViewResolver;
 import web.view_resolvers.PdfViewResolver;
 import web.view_resolvers.XlsViewResolver;
@@ -74,7 +76,7 @@ import web.views.xls.OneExcelView;
 
 
 //<context:component-scan />.
-@ComponentScan(basePackages={"web.beans","web.controllers","web.rest.controllers"})
+@ComponentScan(basePackages={"web.beans","web.controllers","web.rest.controllers","web.rest.interceptors"})
 public class MvcJavaConfig 
 	
 	//implements WebMvcConfigurer {
@@ -98,7 +100,9 @@ public class MvcJavaConfig
 //	public Validator getValidator() { return ;}
 
 	extends WebMvcConfigurerAdapter  // <- better than WebMvcConfigurer (interface)
-	implements AsyncConfigurer{ // <<< this is for use @EnableAsync, @Async
+	implements AsyncConfigurer // <<< this is for use @EnableAsync, @Async
+	{
+	
 	
 	// <=> <mvc:default-servlet-handler/>
 		@Override
@@ -161,6 +165,13 @@ public class MvcJavaConfig
 		executor.initialize();
 		return executor;
 	}
+
+	@Override
+	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+		// TODO Auto-generated method stub
+		System.out.println("METHOD: getAsyncUncaughtExceptionHandler()");
+		return null;
+	}
 	
 	//Custom Async Executor
 	@Bean(name="otherExecutor", destroyMethod = "shutdown",
@@ -171,12 +182,12 @@ public class MvcJavaConfig
 		return executor;
 	}
 
-	@Override
-	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-		// TODO Auto-generated method stub
-		System.out.println("METHOD: getAsyncUncaughtExceptionHandler()");
-		return null;
-	}
+// o SIMPLEMENTE		
+//		@Bean(name = "threadPoolTaskExecutor")
+//	    public Executor threadPoolTaskExecutor() {
+//	        return new ThreadPoolTaskExecutor();
+//	    }
+		
 		
 /*
 ██╗  ██╗████████╗████████╗██████╗ 
@@ -303,6 +314,11 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	// <=>  <mvc:interceptors>
 	public void addInterceptors(InterceptorRegistry interceptorRegistry) {
 
+		//REST-CUSTOM
+		//interceptorRegistry.addInterceptor(new RestAuditInterceptor());
+		//interceptorRegistry.addInterceptor(new RestJsonInterceptor());
+		//REST INTERCEPTORS se registran con @ControllerAdvice
+		
 		//MY-CUSTOM
 		interceptorRegistry.addInterceptor(new AuditInterceptor());
 		

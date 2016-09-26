@@ -92,8 +92,6 @@ class MyRequestCallBack4postForLocationWithServletResponse implements RequestCal
 //		JAVADOC: Does not need to care about closing the request or about handling errors: this will all be handled by the RestTemplate.
 //		bodyOutputStream.close(); 
 		
-		
-		
 	}
 }
 
@@ -149,7 +147,7 @@ System.out.println("handleError(...)");
 public class RestClientTest {
 
 	
-	private boolean everythingOk = Boolean.FALSE;
+	private boolean everythingOk = Boolean.TRUE;
 	
 	//XXX Using Hamcrest matcher framework
 	//http://www.vogella.com/tutorials/Hamcrest/article.html
@@ -165,6 +163,35 @@ public class RestClientTest {
 	en las peticiones que se realicen se incluiran en el Accept header, todos los MediaType definidos en los
 	messageConverters
 	*/
+	
+	@Test
+	public void probandoInterceptores(){
+		assumeTrue(everythingOk);
+		
+		String url = "http://localhost:8080/spring-web/s/rest/me";
+		
+		//RestTemplate restTemplate = new RestTemplate();
+		//by default: Accept header to [application/xml, text/xml, application/json, application/*+xml, application/*+json]
+		
+		RestTemplate restTemplate = this.getRestTemplateWithConverters();
+		
+		//GET 4 OBJECT
+		Person getForObject = restTemplate.getForObject(url,Person.class);
+		assertEquals(getForObject.getFirstName(),"Milton");
+		assertThat(getForObject.getSecondName(), is(equalTo("Javier")));
+		
+		
+//		//GET 4 ENTITY
+//		ResponseEntity<Person> getForEntity = restTemplate.getForEntity(url, Person.class);
+//		assertEquals(getForEntity.getBody().getLastName(),"Ochoa");
+//		
+//		//>>>SeveralPerson
+//		url = "http://localhost:8080/spring-web/s/rest/family";
+//		Person[] persons = restTemplate.getForObject(url,Person[].class);
+//		assertNotNull(persons);
+//		assertThat(persons.length, is(equalTo(2)));
+		
+	}
 	
 	
 	@Test
@@ -210,7 +237,8 @@ public class RestClientTest {
 	
 	@Test
 	public void testAsyncAnnotation(){
-	
+		assumeTrue(everythingOk);
+		
 		String url = "http://localhost:8080/spring-web/s/rest/async";
 		RestTemplate restTemplate = new RestTemplate(); //<<< DEFAULT
 		

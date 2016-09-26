@@ -1,5 +1,6 @@
 package a8.data;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,8 +13,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import a8.utils.JsonDateSerializer;
 
 @Message
-public class Person {
+public class Person implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private static final String DATE_PATTERN= "yyyy-MM-dd";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
 
