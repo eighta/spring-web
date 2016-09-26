@@ -1,0 +1,27 @@
+Spring Web Flow
+===============
+
+Spring Web Flow (SWF) is a component of the Spring Framework’s web stack that was created
+to help develop complex applications by reducing the difficulty in development.
+
+>>>support controlled page navigation and state transition; all of this adds
+up to a rigorously defined conversation between the end user and the application.
+
+Spring Web Flow brings to the possibility to define flows as separate components
+detached from the rest of the implementation—web-specific classes and views.
+
+The flow components can be defined and used similar to the way beans are used in Spring.
+
+What Is a Flow?
+A flow models the sequence of steps necessary to perform a task.
+
+In Spring Web Flow, a flow consists of a series of steps called states. A flow will always have only one
+start point and one or more end points. Leaving one state and passing into another can be restricted by the
+result of a conditional expression.
+
+Web Flow Architecture
+---------------------
+In Spring Web Flow, flows are defined using an XML-based flow definition language.
+
+
+
