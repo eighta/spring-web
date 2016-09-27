@@ -105,4 +105,52 @@ configuration to enable flow handling by Spring MVC
 3. An MvcViewFactoryCreator bean has to be created and configured to use the
 bean view resolvers already defined in the application.
 
-CONTINUAR PAGINA: 264
+The FlowHandlerMapping must be the first HandlerMapping
+implementation used to try to retrieve a mapping to make sure that the flow is identified correctly
+order="-1" is used to set the highest priority in the handler mappings list.
+This class returns null in the case of no flow id match, 
+allowing the next handler mapping in the chain to execute
+
+flowExecutor: This bean created is of type FlowExecutorImpl and it uses the
+flowRegistry bean to identify all flows eligible for execution. This bean is the
+entry point into the Web Flow system, as it manages starting and resuming flow
+executions. When an executor bean is created, Spring automatically looks for a flow
+registry bean named flowRegistry, so the definition can be simplified to
+<webflow:flow-executor id="flowExecutor"/>
+
+flowRegistry: Each flow definition registered in this registry bean is assigned a
+unique identifier. The base-path property is used specify the root directory, under
+which all the flow definition files are found; usually this is the WEB-INF directory.
+The flow-location-pattern further narrows the search for the flow definitions,
+providing a wildcard template file name for the flow definition files. But flow
+definitions can be also registered one at a time using flow-location elements. For
+example:
+
+<webflow:flow-registry id="flowRegistry" base-path="/WEB-INF"
+flow-builder-services="flowBuilderServices">
+<webflow:flow-location path="persons/newPerson/newPerson-flow.xml"/>
+</webflow:flow-registry>
+
+flowBuilderServices: This bean registers custom implementations of services
+needed to build flow definitions: view resolvers, data convertors, formatters,
+validators, and others. In version 2.4.0.RELEASE, the validation-hints were added,
+so flow definition can apply partial validation on the model through the validationhints
+attribute supported on view state and transition elements. This bean was
+modified to add a property named validation-hint-resolver that can be used to
+set a custom validation hints resolver. 
+
+The development="true" is quite important, because as you will solve the practice exercises, you might
+not want to restart the application every time you make a change to a flow definition. Setting the development
+property to "true" ensures that changes to a flow definition is autodetected and results in a flow refresh.
+
+mvcViewFactoryCreator: This bean is used by a FlowBuilder to configure a flow’s
+view states with Spring MVC–based view factories. In this case, the tiles view
+resolver is injected into it, so it can be used to resolve view states using it. The
+useSpringBeanBinding property is set to “true” to enable the same binding system
+used by the Spring MVC in a Web Flow environment.
+
+conversionService: This bean is a wrapper for the conversion service bean used by
+Spring MVC, which is provided to the flowBuilderServices bean to be used during
+a flow execution
+
+CONTINUAR PAGINA: 267
