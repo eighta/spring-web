@@ -143,14 +143,71 @@ The development="true" is quite important, because as you will solve the practic
 not want to restart the application every time you make a change to a flow definition. Setting the development
 property to "true" ensures that changes to a flow definition is autodetected and results in a flow refresh.
 
-mvcViewFactoryCreator: This bean is used by a FlowBuilder to configure a flow’s
-view states with Spring MVC–based view factories. In this case, the tiles view
-resolver is injected into it, so it can be used to resolve view states using it. The
-useSpringBeanBinding property is set to “true” to enable the same binding system
+mvcViewFactoryCreator: This bean is used by a FlowBuilder to configure a flow's
+view states with Spring MVC based view factories. 
+
+In this case, the tiles view resolver is injected into it, so it can be used to resolve view states using it. 
+The useSpringBeanBinding property is set to "true" to enable the same binding system
 used by the Spring MVC in a Web Flow environment.
 
 conversionService: This bean is a wrapper for the conversion service bean used by
 Spring MVC, which is provided to the flowBuilderServices bean to be used during
 a flow execution
 
-CONTINUAR PAGINA: 267
+FlowController: This class is the bridge between the Spring MVC
+Controller layer and the Spring Web Flow engine; it allows Spring Web Flow to run embedded as a Controller
+within a DispatcherServlet and it is used internally. This class uses the handlers and executor defined in the
+configuration to execute flows; it does this transparently.
+
+Create a Flow
+-------------
+
+A flow describes a sequence of steps that is executed in the order established by the flow definition. 
+A web flow is made of tree types of elements: states, transitions, and data.
+
+In a flow definition, the following types of states can be used:
+
+>View state: In this type of state, the execution of a flow is paused to render a view
+to the user and wait for input data. It is defined using the <view-state ../> XML
+element.
+
+>Action state: In this type of state, Java code is executed, and sometimes the next state
+to transition to depends on the outcome of this code. It is defined using the <action-
+state ../> XML element.
+
+>Decision state: In this type of state, some branch logic is implemented using the
+XML flow definition language. It is defined using the <decision-state ../> XML
+element.
+
+>Subflow state: The execution is transferred to another flow. When the subflow
+execution is completed, the execution will return to this state. It is defined using the
+<decision-state ../> XML element.
+
+>End state: The final state of the flow execution. It is not mandatory for this state to
+render a view, but usually a confirmation view is rendered to the user. It is defined
+using the <end-state ../> XML element.
+
+The switch from one state to the other is called a transition and it is triggered by events. Some data can
+be shared among states, depending on the scope of that data.
+
+The data is the information that is carried from one state to
+the other; it has a life span that depends on the scope on which it was declared.
+
+Flow Definition
+---------------
+A flow is defined in a single XML file, and all the states composing it are defined as child elements of the
+flow element. The content of the flow element is actually a task algorithm.
+
+All resources used by a flow (views, internationalization files) when being executed must be placed in the 
+same directory as the flow definition file.
+
+Basically, each flow defined in an application has its own directory that contains all flow
+definition resources.
+
+When developing a flow, it is recommended to think and design the flow logic firstâ€”define the states
+and transitions, review the flow with business analysts, use mock views (plain HTML files that replace the
+view in testing scenarios)â€”to depict the steps and then add the behavior. To define the states of a flow, the
+*-flow.xml file must be populated. Usually, the first step is a view-state that displays a view to the user to
+provide data to the flow.
+
+CONTINUAR PAGINA: 274

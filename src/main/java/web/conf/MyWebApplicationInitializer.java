@@ -29,8 +29,8 @@ public class MyWebApplicationInitializer
 
 	//extends org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer{ <- returning a JavaClasses for Conf! (implicit Context)
 	//	protected Class<?>[] getRootConfigClasses() {return null;}
-	//	protected Class<?>[] getServletConfigClasses() {return null;}
-	//	protected String[] getServletMappings() {return null;}
+	//	protected Class<?>[] getServletConfigClasses() {return new Class<?>{MvcConfig.class,WebFlowConfig.class};}
+	//	protected String[] getServletMappings() {return new String{"/"};}
 
 //or 
 	implements org.springframework.web.WebApplicationInitializer{
