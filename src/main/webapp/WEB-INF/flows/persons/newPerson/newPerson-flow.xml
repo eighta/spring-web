@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow 	xmlns="http://www.springframework.org/schema/webflow"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
 			http://www.springframework.org/schema/webflow
 			http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+	<global-transition on="cancel" to="cancelled" />
+
+	<!-- states and actions-->
+	<view-state id="enterPersonInfo">
+		<transition on="proceed" to="reviewPerson" />
+	</view-state>
+
+	<view-state id="reviewPerson">
+		<transition on="confirm" to="enterIdentityCard" />
+	</view-state>
 	
-	<!-- states and actions will be placed here later -->
+	<end-state id="end" />
 	
+	<end-state id="finish" view="externalRedirect:contextRelative:/person/1" />
+
 </flow>

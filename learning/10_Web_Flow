@@ -206,8 +206,62 @@ definition resources.
 
 When developing a flow, it is recommended to think and design the flow logic first—define the states
 and transitions, review the flow with business analysts, use mock views (plain HTML files that replace the
-view in testing scenarios)—to depict the steps and then add the behavior. To define the states of a flow, the
-*-flow.xml file must be populated. Usually, the first step is a view-state that displays a view to the user to
+view in testing scenarios)—to depict (<<<REPRESENTAR) the steps and then add the behavior. 
+To define the states of a flow, the *-flow.xml file must be populated. 
+Usually, the first step is a view-state that displays a view to the user to
 provide data to the flow.
+
+States
+------
+<view-state id="enterPersonInfo"/>
+
+The view-state id resolves to a view template; by default, a *.jsp file is searched for in the current
+directory. View resolution is pluggable, depending on the view technology used.
+
+In the examples given in this book, Apache Tiles are used to define and resolve views; 
+so the view to display when entering the enterPersonInfo state is defined in the tiles.xml under the flow directory.
+
+Transitions
+-----------
+Next, a transition must be defined by adding the <transition> element as a child to the state you
+are transitioning from when a user event is activated. If no navigation is performed (for example, when
+validation fails), the initial view is refreshed.
+
+When performing typical web navigations, there is always a Cancel button that allows the user to cancel
+the whole process. When using Spring Web Flow, this can be done by declaring a <global-transition>
+element, but using global transition elements sort of breaks the flow. It’s similar to using a goto statement.
+It also makes the flow definition less readable.
+
+A flow can have one or multiple end-states defined (<end-state> elements are used to define them)
+and a flow execution can end in any of them, based on the events the user triggers. After a flow execution
+reaches an end state, the flow terminates and the outcome is returned, unless the end state sends a final
+response or redirects the user to another resource, typically a confirmation page.
+
+Redirecting to a confirmation page after a flow has finished the execution is tricky, as the flow data is
+gone. The solution is to use a redirect to a stateless confirmation page and to use a parameter that has a
+value that can be used to display confirmation data. The <end-state> element has a view attribute that can
+be used to specify the URL to redirect to.
+
+The contextRelative prefix is one of the explicit redirects supported in the context of a flow execution.
+Without these prefixes, the returned resource location is relative to the current servlet mapping. The flow
+redirect prefixes help you have more control over where the user is redirected. The following is the complete
+list of flow redirection prefixes:
+
+-servletRelative: Redirects to a resource relative to the current server
+-contextRelative: Redirects to a resource relative to the current web application context path
+-serverRelative: Redirects to a resource relative to the server root
+-http:// or https:// Redirects to a fully qualified resource URI
+
+These redirect prefixes are supported in a flow definition together with the externalRedirect: directive
+in view-state or end-state elements. The view-state element has a view property that can be used to
+specify a different view than the one with the same state id, and this view can be outside the newPerson flow
+directory
+
+<view-state id="reviewPerson" view="externalRedirect:contextRelative:/verifyPerson">
+	<transition on="confirm" to="enterIdentityCard"/>
+</view-state>
+
+A flow can also redirect to a different flow by using the flowRedirect: directive in its end state; this
+basically means the current flow ends and a new one is started.
 
 CONTINUAR PAGINA: 274
