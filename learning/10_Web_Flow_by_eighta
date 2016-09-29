@@ -21,3 +21,40 @@ MvcConfig
 WebFlowConfig
 -MvcConfig
 
+What are the different parts of a flow
+
+The web flow has three main parts - States, Transition and Data.
+States - States are points on the flow where an action happens or decision is made or a view is displayed. The end of a flow is also a state. Sometimes, to increase brewity, a subset of a flow can be combined together to form a sub-flow and then the sub-flow is a state in the main flow.
+Transitions - Transition connects two states. A movement of request from one state to another is called a transition.
+Data - Data is the information that is carried from one state to another. The life span of the data depends on the scope with which it is declared. 
+
+
+States- There are five kinds of states
+
+    View States - A view state displays information to a user or obtains user input using a form. a model can be passed to bind the elements of the form. The view may be implemented as any view defined in spring mvc. (e.g. JSP)
+    Action States - Action states are where actions are perfomed by the spring beans. The action state transitions to another state. The action states generally have an evaluate property that describes what needs to be done. The evaluate is generally a method of one of the registered spring beans. The evaluate expression is a SpEL. More than one action can be configured in which case the actions will be executed one after the other.
+    Decision States: Decision state is where a decision is made. A decision state has two transitions depending on whether the decision evaluates to true or false.
+    Subflow States - It may be advantageous to call another flow from one flow to complete some steps. The sub flow returns to the original flow when it is complete. Data may be passed from the calling flow into the subflow and output data from the subflow may be retrieved into the calling flow.
+    End States - The end state signifies the end of flow. If the end state is part of a root flow then the execution is ended. However, if its part of a sub flow then the root flow is resumed.
+
+Flow Data Scopes Flow Data can be stored as variables that can be created using the 'var' element or using the evaluate expression.
+Variable scope - The lifespan of the variable depends on the scope with which it is declared. The scopes available are:
+
+    Conversation - The conversation scope starts when a flow starts and ends when the flow ends. It is available in sub flows
+    Flow - Available within a flow. Not available in sub flows
+    Request - Available during the life of a request in a flow
+    Flash - Available during the lifetime of a flow. However, once a state is rendered, the variable is cleared.
+    View - Available only during the lifetime of a view. Created when a view is created and destroyed once a view is destroyed
+   
+Spring Web Flow allows you to represent the page flows of your application in a clear 
+and simple way and the good part is that you can use it Spring Web Flow with other 
+frameworks like Struts, Spring and JSF.   
+   
+Advantages of Spring Web Flow:
+
+    Page flow of the application is visible just by looking at XML or java configuration.
+    Web flows are designed to be self contained, and thus are reusable multiple of times.
+    The technique to capture the page flow remains the same for all the cases and there are no specialized approaches for particular situations.
+
+
+http://docs.spring.io/spring-webflow/docs/current/reference/html/defining-flows.html   
