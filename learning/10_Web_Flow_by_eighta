@@ -57,5 +57,67 @@ Advantages of Spring Web Flow:
     The technique to capture the page flow remains the same for all the cases and there are no specialized approaches for particular situations.
 
 
+How Web Flow Works
+
+When Web Flow receives a transition request
+-It is submitted to the same URL as current state
+-The flow “wakes up”
+-The next state is determined
+-A redirect is issued to the new URL for the new state
+
+Every Web Flow interaction uses "TWO" requests
+ Consequence:
+  -Data associated with the initial request is not available
+	when the next state (view) is generated
+  -So Webflow provides flash-scope
+  
+
+*Configuring Web Flow
+
+Web Flow provides a Spring XML namespace for configuration
+-Use to setup Web Flow inside Spring MVC
+
+Recommendation:
+-Define setup using two configuration files
+--webflow-config.xml for core Web Flow system
+--mvc-config.xml for Spring MVC adapters
+
+*Steps to use within Spring MVC:
+
+1 Configure a flow-registry (and builder-services)
+2 Configure the flow-executor
+3 Enable flow handling by Spring MVC
+4 Setup FlowHandlerMapping (maps registered flows to resource URLs)
+
+*The Flow Registry
+
+-Stores your flow definitions by unique id
+
+-Flows typically stored under /WEB-INF
+-Options for registering flows
+ >One at a time
+ >Using a wildcard pattern
+ 
+-Can be customized with "flow builder services"
+ >Specify development mode
+ >Specify view technology
+ >Specify conversion service (same as MVC)
+ 
+*Registering Flow Definitions
+
+-One at a time
+<webflow:flow-registry id="flowRegistry">
+	<webflow:flow-location id="flights/checkin" path="/WEB-INF/flights/checkin/checkin.xml" />
+</webflow:flow-registry>
+
+-By using a wildcard pattern
+ >The derived flow id is relative to the base path
+<webflow:flow-registry id="flowRegistry" base-path="/WEB-INF/">
+	<webflow:flow-location-pattern value="**/*-flow.xml" />
+</webflow:flow-registry>
+
+
+
 http://docs.spring.io/spring-webflow/docs/current/reference/html/defining-flows.html
 http://docs.spring.io/spring-webflow/docs/current/reference/html/el.html
+https://www.adictosaltrabajo.com/tutoriales/primerospasos-spring-web-flow-2/
