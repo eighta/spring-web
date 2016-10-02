@@ -50,6 +50,7 @@ import web.interceptors.AuditInterceptor;
 import web.rest.interceptors.RestAuditInterceptor;
 import web.rest.interceptors.RestJsonInterceptor;
 import web.view_resolvers.JsonViewResolver;
+import web.view_resolvers.JstlViewsWebFlowResolver;
 import web.view_resolvers.PdfViewResolver;
 import web.view_resolvers.XlsViewResolver;
 import web.views.pdf.CustomPdfView;
@@ -387,7 +388,7 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer contentNegotiationConfigurer) {
 		contentNegotiationConfigurer.useJaf(false).
-				ignoreAcceptHeader(false).	//IGNORAR EL ACCEPT HEADER
+				ignoreAcceptHeader(true).	//IGNORAR EL ACCEPT HEADER
 				favorPathExtension(true).	//IDENTIFICAR POR EXTENSION
 				favorParameter(false).		//IDENTIFICAR POR PARAMETRO
 				parameterName("formatType").//NOMBRE DEL PARAMETRO PARA IDENTIFICAR EL FORMATO SOLICITADO
@@ -405,6 +406,13 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 		
 		// <=><mvc:annotation-driven content-negotiation-manager="cnm"/>
 		viewResolverRegistry.enableContentNegotiation();
+		
+		//4 Web Flow
+//		JstlViewsWebFlowResolver internalResourceViewResolverWebFlow =
+//				new JstlViewsWebFlowResolver();
+//		internalResourceViewResolverWebFlow.setPrefix("/WEB-INF/flows/");
+//		internalResourceViewResolverWebFlow.setSuffix(".jsp");
+//		viewResolverRegistry.viewResolver(internalResourceViewResolverWebFlow);
 		
 		//xls
 		XlsViewResolver xlsViewResolver = new XlsViewResolver(); 
@@ -440,7 +448,12 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	@Bean
 	public TilesConfigurer tilesConfigurer(){
 		TilesConfigurer tilesConfigurer = new TilesConfigurer();
-		tilesConfigurer.setDefinitions("/WEB-INF/views/tiles/tiles.xml");
+		tilesConfigurer.setDefinitions(
+				"/WEB-INF/views/tiles/tiles.xml",
+				
+				//4 WebFlow
+				"/WEB-INF/flows/persons/newPerson/tiles.xml");
+		
 		
 		return tilesConfigurer;
 	}

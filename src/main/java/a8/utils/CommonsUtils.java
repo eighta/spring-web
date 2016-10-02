@@ -45,6 +45,18 @@ public class CommonsUtils {
 		}
 		return null;
 	}
+	
+	public void printList(List<?> list){
+		
+		ConsoleStringTable consoleList= new ConsoleStringTable();
+		int currentRow = 0;
+		for(Object item:list){
+			consoleList.addString(currentRow++, 0, item.toString());
+		}
+		
+		System.out.println(consoleList.toString());
+		
+	}
 
 	public void printMap(Map<?,?> map){
 		

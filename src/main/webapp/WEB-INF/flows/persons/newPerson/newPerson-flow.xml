@@ -1,27 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flow xmlns="http://www.springframework.org/schema/webflow"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
-			http://www.springframework.org/schema/webflow
-			http://www.springframework.org/schema/webflow/spring-webflow.xsd">
-
-	<global-transition on="cancel" to="cancelled" />
-	
-	<on-start>
-	
-	</on-start>
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
 	<!-- states and actions-->
-	<view-state id="enterPersonInfo">
-		<transition on="proceed" to="reviewPerson" />
+	<view-state id="enterMainPersonInfo">
+		<!-- transitions -->
+		<transition on="next" to="enterLocationPersonInfo"/>
+		
+		<transition on="locationInfo" to="enterLocationPersonInfo"/>
+		<transition on="keyInfo" to="enterKeyPersonInfo"/>
+		<transition on="reviewInfo" to="reviewPersonInfo"/>
+		
 	</view-state>
-
-	<view-state id="reviewPerson">
-		<transition on="confirm" to="enterIdentityCard" />
+	
+	<view-state id="enterLocationPersonInfo">
+		<!-- transitions -->
+		<transition on="back" to="enterMainPersonInfo"/>
+		<transition on="next" to="enterKeyPersonInfo"/>
+		
+		<transition on="mainInfo" to="enterMainPersonInfo"/>
+		<transition on="keyInfo" to="enterKeyPersonInfo"/>
+		<transition on="reviewInfo" to="reviewPersonInfo"/>
+		
+	</view-state>
+	
+	<view-state id="enterKeyPersonInfo">
+		<!-- transitions -->
+		<transition on="back" to="enterLocationPersonInfo"/>
+		<transition on="next" to="reviewPersonInfo"/>
+		
+		<transition on="mainInfo" to="enterMainPersonInfo"/>
+		<transition on="locationInfo" to="enterLocationPersonInfo"/>
+		<transition on="reviewInfo" to="reviewPersonInfo"/>
+	</view-state>
+	
+	<view-state id="reviewPersonInfo">
+		<!-- transitions -->
+		<transition on="back" to="enterKeyPersonInfo"/>
+		<transition on="confirm" to="end"/>
+		
+		<transition on="mainInfo" to="enterMainPersonInfo"/>
+		<transition on="locationInfo" to="enterLocationPersonInfo"/>
+		<transition on="keyInfo" to="enterKeyPersonInfo"/>
 	</view-state>
 	
 	<end-state id="end" />
 	
-	<end-state id="finish" view="externalRedirect:contextRelative:/person/1" />
 
 </flow>

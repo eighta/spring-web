@@ -56,7 +56,7 @@ th{
 	color: #393939;
 }
 span{
-	color: #C6C8CA;
+	/*color: #C6C8CA;*/
 	margin: 5px;
 }
 h1,h3, p{
@@ -202,6 +202,10 @@ a{
     font-family: Anime;
     margin-left: 20px;
     margin-bottom: 10px;
+}
+
+.serious_box{
+	font-family: "Ubuntu",serif;
 }
 
 .bigtitle-medium{

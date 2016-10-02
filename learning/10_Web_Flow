@@ -151,7 +151,7 @@ The useSpringBeanBinding property is set to "true" to enable the same binding sy
 used by the Spring MVC in a Web Flow environment.
 
 conversionService: This bean is a wrapper for the conversion service bean used by
-Spring MVC, which is provided to the flowBuilderServices bean to be used during
+Spring MVC, w	hich is provided to the flowBuilderServices bean to be used during
 a flow execution
 
 FlowController: This class is the bridge between the Spring MVC

@@ -33,7 +33,8 @@ public class MyWebApplicationInitializer
 	//	protected String[] getServletMappings() {return new String{"/"};}
 
 //or 
-	implements org.springframework.web.WebApplicationInitializer{
+	implements org.springframework.web.WebApplicationInitializer
+	{
 
 	private static final ServletContextUtil servletContextUtil = ServletContextUtil.getInstance();
 	private static final Logger logger = LoggerFactory.getLogger(MyWebApplicationInitializer.class);

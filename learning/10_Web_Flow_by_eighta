@@ -28,24 +28,34 @@ States - States are points on the flow where an action happens or decision is ma
 Transitions - Transition connects two states. A movement of request from one state to another is called a transition.
 Data - Data is the information that is carried from one state to another. The life span of the data depends on the scope with which it is declared. 
 
+OJO EN LA DIAPOSITVA DICE:
+-STATES, TRANSITIONS AND ACTIONS
 
 States- There are five kinds of states
 
     View States - A view state displays information to a user or obtains user input using a form. a model can be passed to bind the elements of the form. The view may be implemented as any view defined in spring mvc. (e.g. JSP)
+    	(first state in the file becomes "start state")
     Action States - Action states are where actions are perfomed by the spring beans. The action state transitions to another state. The action states generally have an evaluate property that describes what needs to be done. The evaluate is generally a method of one of the registered spring beans. The evaluate expression is a SpEL. More than one action can be configured in which case the actions will be executed one after the other.
     Decision States: Decision state is where a decision is made. A decision state has two transitions depending on whether the decision evaluates to true or false.
     Subflow States - It may be advantageous to call another flow from one flow to complete some steps. The sub flow returns to the original flow when it is complete. Data may be passed from the calling flow into the subflow and output data from the subflow may be retrieved into the calling flow.
     End States - The end state signifies the end of flow. If the end state is part of a root flow then the execution is ended. However, if its part of a sub flow then the root flow is resumed.
 
-Flow Data Scopes Flow Data can be stored as variables that can be created using the 'var' element or using the evaluate expression.
-Variable scope - The lifespan of the variable depends on the scope with which it is declared. The scopes available are:
+Web Flow Scope
+--------------
+(Flow Data Scopes) Flow Data can be stored as variables that can be created using the 'var' element or using the evaluate expression.
+Variable scope - The lifespan of the variable depends on the scope with which it is declared. 
 
-    Conversation - The conversation scope starts when a flow starts and ends when the flow ends. It is available in sub flows
-    Flow - Available within a flow. Not available in sub flows
-    Request - Available during the life of a request in a flow
-    Flash - Available during the lifetime of a flow. However, once a state is rendered, the variable is cleared.
-    View - Available only during the lifetime of a view. Created when a view is created and destroyed once a view is destroyed
-   
+The scopes available are:
+	
+	Flow - Available within a flow. Not available in sub flows (HTTP Session) 
+	View - Available only during the lifetime of a view. 
+			Created when a view is created and destroyed once a view is destroyed (HTTP Session)
+	Request - Available during the life of a request in a flow
+	Flash - Available during the lifetime of a flow. However, once a state is rendered, the variable is cleared.
+			(HTTP Session temporary)
+    Conversation - The conversation scope starts when a flow starts and ends when the flow ends. 
+    		It is available in sub flows (HTTP Session)
+
 Spring Web Flow allows you to represent the page flows of your application in a clear 
 and simple way and the good part is that you can use it Spring Web Flow with other 
 frameworks like Struts, Spring and JSF.   
@@ -61,7 +71,7 @@ How Web Flow Works
 
 When Web Flow receives a transition request
 -It is submitted to the same URL as current state
--The flow “wakes up”
+-The flow â€œwakes upâ€�
 -The next state is determined
 -A redirect is issued to the new URL for the new state
 
@@ -116,8 +126,67 @@ Recommendation:
 	<webflow:flow-location-pattern value="**/*-flow.xml" />
 </webflow:flow-registry>
 
+*Signaling Flow Events
+ >/flights/checkin?execution=e1s1&_eventId=update
+ 
+ **with forms
+ <input type="submit" value="Next" class="button" name="_eventId_next" />
+ 
+ *lab1
+ /rewards/newReward > /persons/newPerson
 
+Evaluation and Variables
+------------------------
 
-http://docs.spring.io/spring-webflow/docs/current/reference/html/defining-flows.html
+<evaluate> elements to invoke SpEL
+<var> and <set>
+
+<evaluate result="flowScope.itinerary" 
+ expression="checkinAgent.findItinerary(passengerInfo)"/>
+
+Spring EL Syntax
+-----------------
+<variable>[.property]
+ 
+Variable resolution algorithm
+-Busca en variables reservadas primero
+-Busca en Web Flow Scopes de segundo
+-Busca en Flow Application Context de tercero (Spring Beans)
+
+Variables Reservadas SpEL
+-------------------------
+conversationScope
+flowScope
+viewScope
+requestScope
+flashScope
+flowExecutionUrl
+flowRequestContext
+requestParameters
+currentEvent
+currentUser
+externalContext
+messageContext
+resourceBundle
+
+OJO: sessionScope NO EXISTE, usar: externalContext.sessionMap
+
+Se definen dentro de los tags: <flow> y <view-state>
+
+Actions During Transitions
+--------------------------
+-Corren antes que ocurra la transition
+ >La transition solo ocurre si el <evaluate> return
+ 	-Boolean.TRUE or true
+ 	-String= sucess, yes, true
+ 	-Cualquier tipo o null
+
+Solo un <evaluate> es permitido (WARNING)
+
+<set> nunca detienen la transicion, es posible utilizar muchos
+
+ *lab2
+
+http://docs.spring.io/spring-webflow/docs/current/reference/html/defining-flows.html [DONE]
 http://docs.spring.io/spring-webflow/docs/current/reference/html/el.html
 https://www.adictosaltrabajo.com/tutoriales/primerospasos-spring-web-flow-2/

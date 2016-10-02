@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	
+	<definition name="enterMainPersonInfo" extends="layout">
+		<put-attribute name="pageTitle" value="Person Information" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/persons/newPerson/_newPersonFormUI.jsp" />
+		<put-attribute name="content" value="/WEB-INF/flows/persons/newPerson/_newPersonFormUI.jsp" />
+	</definition>
+	
+	<definition name="enterLocationPersonInfo" extends="layout">
+		<put-attribute name="pageTitle" value="Location Information" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/persons/newPerson/_locationPersonFormUI.jsp" />
+		<put-attribute name="content" value="/WEB-INF/flows/persons/newPerson/_locationPersonFormUI.jsp" />
+	</definition>
+	
+	<definition name="enterKeyPersonInfo" extends="layout">
+		<put-attribute name="pageTitle" value="Security Information" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/persons/newPerson/_keyPersonFormUI.jsp" />
+		<put-attribute name="content" value="/WEB-INF/flows/persons/newPerson/_keyPersonFormUI.jsp" />
+	</definition>
+	
+	<definition name="reviewPersonInfo" extends="layout">
+		<put-attribute name="pageTitle" value="Review Person Info" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/persons/newPerson/_reviewPersonFormUI.jsp" />
+		<put-attribute name="content" value="/WEB-INF/flows/persons/newPerson/_reviewPersonFormUI.jsp" />
+	</definition>
+	
+</tiles-definitions>
