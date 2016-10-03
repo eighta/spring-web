@@ -1,25 +1,9 @@
 orden a seguir:
 
--lab: Chapter 12. webflow-language-essentials: Web Flow Language Essentials Lab
-
-en el review, se va a mostrar:
-
-name
-	PRIMER NOMBRE + APELLIDO
-
-autoriza:
-	CHECK
-	(POR ALGUN LADO UN LINK O TEXT AREA << NO AGUANTA)
-
-buton: FINISH
-	REALIZAR "ALMACENAMIENTO", 
-
-Y FINALMENTE MOSTRAR UNA PANTALLA DE DONE
-
-LUEGO SEGUIR, CON EL PASO 3, DEL LABORATORIO
-
+-lab: Chapter 12. webflow-language-essentials: Web Flow Language Essentials Lab [DONE]
 
 -808 Web Flow Essentials (LAB si hay)
+
 -836 Web Flow Actions (LAB si hay)
 -888 Web Flow Action States (LAB si hay)
 -919 Web Flow Advanced Features (LAB si hay)
