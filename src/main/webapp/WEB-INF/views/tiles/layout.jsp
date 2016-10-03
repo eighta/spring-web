@@ -20,7 +20,7 @@
 		<tiles:insertAttribute name="pageTitle"/>
 	</title>
 </head>
-
+ 
 <body>
 	<div class="bigtitle">
 		<tiles:insertAttribute name="pageTitle"/>

@@ -46,7 +46,9 @@
 		<transition on="keyInfo" to="enterKeyPersonInfo"/>
 	</view-state>
 	
-	<end-state id="end" />
+	<!-- XXX ANALIZAR LAS DISTINTAS ALTERNATIVOS EN EL VIEW attribute -->
+	<!-- view="externalRedirect:contextRelative:/rewards/1" -->
+	<end-state id="end"  view="vista_final"/>
 	
 
 </flow>

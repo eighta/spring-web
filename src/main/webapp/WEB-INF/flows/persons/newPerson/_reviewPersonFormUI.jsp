@@ -8,12 +8,24 @@
     </ul>
     
     <form class="form" method="post">
-      <input type="text" placeholder="First Name" class="textbox" />
-      <input type="text" placeholder="Last Name" class="textbox" />
-      <input type="text" placeholder="Email Address" class="textbox" />
+    
+    	<h4>Name</h4>
+      	<input type="text" class="textbox" disabled="disabled" value="Milton J. Ochoa" />
+      	
+      	<h4>T&eacute;rminos y Condiciones</h4>
+      	<textarea>
+      		POR FAVOR LEA CON DETENIMIENTO LAS CONDICIONES DE USO ANTES DE UTILIZAR EL PRESENTE SITIO. PUEDEN PARECERLE MUY TÉCNICAS Y FORMALES DESDE EL PUNTO DE VISTA LEGAL PERO SON DE VITAL IMPORTANCIA. AL UTILIZAR ESTE SITIO, UD. ACEPTA ESTAS CONDICIONES DE USO. EN CASO DE QUE UD. NO ESTE DE ACUERDO CON ESTAS CONDICIONES DE USO, POR FAVOR NO UTILICE ESTE SITIO O LOS SERVICIOS QUE EL MISMO LE OFRECE. GRACIAS.
+1. La aceptación a estos términos del servicio (“Términos de Servicio”) es un acuerdo legal vinculante entre usted y la EMPRESA respecto al uso del Sitio Web y todos los productos o servicios disponibles del Sitio Web. Por favor, lea estos Términos de Servicio cuidadosamente. Al acceder o utilizar el Sitio Web, usted expresa su acuerdo con (1) los Términos del Servicio, y (2) las Normas de la comunidad incorporadas y detalladas en las presentes condiciones generales. Si no está de acuerdo con cualquiera de estos términos o las Normas de la comunidad, por favor, no utilice este sitio o los servicios que el mismo ofrece.
+2. Actualización de los Términos del Servicio. Aunque intentaremos notificar a los lectores cuando se realizan cambios importantes a las presentes Condiciones de Servicio, usted debe revisar periódicamente la versión vigente más actualizada de las Condiciones del servicio. La EMPRESA, a su discreción, puede modificar o revisar estas Condiciones de servicio y políticas en cualquier momento, y usted acepta que quedará vinculado por estas modificaciones o revisiones.
+3. Las presentes Condiciones de Servicio se aplican a todos los usuarios del Sitio Web, incluidos los usuarios que participen aportando contenidos tales como imágenes, información y otros materiales o servicios en el Sitio Web.
+4. La EMPRESA se reserva el derecho a modificar cualquier aspecto del Sitio Web en cualquier momento.
+      	</textarea>
+     <br/> <br/>
+     <input type="checkbox" value="YES" /> Acepto las Condiciones del servicio
+      
       <div>
       	<input type="submit" value="Back" class="button back_b" name="_eventId_back" />
-      	<input type="submit" value="Finish" class="button" name="_eventId_next" />
+      	<input type="submit" value="Finish" class="button" name="_eventId_confirm" />
       </div>
     </form>
   </div>
