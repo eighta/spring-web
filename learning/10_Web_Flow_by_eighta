@@ -28,7 +28,7 @@ States - States are points on the flow where an action happens or decision is ma
 Transitions - Transition connects two states. A movement of request from one state to another is called a transition.
 Data - Data is the information that is carried from one state to another. The life span of the data depends on the scope with which it is declared. 
 
-OJO EN LA DIAPOSITVA DICE:
+OJO EN LA DIAPOSITVA DEL CURSO DICE:
 -STATES, TRANSITIONS AND ACTIONS
 
 States- There are five kinds of states
@@ -71,7 +71,7 @@ How Web Flow Works
 
 When Web Flow receives a transition request
 -It is submitted to the same URL as current state
--The flow â€œwakes upâ€�
+-The flow awakes up
 -The next state is determined
 -A redirect is issued to the new URL for the new state
 
@@ -187,6 +187,75 @@ Solo un <evaluate> es permitido (WARNING)
 
  *lab2
 
+MISC
+====
+Los ids de los flows, son generados a partir de la carpeta en donde se encuentra el XML (authoring flow)
+e.g. : 	/folder1/folder2/folder3/folder4/folder5/folderFlow-flow.xml
+id:		"folder1/folder2/folder3/folder4/folder5"
+
+**Los "View States" poseen un id, el cual resuelve a un "View Template", correspondiente al mismo nombre (id)
+(por defecto id.jsp), pero obviamente se puede configurar el ViewResolution a travez de los ViewResolvers
+
+**Las Transitions, manejan los eventos de un usuario
+<transition on="findItinerary" to="reviewItinerary" />
+
+**Existen las Global Transitions, que pueden ser llamadas desde cualquier view-state
+<global-transition on="cancel" to="cancelled" />
+NOTA: en el xml, me toco definirlas al final del archivo (de primeras lanzaba error)
+
+**Sending End State Redirects
+Use the <end-state> view attribute to specify the URL to redirect to
+<end-state id="finish" view="externalRedirect:contextRelative:/flights/checkin/confirm?id=1" />
+
+Can use:
+"externalRedirect:" or "flowRedirect:"
+
+Can use:
+"servletRelative"		RELACIONADO CON EL SERVLET (frontController de Spring)
+"contextRelative",		SE REFIERE AL NIVEL DEL CONTEXTO DEL WEB-APP
+"serverRelative",		SOLO FUNCIONA CON:  externalRedirect (FUERA DE LA WEB-APP)
+
+The explicit redirect prefixes supported are:
+servletRelative: - redirect to a resource relative to the current servlet
+contextRelative: - redirect to a resource relative to the current web application context path
+serverRelative: - redirect to a resource relative to the server root
+http:// or https:// - redirect to a fully-qualified resource URI
+
+**MVC Flash Scope
+Cuando se desea transmitir un dato desde WebFlow a Mvc 
+
+>Se debe habilitar en el FlowHandlerAdapter
+<property name="saveOutputToFlashScopeOnRedirect" ref="true"/>
+
+>utilizando el tag: <output name="confirmationNumber" value="1"/>
+
+**To signal an event JSP views use a naming convention for form buttons:
+>_eventId_xxx
+<button name="_eventId_findItinerary" type="submit">
+	Find Itinerary
+</button>
+
+>A view can also add _eventId to HTML links
+– /flights/checkin?execution=e1s1&_eventId=update
+
+>JSF views specify the event in the action attribute of command buttons and links
+<h:commandButton id="findItineraryButton"
+	action="findItinerary”
+	value="Find Itinerary" />
+
+**Testing Flows
+Every flow should have a unit test
+– Verifies flow logic works as expected
+
+Web Flow provides JUnit test support
+– Extend from a base test class
+
+Define a new TestCase class per Flow
+– e.g. FlightCheckinFlowExecutionTests
+
+
+[DOCUMENTATION]
+http://docs.spring.io/spring-webflow/docs/current/reference/htmlsingle/
 http://docs.spring.io/spring-webflow/docs/current/reference/html/defining-flows.html [DONE]
 http://docs.spring.io/spring-webflow/docs/current/reference/html/el.html
 https://www.adictosaltrabajo.com/tutoriales/primerospasos-spring-web-flow-2/

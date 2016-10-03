@@ -2,7 +2,7 @@
 spring testing
 ==============
 Unit testing is used to test small units of code, thus its naming. Unit testing is easy to
-do—not much setup is necessary, and since JUnit10 has introduced @Test annotation
+do not much setup is necessary, and since JUnit10 has introduced @Test annotation
 writing, unit tests have become a breeze.
 
 Integration testing is used to test bigger chunks of code made up of objects

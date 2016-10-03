@@ -3,8 +3,8 @@ spring web
 ==========
 The Spring Web MVC provides preconfigured beans for the implementation of this behavior.
 These beans are contained in two main libraries:
-• spring-web.jar
-• spring-webmvc.jar
+- spring-web.jar
+- spring-webmvc.jar
 
 At the center of the Spring Web MVC framework sits the DispatcherServlet class
 it acts as a front controller, an entry point for the web application.
@@ -13,15 +13,15 @@ The DispatcherServlet in Spring has the same responsibilities as the ActionServl
 as both are implementations of the Front Controller Pattern.
 
 The Spring components mentioned earlier can be categorized as follows:
-• Spring MVC infrastructure components
-	• handler mappings
-	• handler adapters
-	• view resolvers
-	• personalization beans
-	• exception resolvers
-• User-provided web components
-	• handler interceptors
-	• controllers
+- Spring MVC infrastructure components
+	> handler mappings
+	> handler adapters
+	> view resolvers
+	> personalization beans
+	> exception resolvers
+- User-provided web components
+	> handler interceptors
+	> controllers
 	
 Configuration Without Using web.xml
 ===================================

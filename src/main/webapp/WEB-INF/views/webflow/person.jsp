@@ -8,21 +8,17 @@
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
 <link rel="stylesheet" href="http://localhost:8080/spring-web/libs/pure-release-0.6.0/pure-min.css">
 
-<title>Web Flow</title>
+<title>Web Flow - Person</title>
 </head>
 <body>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
 
-	<div class="rainbow">Web Flow</div>
-	<div class="box">views/webflow/index.jsp</div>
+	<div class="rainbow">Web Flow - Person</div>
+	<div class="box">views/webflow/person.jsp</div>
 	
 	<h1><%=response.getStatus() %></h1>
 	
-	<ul class="rounded-list">
-		<li><a href="/spring-web/s/tasks/webflow/ids">/spring-web/s/tasks/webflow/ids</a> <span class="resalt">Flows Ids</span><span class="yellow">(FlowHandlerMapping)</span></li>
-		<li><a href="/spring-web/s/dogs/newDog">/spring-web/s/dogs/newDog</a> <span class="resalt">Dog Flow</span><span class="yellow">(FlowHandlerMapping)</span></li>
-		<li><a href="/spring-web/s/persons/newPerson">/spring-web/s/persons/newPerson</a> <span class="resalt">Iniciar Flow</span><span class="yellow">(FlowHandlerMapping)</span></li>
-	</ul>
+	 <br><span class="text-green">Confirmation Number: </span><span class="text-yellow">${confirmationNumer}</span>
 	
 </body>
 </html>

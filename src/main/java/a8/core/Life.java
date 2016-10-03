@@ -1,5 +1,6 @@
 package a8.core;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,10 @@ public class Life {
 	private CommonsUtils commonsUtils = CommonsUtils.getInstance();
 	
 	private Heart heart = Heart.getInstance(); 
+	
+	public List<String> getThemifyIcons(){
+		return ThemifyIcons.getNames();
+	}
 	
 	public Map<String,Object> getSessionAttributeNames(HttpSession session){
 		Map<String,Object> sessionAttributeMap = new HashMap<>();

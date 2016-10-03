@@ -57,7 +57,7 @@ public class CommonsUtils {
 		System.out.println(consoleList.toString());
 		
 	}
-
+	
 	public void printMap(Map<?,?> map){
 		
 		ConsoleStringTable table= new ConsoleStringTable();

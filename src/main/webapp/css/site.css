@@ -7,6 +7,17 @@
     src: url("../fonts/animeace2_reg.ttf");
 }
 
+@font-face {
+    font-family: "Akronim";
+    src: url("../fonts/Akronim-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Ewert";
+    src: url("../fonts/Ewert-Regular.ttf");
+}
+
+
 #form {
     border-radius: 5px;
     background-color: #f2f2f2;

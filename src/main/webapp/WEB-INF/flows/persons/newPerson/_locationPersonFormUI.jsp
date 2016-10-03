@@ -11,9 +11,11 @@
       <input type="text" placeholder="Country" class="textbox" />
       <input type="text" placeholder="City" class="textbox" />
       <input type="text" placeholder="Language" class="textbox" />
-      <div>
+      <div style="text-align:center;">
+      	<input type="submit" value="Cancel" class="button cancel_b" name="_eventId_cancel" />
       	<input type="submit" value="Back" class="button back_b" name="_eventId_back" />
       	<input type="submit" value="Next" class="button" name="_eventId_next" />
+      	<input type="submit" value="Finish" class="button finish_b" name="_eventId_confirm" disabled="disabled" />
       </div>
     </form>
   </div>

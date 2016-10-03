@@ -44,11 +44,11 @@ public class BackendXmlConfigTest {
 		
 		/*
 		Depending on the context class used, the resource loaded can have one of the following types:
-			• If ctx is a ClassPathXmlApplicationContext instance, the resource type is
+			- If ctx is a ClassPathXmlApplicationContext instance, the resource type is
 			ClassPathResource
-			• If ctx is a FileSystemXmlApplicationContext instance, the resource type is
+			- If ctx is a FileSystemXmlApplicationContext instance, the resource type is
 			FileSystemResource
-			• If ctx is a WebApplicationContext instance, the resource type is
+			- If ctx is a WebApplicationContext instance, the resource type is
 			ServletContextResource
 		*/
 	}

@@ -1,16 +1,16 @@
 spring-web-4.0.a.RELEASE-student-handout.pdf
 --------------------------------------------
 
-534	Introduction to Spring Webflow [DONE]
-587 Introduction to Spring Security
-639 Debuging and Testing
-683 Using Spring Boot and WebSockets
-//709 Finishing Up
-724 Spring Introduction*OLD
+534	Introduction to Spring Webflow 		[DONE]
+587 Introduction to Spring Security 	[WAIT]
+639 Debuging and Testing				[WAIT]
+683 Using Spring Boot and WebSockets	[WAIT]
 
+709 [Finishing Up]
+724 Spring Core Introduction
 769	Getting Started with Spring Web Flow (similar a 'Introduction to Spring Webflow', pero mas detallada)	[DONE]
-808 Web Flow Essentials (similar a 'Introduction to Spring Webflow: Defining a flow', pero mas detallada)
-836 Web Flow Actions
+808 Web Flow Essentials (similar a 'Introduction to Spring Webflow: Defining a flow', pero mas detallada)	[DONE]
+836 Web Flow Actions																						[READING...]
 888 Web Flow Action States
 919 Web Flow Advanced Features
 
@@ -18,7 +18,5 @@ spring-web-4.0.a.RELEASE-student-handout.pdf
 Spring Web Training - Lab
 -------------------------
 
-Chapter 11. webflow-getting-started: Getting Started with Spring Web Flow
-C:\Yesta\Spring\SpringWeb\springsource\spring-web-4.0.a.RELEASE\webflow-getting-started
-
-Chapter 12. webflow-language-essentials: Web Flow Language Essentials Lab
+Chapter 11. webflow-getting-started: Getting Started with Spring Web Flow
+Chapter 12. webflow-language-essentials: Web Flow Language Essentials Lab

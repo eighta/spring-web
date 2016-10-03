@@ -114,6 +114,18 @@ a{
   padding:40px;
 }
 
+.justtext{
+	width:100%;
+	
+	/*
+	margin-top: 15px;
+	margin-bottom: 12px;
+	background-color: red;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	*/
+}
+
 .textbox{
   height:50px;
   width:100%;
@@ -130,9 +142,15 @@ a{
    color:rgba(24,149,215,1);
 }
 
+.textarea{
+	width:100%;
+	height:100px;
+	resize: none;
+}
+
 .button{
   height:50px;
-  width:100px;
+  width:80px;
   border-radius:3px;
   border:rgba(0,0,0,.3) 0px solid;
   box-sizing:border-box;
@@ -148,6 +166,14 @@ a{
 
 .back_b{
 	background:#517422;
+}
+
+.cancel_b{
+	background:#FF576A;
+}
+
+.finish_b{
+	background:#00B4F1;
 }
 
 .button:disabled {

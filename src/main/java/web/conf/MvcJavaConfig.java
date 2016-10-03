@@ -452,7 +452,8 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 				"/WEB-INF/views/tiles/tiles.xml",
 				
 				//4 WebFlow
-				"/WEB-INF/flows/persons/newPerson/tiles.xml");
+				"/WEB-INF/flows/persons/newPerson/tiles.xml",
+				"/WEB-INF/flows/dogs/newDog/tiles.xml");
 		
 		
 		return tilesConfigurer;

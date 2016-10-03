@@ -4,51 +4,86 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-	<!-- states and actions-->
+	<!-- states and actions -->
 	<view-state id="enterMainPersonInfo">
+
 		<!-- transitions -->
-		<transition on="next" to="enterLocationPersonInfo"/>
-		
-		<transition on="locationInfo" to="enterLocationPersonInfo"/>
-		<transition on="keyInfo" to="enterKeyPersonInfo"/>
-		<transition on="reviewInfo" to="reviewPersonInfo"/>
-		
+		<transition on="next" to="enterLocationPersonInfo" />
+
+		<transition on="locationInfo" to="enterLocationPersonInfo" />
+		<transition on="keyInfo" to="enterKeyPersonInfo" />
+		<transition on="reviewInfo" to="reviewPersonInfo" />
+
 	</view-state>
-	
+
 	<view-state id="enterLocationPersonInfo">
 		<!-- transitions -->
-		<transition on="back" to="enterMainPersonInfo"/>
-		<transition on="next" to="enterKeyPersonInfo"/>
-		
-		<transition on="mainInfo" to="enterMainPersonInfo"/>
-		<transition on="keyInfo" to="enterKeyPersonInfo"/>
-		<transition on="reviewInfo" to="reviewPersonInfo"/>
-		
+		<transition on="back" to="enterMainPersonInfo" />
+		<transition on="next" to="enterKeyPersonInfo" />
+
+		<transition on="mainInfo" to="enterMainPersonInfo" />
+		<transition on="keyInfo" to="enterKeyPersonInfo" />
+		<transition on="reviewInfo" to="reviewPersonInfo" />
+
 	</view-state>
-	
+
 	<view-state id="enterKeyPersonInfo">
 		<!-- transitions -->
-		<transition on="back" to="enterLocationPersonInfo"/>
-		<transition on="next" to="reviewPersonInfo"/>
-		
-		<transition on="mainInfo" to="enterMainPersonInfo"/>
-		<transition on="locationInfo" to="enterLocationPersonInfo"/>
-		<transition on="reviewInfo" to="reviewPersonInfo"/>
+		<transition on="back" to="enterLocationPersonInfo" />
+		<transition on="next" to="reviewPersonInfo" />
+
+		<transition on="mainInfo" to="enterMainPersonInfo" />
+		<transition on="locationInfo" to="enterLocationPersonInfo" />
+		<transition on="reviewInfo" to="reviewPersonInfo" />
 	</view-state>
-	
+
 	<view-state id="reviewPersonInfo">
 		<!-- transitions -->
-		<transition on="back" to="enterKeyPersonInfo"/>
-		<transition on="confirm" to="end"/>
-		
-		<transition on="mainInfo" to="enterMainPersonInfo"/>
-		<transition on="locationInfo" to="enterLocationPersonInfo"/>
-		<transition on="keyInfo" to="enterKeyPersonInfo"/>
+		<transition on="back" to="enterKeyPersonInfo" />
+		<transition on="confirm" to="end" />
+
+		<transition on="mainInfo" to="enterMainPersonInfo" />
+		<transition on="locationInfo" to="enterLocationPersonInfo" />
+		<transition on="keyInfo" to="enterKeyPersonInfo" />
 	</view-state>
+
+	<!-- HAY QUE ENTENDER, QUE UN: flowRedirect (or externalRedirect) OCACIONAR QUE EL BROWSER,
+	REALICE UN REDIRECT A LA RUTA INDICADA-->
+	<!-- SI DEJA UN TEXTO LITERAL, se interpretará como el nombre de una vista -->
 	
+
 	<!-- XXX ANALIZAR LAS DISTINTAS ALTERNATIVOS EN EL VIEW attribute -->
 	<!-- view="externalRedirect:contextRelative:/rewards/1" -->
-	<end-state id="end"  view="vista_final"/>
+	<!-- XXX PROBAR DANDO EL NOMBRE DE LA VISTA -->
+	<end-state id="end"
+		view="externalRedirect:contextRelative:/s/tasks/webflow/persons/1">
+		
+		<!-- Flash Scope -->
+		<output name="confirmationNumer" value="836"/>
+		
+	</end-state>
+
+	<end-state id="cancelled" 
+		view="flowRedirect:/tasks/webflow/persons/cancelled"/>
+		
+	<!-- ALTERNATIVAS EN EL VIEW -->
+	<end-state id="logout" 
+		view="webflow/logout"/>
+	<end-state id="server" 
+		view="externalRedirect:serverRelative:/SERVER_RELATIVE"/>
+	<end-state id="servlet" 
+		view="externalRedirect:servletRelative:/SERVLET_RELATIVE"/>
+	<end-state id="context" 
+		view="externalRedirect:contextRelative:/CONTEXT_RELATIVE"/>
 	
+		
+	<!-- POR ALGUN MOTIVO, LAS GLOBAL-TRANSITIONS, van despues de: view-states -->
+	<global-transitions>
+		<transition on="cancel" to="cancelled" />
+		<transition on="logout" to="logout" /> 
+		<transition on="server" to="server" />
+		<transition on="servlet" to="servlet" />
+		<transition on="context" to="context" />
+	</global-transitions>
 
 </flow>

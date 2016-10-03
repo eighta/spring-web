@@ -23,7 +23,7 @@ public class MyServletContextListener
 		
 		//Spring Backend Configuration
 		//ERROR: 
-		//java.lang.IllegalArgumentException: Una vez que el primer ServletContextListener ha sido llamado, no se pueden aÒadir m·s ServletContextListeners.
+		//java.lang.IllegalArgumentException: Una vez que el primer ServletContextListener ha sido llamado, no se pueden a√±adir m√°s ServletContextListeners.
 		//ServletContext servletContext = servletContextEvent.getServletContext();
 		//servletContextUtil.registrarListener4backendConfiguration(servletContext);
 		
