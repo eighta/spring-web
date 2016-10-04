@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.msgpack.annotation.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -16,6 +18,7 @@ import a8.utils.JsonDateSerializer;
 public class Person implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(Person.class);
 	
 	private static final String DATE_PATTERN= "yyyy-MM-dd";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
@@ -34,7 +37,9 @@ public class Person implements Serializable{
     private String gender;
     private String hospital;
 
-    public Person(){}
+    public Person(){
+    	logger.info("Instanciando...");
+    }
     
     public Person(Integer id, String firstName, String lastName, String dob) {
     	this.id=id;

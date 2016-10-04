@@ -22,6 +22,7 @@ import org.springframework.webflow.mvc.builder.MvcViewFactoryCreator;
 import org.springframework.webflow.mvc.servlet.FlowHandlerAdapter;
 import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
 
+import a8.data.Person;
 import a8.utils.CommonsUtils;
 
 @Configuration
@@ -29,6 +30,12 @@ public class WebFlowJavaConfig
 extends AbstractFlowConfiguration 
 {
 
+	@Bean
+	public Person singletonPerson(){
+		return new Person();
+	}
+	
+	
 /*
 ███████╗██╗      ██████╗ ██╗    ██╗███╗   ███╗ █████╗ ██████╗ ██████╗ ██╗███╗   ██╗ ██████╗ 
 ██╔════╝██║     ██╔═══██╗██║    ██║████╗ ████║██╔══██╗██╔══██╗██╔══██╗██║████╗  ██║██╔════╝ 

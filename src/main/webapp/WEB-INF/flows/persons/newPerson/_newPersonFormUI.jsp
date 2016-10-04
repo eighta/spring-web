@@ -21,6 +21,8 @@
   </div>
 </div>
 
+<h1>${concretePerson}</h1>
+
 <a href="${flowExecutionUrl}&_eventId=logout" class="ti-angle-double-left"></a></li>
 <a href="${flowExecutionUrl}&_eventId=server" class="ti-back-left"></a></li>
 <a href="${flowExecutionUrl}&_eventId=servlet" class="ti-arrow-circle-up"></a></li>

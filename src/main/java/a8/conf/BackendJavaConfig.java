@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 
 import a8.beans.SimpleBean;
+import a8.data.Person;
 
 @Configuration
 @PropertySource(value = "classpath:core/backend.properties")

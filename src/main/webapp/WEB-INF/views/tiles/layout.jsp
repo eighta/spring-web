@@ -118,9 +118,10 @@
 	
 	<!-- XXX TODO no termine el ejemplo del tiles del libro, continuarlo: page 126 -->
 	
-	<!--ThemifyIcons: ALL ICONS-->
+	<%--ThemifyIcons: ALL ICONS
 	<c:forEach var="icon" items="${global.getThemifyIcons()}">
 		<span class="${icon}"></span>	
 	</c:forEach>
+	--%>
 </body>
 </html>

@@ -253,6 +253,143 @@ Web Flow provides JUnit test support
 Define a new TestCase class per Flow
 – e.g. FlightCheckinFlowExecutionTests
 
+WebFlow Actions
+===============
+
+Scoped Objects
+--------------
+Flow has a context where objects are stored
+-State is managed for you
+-Several "data scopes" provided by this context
+-Add objects to these scopes during flow execution
+-Objects cleaned up when they go out of scope
+
+Explicit variable declaration
+– Allocates a scoped object
+– Flow and View scope using <var>
+
+Or assign variables dynamically using actions
+– Assignment in any scope possible
+– See <evaluate> discussed later
+
+WebFlow Scopes
+--------------
+Flow:			Lasts for the life of the flow
+View:			Associated with each view-state
+Request: 		Lasts a single request
+Flash:			Cleaned up after the next view is rendered
+Conversation:	Global execution scope (shared by flow and all subflows)
+
+Flow Variables
+--------------
+Use <var> tag at "flow level"
+-Variable created automatically
+-Must have a default or @Autowired constructor
+-May have @Autowired property setters too
+-The object(s) must be Serializable
+-Often used as the data model for views
+-Often passed to services invoked by the flow
+
+<var name="concretePerson" class="a8.data.Webmaster" />
+<view-state id="enterMainPersonInfo" model="concretePerson">
+NOTA: al definir variables en el "Flow Scope", los "view-state" tienen acceso
+a estas variables a traves de SpEL en el JSP
+
+Conversation Variables
+----------------------
+Like flow scope variables
+-But available to any sub-flows too
+-Similar to global variables: with all the dangers 
+
+Be careful
+-Introduces a dependency between flow and sub-flow
+-Sub-flows accept input/output parameters: a better option
+
+<evaluate result="conversationScope.itinerary"
+	expression="checkinAgent.findItinerary(passengerInfo)"/>
+	
+View Variables
+---------------
+Declare using the view-state <var> tag
+-Convenient way to allocate a view-scoped object
+Created when entering the view-state
+-May also be @Autowired with dependencies
+Referenced by expressions
+-Often used as the data model for a single view
+-Often updated over a series of Ajax requests
+
+Nota: Se definen dentro del tag <view-state>, y se puede
+utilizar para el atributo: "model" de este mismo tag,
+y ademas, puede ser utilizado como parametro a llamadas de metodos
+utilizando el tag <evaluate>
+<evaluate expression="checkinAgent.findItinerary(passengerInfo)"/>
+
+IMAGEN: RequestScopeVsFlashScope.png
+ 
+FlashScope
+----------
+Lasts for the entire flow
+-But is cleared each time a view renders
+Effective scope is:
+-Transition from current view to end of "render of next view"
+Used to pass data from one state to the next
+-Especially request/view scoped data
+-Very useful scope
+
+Request Scope
+-------------
+Two requests per interaction
+-First: transition from current state to on-entry of next state
+-Second: From on-render of next state to end of render of same state
+Typical Usage
+-Data needs fetching every time state is redisplayed
+--If data can be cached, make it view scoped
+-Data needed to initialize next state, but not displayed by it
+Generally not that useful (flash scope easier)
+
+Examples
+--------
+Wherever a variable can be set – its scope can be defined
+<set name="flashScope.accountNumber" value="requestParameters.accountNumber"/>
+<set name="flashScope.statusMessage" value="'Booking confirmed'"/>
+<set name="requestScope.hotelId" value="requestParameters.id"/>
+
+Scope Implementation
+--------------------
+Conversation, Flow and View scope data are all stored in the user's HTTP session
+-After the View has been presented
+--The flow then suspends until next transition
+-All variables should be Serializable
+--Overhead if you store too much data
+
+Flash scope also stored temporarily in session across redirect
+-Same considerations: Serializable, overhead
+
+Actions
+=======
+-Actions execute behavior at specific points within the flow
+-Several points where actions can be executed
+--on startup, before rendering, on transition, etc
+
+Flow actions often act on Java objects
+-Invoke Spring-managed services
+-Assign variables
+
+
+
+
+slides: 852
+
+
+
+
+
+
+
+
+
+
+
 
 [DOCUMENTATION]
 http://docs.spring.io/spring-webflow/docs/current/reference/htmlsingle/
