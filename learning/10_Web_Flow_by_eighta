@@ -248,10 +248,10 @@ Every flow should have a unit test
 – Verifies flow logic works as expected
 
 Web Flow provides JUnit test support
-– Extend from a base test class
+-Extend from a base test class  (AbstractXmlFlowExecutionTests)
 
 Define a new TestCase class per Flow
-– e.g. FlightCheckinFlowExecutionTests
+e.g. FlightCheckinFlowExecutionTests
 
 WebFlow Actions
 ===============
@@ -375,21 +375,137 @@ Flow actions often act on Java objects
 -Invoke Spring-managed services
 -Assign variables
 
+Writing an expression
 
+evaluate
+-Evaluate an expression
+-Can prevent a transition
 
+set
+-Set the value of a variable
+-Never prevent a transition, regardless of variable value
 
-slides: 852
+Evaluate Action
+---------------
+-Use <evaluate> to evaluate an expression
+-Actions are expressed in EL
+-Can use any object in flow context
+--Resolve properties on beans in scope
+--Invoke methods
+-Can also assign result of evaluation
+--Save result to a scope
+--Optionally perform a result type conversion
 
+<evaluate result="flowScope.itinerary"
+	expression="checkinAgent.findItinerary(passengerInfo)" />
 
+Spring EL Syntax
+----------------
+<variable>[.property]
+-Variable resolved against current flow context
+-Property can be JavaBeans property or method
 
+Variable resolution algorithm
+-Search reserved variables first
+-Search web flow scopes second
+>>request/flash/view/flow/conversation
+-Search flow application context third
+>>resolve Spring beans
 
+flowScope.foo	[Resolve 'foo' in flow scope]
+foo				[Search all scopes looking for 'foo']
+foo.bar()		[Invoke method 'bar' on foo]
+foo.bar(baz)	[Invoke method bar passing in variable 'baz']
 
+Reserved SpEL Variables
+-----------------------
+conversationScope
+flowScope
+viewScope
+requestScope
+flashScope
+flowExecutionUrl
+flowRequestContext
 
+requestParameters
+currentEvent
+currentUser
+externalContext
+messageContext
+resourceBundle
 
+NOTA: Note: sessionScope. Use externalContext.sessionMap
 
+Reserved EL Variables in JSP
+----------------------------
+Only the following are valid in a JSP page
+-Any variables in scope
+-requestScope, viewScope , flashScope
+-flowExecutionUrl = url of current page
+-flowRequestContext = the RequestContext
 
+This is in addition to usual variables
+-sessionScope, pageScope, params, ...
 
+For anything else, use flowRequestContext
+-flowRequestContext.currentState.id
 
+Examples
+--------
+<evaluate expression="checkinAgent.update(passengerInfo)" />
+
+<evaluate expression="checkinAgent.findItinerary(passengerInfo)"
+	result="flowScope.itinerary" />
+
+<evaluate expression="bookingAgent.countMatches(searchCriteria)"
+	result="flowScope.hotelsFound" result-type="long"/>
+*El result-type puede ser un string o cualquier tipo primitivo, bigInteger, bigDecimal, 
+or fully-qualified class name
+
+Set Action
+----------
+
+Assign a new variable in a scope (Must specify a scope, no default)
+<set name="flowScope.accountNumber"
+	value="requestParameters.accountNumber"/>
+	
+Update the value of an existing variable
+-Or one of its properties
+-Scope optional: scope resolution algorithm used
+<set name="searchCriteria.sortBy"
+	value="requestParameters.sortBy"/>
+
+Places to Invoke Actions From
+-----------------------------
+-When a flow starts/ends
+-When a state is entered/exited
+
+Actions During Transitions
+--------------------------
+Run prior to the transition
+Transition will only occur if <evaluate/> returns
+-Boolean.TRUE or true
+-One of these Strings: "success", "yes", "true"
+-Any other type or null
+Only one evaluate is allowed
+-Recall: <set/> never prevents a transition, use as many as you want
+<transition on="modify " to="searchForm " >
+	<evaluate expression=" ... ">
+</transition>
+
+Actions Before Rendering
+------------------------
+<view-state id="enterPassengerInformation">
+	<on-render>
+		<evaluate expression="...">
+	</on-render>
+</view-state>
+
+Executed again on every browser refresh
+-contrast to on-entry
+
+practicar, desde la linea 256
+slide 868
 
 [DOCUMENTATION]
 http://docs.spring.io/spring-webflow/docs/current/reference/htmlsingle/

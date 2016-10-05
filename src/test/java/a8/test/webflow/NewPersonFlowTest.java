@@ -1,6 +1,5 @@
 package a8.test.webflow;
 
-import org.junit.Ignore;
 import org.springframework.webflow.config.FlowDefinitionResource;
 import org.springframework.webflow.config.FlowDefinitionResourceFactory;
 import org.springframework.webflow.test.MockExternalContext;
