@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.ViewResolverComposite;
-import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.springframework.webflow.config.AbstractFlowConfiguration;
 import org.springframework.webflow.config.FlowBuilderServicesBuilder;
 import org.springframework.webflow.config.FlowDefinitionRegistryBuilder;
@@ -23,16 +22,40 @@ import org.springframework.webflow.mvc.servlet.FlowHandlerAdapter;
 import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
 
 import a8.data.Person;
+import a8.data.Simple1;
+import a8.services.InterviewFactory;
 import a8.utils.CommonsUtils;
+import web.listeners.WebFlowListener;
 
 @Configuration
 public class WebFlowJavaConfig 
 extends AbstractFlowConfiguration 
 {
 
+	//XXX OJO: Recordando, el nombre del metodo, es el nombre del Bean
+	@Bean
+	public WebFlowListener theFlowListener(){
+		return new WebFlowListener(); 
+	}
+	
+	@Bean
+	public Simple1 simple1Bean(){
+		return new Simple1();
+	}
+	
 	@Bean
 	public Person singletonPerson(){
-		return new Person();
+		
+		Person person = new Person();
+		person.setFirstName("Alex");
+		person.setLastName("Poe");
+		
+		return person;
+	}
+	
+	@Bean
+	public InterviewFactory interviewFactory(){
+		return new InterviewFactory();
 	}
 	
 	
@@ -132,7 +155,7 @@ extends AbstractFlowConfiguration
 		flowBuilderServicesBuilder.setViewFactoryCreator(viewFactoryCreator);
 		//flowBuilderServicesBuilder.setValidator(this.mvcConfig.validator())
 		//flowBuilderServicesBuilder.setConversionService(conversionService())
-		//flowBuilderServicesBuilder.setDevelopmentMode(true)
+		flowBuilderServicesBuilder.setDevelopmentMode(true);
 		
 		return flowBuilderServicesBuilder.build();
 	}

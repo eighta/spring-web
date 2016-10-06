@@ -405,7 +405,7 @@ Spring EL Syntax
 -Variable resolved against current flow context
 -Property can be JavaBeans property or method
 
-Variable resolution algorithm
+Variable resolution "algorithm"
 -Search reserved variables first
 -Search web flow scopes second
 >>request/flash/view/flow/conversation
@@ -478,7 +478,38 @@ Update the value of an existing variable
 Places to Invoke Actions From
 -----------------------------
 -When a flow starts/ends
--When a state is entered/exited
+<flow>
+	<on-start>
+		<evaluate expression="..."/>
+	</on-start>
+	
+	<on-end>
+		<evaluate expression="..."/>
+	</on-end>
+</flow>
+
+
+-When a state is entered/exited and rendering/transition
+
+<view-state>
+	<on-entry>
+		<evaluate expression="..." />
+	</on-entry>
+	
+	<on-render>
+		<evaluate expression="..." />
+	</on-render>
+	
+	<transition>
+		<evaluate expression="..." />
+	</transition>
+	
+	<on-exit>
+		<evaluate expression="..." />
+	</on-exit>
+
+</view-state>
+
 
 Actions During Transitions
 --------------------------
@@ -487,7 +518,9 @@ Transition will only occur if <evaluate/> returns
 -Boolean.TRUE or true
 -One of these Strings: "success", "yes", "true"
 -Any other type or null
-Only one evaluate is allowed
+Only one evaluate is allowed 
+NOTA: intente colocar varios <evaluate> y lo permite (no se si sea por la ultima version)
+
 -Recall: <set/> never prevents a transition, use as many as you want
 <transition on="modify " to="searchForm " >
 	<evaluate expression=" ... ">
@@ -504,8 +537,29 @@ Actions Before Rendering
 Executed again on every browser refresh
 -contrast to on-entry
 
-practicar, desde la linea 256
-slide 868
+Form Handling Views
+-------------------
+Data binding and validation with Forms
+-A common use for views
+
+A view can be associated with a model object
+-The form object in MVC
+
+<view-state id="enterPassengerInformation"
+	model="passengerInfo" />
+	
+The model object can be in different scopes
+
+SLIDE: 870
+
+>>>INDAGAR LOS SIGUIENTES TAGS<<<
+'{
+"http://www.springframework.org/schema/webflow":action-state, 
+"http://www.springframework.org/schema/webflow":decision-state, 
+"http://www.springframework.org/schema/webflow":subflow-state, 
+"http://www.springframework.org/schema/webflow":output, 
+"http://www.springframework.org/schema/webflow":exception-handler, 
+"http://www.springframework.org/schema/webflow":bean-import}'
 
 [DOCUMENTATION]
 http://docs.spring.io/spring-webflow/docs/current/reference/htmlsingle/

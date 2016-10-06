@@ -36,6 +36,9 @@ public class Person implements Serializable{
     
     private String gender;
     private String hospital;
+    
+    //ANOTHERS fields
+    private String email;
 
     public Person(){
     	logger.info("Instanciando...");
@@ -122,5 +125,9 @@ public class Person implements Serializable{
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	@Override
+	public String toString() {
+		return getFirstName() + " " + getLastName();
+	}
 
 }

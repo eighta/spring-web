@@ -190,3 +190,38 @@ a{
 [class^="ti-"], [class*=" ti-"]{
 	font-size:xx-large;
 }
+
+.topright {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+    
+    color: white;
+    background:rgba(0,0,0,0.75);
+    width: 850px;
+    height: 200px;
+    z-index: 1;
+    
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+}
+
+.information table, .information th, .information td {
+   border: 1px solid #606060;
+}
+
+.information th{
+	color: inherit;
+}
+
+.information {
+  table-layout: fixed;
+  width: 97%;
+  white-space: nowrap;
+}
+
+.column-INVOCATION{width: 18%;}
+.column-SCOPE{width: 13%;}
+.column-VAR-NAME{width: 35%;}
+.column-VAR-VALUE{width: 34%;}

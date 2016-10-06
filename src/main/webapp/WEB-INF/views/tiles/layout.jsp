@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 	<title>
@@ -27,9 +28,10 @@
 	<script src="http://localhost:8080/spring-web/js/jquery-3.1.0.js"></script>
 	
 	<script type="text/javascript">
+	
 	$(document).ready(function(){
 		
-		$("body").css("display", "none");
+		$("body").css("display", "none");	
 		
 		//IN
 		$("body").fadeIn(2000);
@@ -93,6 +95,70 @@
  
 <body>
 	<c:set var="global" value="${applicationScope.GLOBAL}" />
+
+	<!-- TOP-RIGHT -->
+	  <div class="topright">
+	  	<table class="information">
+	  		
+	  		<!-- header -->
+	  		<tr>
+	  			<th class="column-INVOCATION">Invocation</th>
+	  			<th class="column-SCOPE">Scope</th>
+	  			<th class="column-VAR-NAME">Variable</th>
+	  			<th class="column-VAR-VALUE">Value</th>
+	  		</tr>
+	  		
+	  		<!-- flow Scope -->
+	  		<tr>
+	  			<td>Flow at Beginning</td>
+	  			<td>Flow</td>
+	  			<td>&lt;var name='grammy'&gt;</td>
+	  			<td>${grammy}</td>
+	  		</tr>
+	  		
+	  		<!-- view-state Scope -->
+	  		<tr>
+	  			<td>View at Beginning</td>
+	  			<td>View</td>
+	  			<td>&lt;var  name='concretePerson'&gt;</td>
+	  			<td>${concretePerson}</td>
+	  		</tr>
+	  		
+	  		<!-- conversation Scope -->
+	  		<tr>
+	  			<td>Flow &lt;on-start&gt;</td>
+	  			<td>Conversation</td>
+	  			<td>(conversationScope.conversationVar1)</td>
+	  			<td>${conversationVar1}</td>
+	  		</tr>
+	  		
+	  		<!-- Flash Scope -->
+	  		<tr>
+	  			<td>Flow &lt;on-start&gt;</td>
+	  			<td>Flash</td>
+	  			<td>(flashScope.flashVar1)</td>
+	  			<td>${flashVar1}</td>
+	  		</tr>
+	  		
+	  		<!-- Request Scope -->
+	  		<tr>
+	  			<td>Flow &lt;on-start&gt;</td>
+	  			<td>Request</td>
+	  			<td>(requestScope.requestVar1)</td>
+	  			<td>${requestVar1} (NO ENTENDIDO)</td>
+	  		</tr>
+	  		
+	  		<!-- OTHERS examples -->
+	  		<tr>
+	  			<td>Flow &lt;transition&gt;</td>
+	  			<td>Flash</td>
+	  			<td>from 'requestParameters.firstName'</td>
+	  			<td>${flashVar2}</td>
+	  		</tr>
+	  		
+	  	</table>
+	  
+	  </div>
 
 	<div class="bigtitle">
 		<tiles:insertAttribute name="pageTitle"/>

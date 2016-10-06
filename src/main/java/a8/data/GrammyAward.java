@@ -18,5 +18,20 @@ public class GrammyAward implements Serializable{
 		logger.info("Instanciando... [with: " + person);
 		this.person = person;
 	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	
+	@Override
+	public String toString() {
+		
+		String msg = "Grammy goes to ";
+		return msg + person.getFirstName() + " " + person.getLastName();
+	}
 	
 }

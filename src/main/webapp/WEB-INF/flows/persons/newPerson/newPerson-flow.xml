@@ -4,22 +4,58 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-	<!-- Scope: Flow -->
+	<!-- Scope: Flow--> 
+	<!-- NOTA: las var de scope flow, deben ir definidas de primero -->
 	<var name="newPerson" class="a8.data.Person" />
 	<var name="grammy" class="a8.data.GrammyAward"/>
 
+	<!-- Event: Flow starts -->
+	<on-start>
+		<set name="flashScope.flashVar1" 
+			value="interviewFactory.getCurrentDateTime()"/>
+			
+		<set name="requestScope.requestVar1" 
+			value="'This is a Request Variable'"/>
+			
+		<evaluate expression="interviewFactory.createInterview()"
+					result="conversationScope.conversationVar1"/>
+					
+		<evaluate expression="theFlowListener.onStart()" />
+	</on-start>
+	
 	<!-- states and actions -->
-	<view-state id="enterMainPersonInfo" model="concretePerson">
+	<view-state id="enterMainPersonInfo"> <!-- model="concretePerson" -->	
 
 		<!-- Scope: View -->
 		<var name="concretePerson" class="a8.data.Webmaster" />
+		
+		<!-- Event: Entry to View-State -->
+		<on-entry>
+			<evaluate expression="theFlowListener.onViewStateEntry()" />
+		</on-entry>
+		
+		<!-- Event: Rendering View -->
+		<on-render>
+			<evaluate expression="theFlowListener.onViewStateRender()" />
+		</on-render>
 
 		<!-- transitions -->
-		<transition on="next" to="enterLocationPersonInfo" />
+		<transition on="next" to="enterLocationPersonInfo">
+			<set name="flashScope.flashVar2" 
+				value="requestParameters.firstName"/>
+				
+			<evaluate expression="theFlowListener.onViewStateTransition()" />
+			<evaluate expression="theFlowListener.onViewStateTransition()" />
+		</transition>
 
 		<transition on="locationInfo" to="enterLocationPersonInfo" />
 		<transition on="keyInfo" to="enterKeyPersonInfo" />
 		<transition on="reviewInfo" to="reviewPersonInfo" />
+		
+		<!-- Event: Exit from View-State -->
+		<on-exit>
+			<evaluate expression="theFlowListener.onViewStateExit()" />
+		</on-exit>
 
 	</view-state>
 
@@ -92,5 +128,10 @@
 		<transition on="servlet" to="servlet" />
 		<transition on="context" to="context" />
 	</global-transitions>
+	
+	<!-- Event: Flow ends -->
+	<on-end>
+		<evaluate expression="theFlowListener.onEnd()" />
+	</on-end>
 
 </flow>
