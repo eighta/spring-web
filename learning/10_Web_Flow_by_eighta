@@ -550,7 +550,203 @@ A view can be associated with a model object
 	
 The model object can be in different scopes
 
-SLIDE: 870
+Submitting the Form
+-------------------
+Automatic data binding + validation
+
+Can be suppressed
+<view-state id="enterPassengerInformation" model="passengerInfo">
+	<transition on="submit" to="reviewItinerary" />
+	<transition on="cancel" to="end"
+		bind="false" validate="false"/>
+</view-state>
+
+Flow remains in same view on submit failure
+
+Restricting Automatic Binding
+-----------------------------
+Not all fields should be bound to
+-fields which are read but not written by the end-user
+-application security can be compromised
+
+Binder white-lists elements eligible for binding
+<view-state id="enterDiningInformation" model="diningForm">
+	<binder>
+		<binding property="amount" required="true" />
+		<binding property="creditCardNumber" required="true" />
+		...
+	</binder>
+</view-state>
+
+Customizing Type Conversion
+---------------------------
+Spring 3 Formatters can also be used for Web Flow
+-Same approach as in Spring MVC
+Custom formatters defined for Spring MVC are not
+automatically defined for Web Flow as well
+-Must be explicitly associated using flow builder services
+-Default formatters are present in both "out of the box"
+
+<webflow:flow-builder-services
+	id="flowBuilderServices" conversion-service="converter"/>
+<webflow:flow-registry id="flowRegistry"
+	flow-builder-services="flowBuilderServices">
+
+Data Binding Error Messages
+---------------------------
+Web Flow uses a different strategy for generating
+typeMismatch and required error codes
+-The error code is appended to the end and not at the beginning
+
+typeMismatch
+amount.typeMismatch
+diningForm.amount.typeMismatch
+common.money.MonetaryAmount.typeMismatch
+
+required
+amount.required
+diningForm.amount.required
+common.money.MonetaryAmount.required
+
+Customizing Data Binding Error Messages
+---------------------------------------
+To use same error code strategy in WebFlow as MVC,
+add a DefaultMessageCodesResolver
+
+<bean id="viewFactoryCreator" class="...MvcViewFactoryCreator">
+	<property name="viewResolvers" ref="tilesViewResolver" />
+	<property name="messageCodesResolver ref="mcr" />
+</bean>
+
+typeMismatch.amount.
+typeMismatch.diningForm.amount
+typeMismatch.common.money.MonetaryAmount
+
+Validation Options
+------------------
+JSR 303 validation support
+-annotate the form object
+-automatically used for validation
+-but: you must enable this
+
+Custom validators
+-well-known method or class
+-automatically invoked
+
+Can use either, both or neither
+
+JSR 303 Validation (Web Flow 2.3)
+------------------
+Enable same validator as MVC
+-via Web Flow builder services
+
+<webflow:flow-builder-services
+	id="flowBuilderServices" validator="validationService"/>
+<bean id="validationService" class="org.springframework.
+	validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+public class AccountSearchCriteria {
+	@NotEmpty
+	private String searchString = "";
+	
+	@Min(0) @Max(100)
+	private int maximumResults = 10;
+}
+
+Validation In Code
+------------------
+Four Options
+-Add a method with specific signature to Model Object (1)
+
+-Create a class with a specific name
+ >Add a method whose name relates to the view (2)
+ >Define a validate() method taking the Model Object type (3)
+
+-Write your own validator class (4)
+ >Invoke a validation method in flow XML
+
+e.g. Having this view
+<view-state id="searchForm" model="accountSearchCriteria" >
+
+1. Validation Via Model Object
+------------------------------
+Method "discovered" by convention
+-validate[view-state-id](ValidationContext ctx)
+
+public class AccountSearchCriteria {
+	public void validateSearchForm (ValidationContext ctx) {...}
+}
+
+2. Custom Validation Class
+--------------------------
+Separate validator bean "discovered" by convention
+-Bean name: [model-object-name]Validator
+-Method name validate[view-name]
+
+Looks for bean by name not type
+@Component("accountSearchCriteriaValidator")
+public class AccountSearchCriteriaValidator {
+	public void validateSearchForm
+	(AccountSearchCriteria target, ValidationContext ctx) {...}
+}
+
+3. Custom Validation Class, Any View
+------------------------------------
+Generic validator, independent of any view
+-Bean name: [model-object-name]Validator
+Method must be called validate
+ -Called for any view where AccountSearchCriteria is the model object
+
+@Component("accountSearchCriteriaValidator")
+public class AccountSearchCriteriaValidator {
+	public void validate(AccountSearchCriteria target, ValidationContext ctx) {...}
+}
+
+4. Manual Validation via <evaluate>
+-----------------------------------
+If you don’t like using our conventions
+
+Validate using an <evaluate> action
+If validator returns false, transition is prevented
+
+<view-state id="enterBooking" model="booking">
+	<transition on="submit" to="confirmBooking">
+		<evaluate expression="bookingValidator.check(booking, messageContext)"/>
+	</transition>
+</view-state>
+
+public class BookingValidator {
+	public boolean check(Booking booking,MessageContext ctx) {...}
+}
+
+Registering Errors
+------------------
+Using an Errors object
+-commonly used in Spring MVC
+
+errors.rejectValue("creditCardNumber","creditCard.invalidNumber",
+	"A credit card number must have 16 digits.");
+	
+or
+
+Using a ValidationContext
+addMessage(new MessageBuilder().error()
+	.source("creditCardNumber")
+	.code("creditCard.invalidNumber")
+	.defaultText("A credit ... 16 digits.").build());	
+	
+
+
+
+
+
+
+
+PROBAR DESDE LA LINEA #540
+
+SLIDE: 888
+
+>>>TODO testear los ConversionService en WebFlow slide 874<<<
 
 >>>INDAGAR LOS SIGUIENTES TAGS<<<
 '{
