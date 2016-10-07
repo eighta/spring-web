@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <div id="bg">
   <div class="module">
     <ul>
@@ -9,20 +11,32 @@
     
 <!-- SPRING TAGS -->
 <form:form modelAttribute="newPerson" method="POST" class="form">
-	<form:input path="firstName" class="textbox"/>
-	<form:input path="lastName" class="textbox"/>
-	<form:input path="email" class="textbox"/>
+	<form:input path="firstName" placeholder="First Name" class="textbox"/>
+	<form:input path="lastName" placeholder="Last Name" class="textbox"/>
+	<form:input path="email" placeholder="Email Address" class="textbox"/>
+	
+	<div style="text-align:center;">
+		<form:button class="button cancel_b">Cancel</form:button>
+		<form:button class="button back_b" disabled="disabled">Back</form:button>
+		<form:button class="button"  name="_eventId" value="next">Next</form:button>
+		<form:button class="button finish_b" disabled="disabled">Finish</form:button>
+	
+	</div>
+	<!-- 
 	<div style="text-align:center;">
 		<input type="submit" value="Cancel" class="button cancel_b" name="_eventId_cancel" />
       	<input type="submit" value="Back" class="button back_b" name="_eventId_back" disabled="disabled" />
       	<input type="submit" value="Next" class="button" name="_eventId_next" />
       	<input type="submit" value="Finish" class="button finish_b" name="_eventId_confirm" disabled="disabled" />
 	</div>
-	
+	-->
 </form:form>
 
+<!-- 
+	 -->
+
     
-<!-- PLAIN HTML     
+<!-- PLAIN HTML 
 <form class="form" id="newPersonForm" method="post">
       <input type="text" placeholder="First Name" class="textbox" name="firstName"/>
       <input type="text" placeholder="Last Name" class="textbox" />
@@ -33,7 +47,8 @@
       	<input type="submit" value="Next" class="button" name="_eventId_next" />
       	<input type="submit" value="Finish" class="button finish_b" name="_eventId_confirm" disabled="disabled" />
       </div>
-    </form> -->
+    </form> 
+-->    
   </div>
 </div>
 

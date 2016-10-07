@@ -130,4 +130,12 @@ public class Person implements Serializable{
 		return getFirstName() + " " + getLastName();
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }
