@@ -5,6 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+
 import org.msgpack.annotation.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,7 @@ public class Person implements Serializable{
 
 	private Integer id;
 	
+	@Pattern(regexp = "sophie", message="Debe ser {2}")
 	private String firstName;
 	
     private String secondName;
@@ -38,7 +42,15 @@ public class Person implements Serializable{
     private String hospital;
     
     //ANOTHERS fields
-    private String email;
+    @Min(5)
+    private Integer email;
+    private String country;
+    private String city;
+    private String lang;
+    private String password;
+    private String confirmPassword;
+    private String securityQuestion;
+    private Boolean acceptConditions; 
 
     public Person(){
     	logger.info("Instanciando...");
@@ -130,12 +142,68 @@ public class Person implements Serializable{
 		return getFirstName() + " " + getLastName();
 	}
 
-	public String getEmail() {
+	public Integer getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(Integer email) {
 		this.email = email;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public String getSecurityQuestion() {
+		return securityQuestion;
+	}
+
+	public void setSecurityQuestion(String securityQuestion) {
+		this.securityQuestion = securityQuestion;
+	}
+
+	public Boolean getAcceptConditions() {
+		return acceptConditions;
+	}
+
+	public void setAcceptConditions(Boolean acceptConditions) {
+		this.acceptConditions = acceptConditions;
 	}
 
 }

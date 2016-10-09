@@ -13,10 +13,13 @@
 <!-- NOTA: SE HACE NECESARIO EL 'action' -->
 <form:form modelAttribute="newPerson" method="POST" class="form" action="${flowExecutionUrl}">
 	<form:input path="firstName" placeholder="First Name" class="textbox"/>
+	<form:errors cssClass="fieldError" path="firstName"/>
 	<form:input path="lastName" placeholder="Last Name" class="textbox"/>
+	<form:errors cssClass="fieldError" path="lastName"/>
 	<form:input path="email" placeholder="Email Address" class="textbox"/>
+	<form:errors cssClass="fieldError" path="email"/>
 	
-	<div style="text-align:center;">
+	<div class="footerButtons" style="text-align:center;">
 		<form:button class="button cancel_b" name="_eventId" value="cancel">Cancel</form:button>
 		<form:button class="button back_b" disabled="true">Back</form:button>
 		<form:button class="button"  name="_eventId" value="next">Next</form:button>

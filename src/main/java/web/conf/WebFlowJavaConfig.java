@@ -2,10 +2,12 @@ package web.conf;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.binding.convert.ConversionService;
 import org.springframework.binding.convert.service.DefaultConversionService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.Validator;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.ViewResolverComposite;
@@ -148,16 +150,20 @@ extends AbstractFlowConfiguration
 ███████║███████╗██║  ██║ ╚████╔╝ ██║╚██████╗███████╗
 ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝ ╚═════╝╚══════╝*/
 	@Bean
-	public FlowBuilderServices flowBuilderServices(ViewFactoryCreator viewFactoryCreator ) {
+	public FlowBuilderServices flowBuilderServices(
+			ViewFactoryCreator viewFactoryCreator, 
+			@Qualifier("mvcValidator")
+			Validator validator ) {
 		
 		FlowBuilderServicesBuilder flowBuilderServicesBuilder = super.getFlowBuilderServicesBuilder();
 		flowBuilderServicesBuilder.setViewFactoryCreator(viewFactoryCreator);
-		//flowBuilderServicesBuilder.setValidator(this.mvcConfig.validator())
+		flowBuilderServicesBuilder.setValidator(validator);
 		//flowBuilderServicesBuilder.setConversionService(conversionService());
 		flowBuilderServicesBuilder.setDevelopmentMode(true);
 		
 		return flowBuilderServicesBuilder.build();
 	}
+	
 	
 /*
 ███████╗██╗      ██████╗ ██╗    ██╗██████╗ ███████╗ ██████╗ ██╗███████╗████████╗██████╗ ██╗   ██╗

@@ -24,7 +24,7 @@
 	</on-start>
 	
 	<!-- states and actions -->
-	<view-state id="enterMainPersonInfo"> <!-- model="concretePerson" -->	
+	<view-state id="enterMainPersonInfo" model="newPerson"> 	
 
 		<!-- Scope: View -->
 		<var name="concretePerson" class="a8.data.Webmaster" />
@@ -52,7 +52,7 @@
 			<evaluate expression="theFlowListener.onViewStateTransition()" />
 		</transition>
 
-		<transition on="locationInfo" to="enterLocationPersonInfo" />
+		<transition on="locationInfo" to="enterLocationPersonInfo" bind="false" />
 		<transition on="keyInfo" to="enterKeyPersonInfo" />
 		<transition on="reviewInfo" to="reviewPersonInfo" />
 		
@@ -63,7 +63,7 @@
 
 	</view-state>
 
-	<view-state id="enterLocationPersonInfo">
+	<view-state id="enterLocationPersonInfo" model="newPerson">
 		<!-- transitions -->
 		<transition on="back" to="enterMainPersonInfo" />
 		<transition on="next" to="enterKeyPersonInfo" />
@@ -74,7 +74,7 @@
 
 	</view-state>
 
-	<view-state id="enterKeyPersonInfo">
+	<view-state id="enterKeyPersonInfo" model="newPerson">
 		<!-- transitions -->
 		<transition on="back" to="enterLocationPersonInfo" />
 		<transition on="next" to="reviewPersonInfo" />
@@ -84,7 +84,7 @@
 		<transition on="reviewInfo" to="reviewPersonInfo" />
 	</view-state>
 
-	<view-state id="reviewPersonInfo">
+	<view-state id="reviewPersonInfo" model="newPerson">
 		<!-- transitions -->
 		<transition on="back" to="enterKeyPersonInfo" />
 		<transition on="confirm" to="end" />
@@ -94,11 +94,11 @@
 		<transition on="keyInfo" to="enterKeyPersonInfo" />
 	</view-state>
 
-	<!-- HAY QUE ENTENDER, QUE UN: flowRedirect (or externalRedirect) OCACIONAR QUE EL BROWSER,
-	REALICE UN REDIRECT A LA RUTA INDICADA-->
+	<!-- HAY QUE ENTENDER, QUE UN: flowRedirect (or externalRedirect) 
+	OCACIONA QUE EL BROWSER REALICE UN REDIRECT A LA RUTA INDICADA-->
+	
 	<!-- SI DEJA UN TEXTO LITERAL, se interpretará como el nombre de una vista -->
 	
-
 	<!-- XXX ANALIZAR LAS DISTINTAS ALTERNATIVOS EN EL VIEW attribute -->
 	<!-- view="externalRedirect:contextRelative:/rewards/1" -->
 	<!-- XXX PROBAR DANDO EL NOMBRE DE LA VISTA -->
@@ -124,9 +124,9 @@
 		view="externalRedirect:contextRelative:/CONTEXT_RELATIVE"/>
 	
 		
-	<!-- POR ALGUN MOTIVO, LAS GLOBAL-TRANSITIONS, van despues de: view-states -->
+	<!-- LAS GLOBAL-TRANSITIONS, van despues de: view-states -->
 	<global-transitions>
-		<transition on="cancel" to="cancelled" />
+		<transition on="cancel" to="cancelled" validate="false" />
 		<transition on="logout" to="logout" /> 
 		<transition on="server" to="server" />
 		<transition on="servlet" to="servlet" />

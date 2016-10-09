@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <div id="bg" style="background:url('../images/climb/006.jpg') center no-repeat;">
   <div class="module">
     <ul>
@@ -7,10 +9,10 @@
       <li class="tab activeTab" ><span class="ti-check"></span></li>
     </ul>
     
-    <form class="form" method="post">
+    <form:form modelAttribute="newPerson" method="POST" class="form" action="${flowExecutionUrl}">
     
     	<h4>Name</h4>
-    	<span class="justtext" style="font-family: Ewert; font-size:35px;">Milton J. Ochoa</span>
+    	<span class="justtext" style="font-family: Ewert; font-size:35px;">${newPerson.firstName}-${newPerson.password}</span>
     	<!-- 
       	<input type="text" class="textbox" disabled="disabled" value="" />
       	 -->
@@ -25,16 +27,16 @@ POR FAVOR LEA CON DETENIMIENTO LAS CONDICIONES DE USO ANTES DE UTILIZAR EL PRESE
 4. La EMPRESA se reserva el derecho a modificar cualquier aspecto del Sitio Web en cualquier momento.</textarea>
      <br/> 
      <div  style="margin-top: 8px;">
-     	<input type="checkbox" value="YES" />
+     	<form:checkbox path="acceptConditions"/>
      	<span style="font-family: Akronim; font-size:20px;">Acepto las Condiciones del servicio</span>
      </div>
         
       <div style="text-align:center;">
-      	<input type="submit" value="Cancel" class="button cancel_b" name="_eventId_cancel" />
-      	<input type="submit" value="Back" class="button back_b" name="_eventId_back" />
-      	<input type="submit" value="Next" class="button" name="_eventId_next" disabled="disabled" />
-      	<input type="submit" value="Finish" class="button finish_b" name="_eventId_confirm" />
+      	<form:button class="button cancel_b" name="_eventId" value="cancel">Cancel</form:button>
+		<form:button class="button back_b" name="_eventId" value="back">Back</form:button>
+		<form:button class="button" disabled="true">Next</form:button>
+		<form:button class="button finish_b" name="_eventId" value="confirm">Finish</form:button>
       </div>
-    </form>
+    </form:form>
   </div>
 </div>

@@ -57,6 +57,14 @@
 	<!-- DEPENDENCIES -->
 	<dependencies>
 
+		<!-- Bean Validator -->
+		<!-- Hibernate Validator Engine -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+		</dependency>
+
 		<!-- Utilitarios temporales -->
 		<dependency>
 			<groupId>de.ruedigermoeller</groupId>
@@ -127,26 +135,19 @@
 			<version>${guava.version}</version>
 		</dependency>
 
-		
+
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-extras</artifactId>
 			<version>3.0.7</version>
 		</dependency>
 
-		<!-- TILES 3:core 
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-core</artifactId>
-			<version>${tiles.version}</version>
-		</dependency> -->
+		<!-- TILES 3:core <dependency> <groupId>org.apache.tiles</groupId> <artifactId>tiles-core</artifactId> 
+			<version>${tiles.version}</version> </dependency> -->
 
-		<!-- TILES 3:Tiles Servlet Support 
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-servlet</artifactId>
-			<version>${tiles.version}</version>
-		</dependency> -->
+		<!-- TILES 3:Tiles Servlet Support <dependency> <groupId>org.apache.tiles</groupId> 
+			<artifactId>tiles-servlet</artifactId> <version>${tiles.version}</version> 
+			</dependency> -->
 
 		<!-- JavaBeans(TM) Activation Framework -->
 		<dependency>

@@ -552,13 +552,15 @@ The model object can be in different scopes
 
 Submitting the Form
 -------------------
-Automatic data binding + validation
+"Automatic" data binding + validation
 
 Can be suppressed
+
 <view-state id="enterPassengerInformation" model="passengerInfo">
 	<transition on="submit" to="reviewItinerary" />
 	<transition on="cancel" to="end"
-		bind="false" validate="false"/>
+		bind="false" 
+		validate="false"/>
 </view-state>
 
 Flow remains in same view on submit failure
@@ -742,7 +744,7 @@ addMessage(new MessageBuilder().error()
 
 
 
-PROBAR DESDE LA LINEA #540
+PROBAR DESDE LA LINEA #568
 
 SLIDE: 888
 

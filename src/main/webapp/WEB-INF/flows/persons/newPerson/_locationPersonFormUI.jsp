@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <div id="bg" style="background:url('../images/climb/007.jpg') center no-repeat;">
   <div class="module">
     <ul>
@@ -7,17 +9,19 @@
       <li class="tab"><a href="${flowExecutionUrl}&_eventId=reviewInfo" class="ti-check"></a></li>
     </ul>
     
-    <form class="form" method="post">
-      <input type="text" placeholder="Country" class="textbox" />
-      <input type="text" placeholder="City" class="textbox" />
-      <input type="text" placeholder="Language" class="textbox" />
+<form:form modelAttribute="newPerson" method="POST" class="form" action="${flowExecutionUrl}">
+
+	<form:input path="country" placeholder="Country" class="textbox"/>
+	<form:input path="city" placeholder="City" class="textbox"/>
+	<form:input path="lang" placeholder="Language" class="textbox"/>
+
       <div style="text-align:center;">
-      	<input type="submit" value="Cancel" class="button cancel_b" name="_eventId_cancel" />
-      	<input type="submit" value="Back" class="button back_b" name="_eventId_back" />
-      	<input type="submit" value="Next" class="button" name="_eventId_next" />
-      	<input type="submit" value="Finish" class="button finish_b" name="_eventId_confirm" disabled="disabled" />
+      	<form:button class="button cancel_b" name="_eventId" value="cancel">Cancel</form:button>
+      	<form:button class="button back_b" name="_eventId" value="back">Back</form:button>
+      	<form:button class="button"  name="_eventId" value="next">Next</form:button>
+      	<form:button class="button finish_b" disabled="true">Finish</form:button>
       </div>
-    </form>
+    </form:form>
   </div>
 </div>
 
