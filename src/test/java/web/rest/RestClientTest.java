@@ -51,10 +51,10 @@ import a8.data.Person;
 import a8.data.User;
 import a8.utils.JsonUtils;
 import a8.utils.YamlUtils;
-import web.converters.HtmlFormPersonMessageConverter;
-import web.converters.JsonPersonMessageConverter;
-import web.converters.PersonMessageConverter;
-import web.converters.SeveralPersonMessageConverter;
+import web.converters.http.message.HtmlFormPersonMessageConverter;
+import web.converters.http.message.JsonPersonMessageConverter;
+import web.converters.http.message.PersonMessageConverter;
+import web.converters.http.message.SeveralPersonMessageConverter;
 class MyRequestCallBack implements RequestCallback{
 
 	//from javadoc:

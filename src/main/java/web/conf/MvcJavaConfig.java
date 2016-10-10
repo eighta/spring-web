@@ -42,15 +42,12 @@ import a8.business.PersonManager;
 import a8.business.PersonManagerImpl;
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
-import web.converters.HtmlFormPersonMessageConverter;
-import web.converters.JsonPersonMessageConverter;
-import web.converters.PersonMessageConverter;
-import web.converters.SeveralPersonMessageConverter;
+import web.converters.http.message.HtmlFormPersonMessageConverter;
+import web.converters.http.message.JsonPersonMessageConverter;
+import web.converters.http.message.PersonMessageConverter;
+import web.converters.http.message.SeveralPersonMessageConverter;
 import web.interceptors.AuditInterceptor;
-import web.rest.interceptors.RestAuditInterceptor;
-import web.rest.interceptors.RestJsonInterceptor;
 import web.view_resolvers.JsonViewResolver;
-import web.view_resolvers.JstlViewsWebFlowResolver;
 import web.view_resolvers.PdfViewResolver;
 import web.view_resolvers.XlsViewResolver;
 import web.views.pdf.CustomPdfView;
@@ -214,7 +211,6 @@ public class MvcJavaConfig
 			httpMessageConverterList.add(new PersonMessageConverter() );
 			httpMessageConverterList.add(new SeveralPersonMessageConverter() );
 			httpMessageConverterList.add(new HtmlFormPersonMessageConverter() );
-			
 		}
 		
 /*

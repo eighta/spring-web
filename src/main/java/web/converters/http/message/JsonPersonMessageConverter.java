@@ -1,4 +1,4 @@
-package web.converters;
+package web.converters.http.message;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,14 +13,12 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import a8.data.Person;
-import a8.utils.YamlUtils;
+import a8.utils.JsonUtils;
 
-public class PersonMessageConverter extends AbstractHttpMessageConverter<Person> {
+public class JsonPersonMessageConverter extends AbstractHttpMessageConverter<Person> {
 
-	public static final String [] columnMapping =  new String[] {"id","firstName","lastName"};
-	
-	public PersonMessageConverter(){
-		super(MediaType.TEXT_HTML);
+	public JsonPersonMessageConverter(){
+		super(MediaType.APPLICATION_JSON);
 	}
 	
 	@Override
@@ -31,36 +29,18 @@ public class PersonMessageConverter extends AbstractHttpMessageConverter<Person>
 	@Override
 	protected Person readInternal(Class<? extends Person> clazz, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotReadableException {
-		
-		//https://www.javacodegeeks.com/2013/07/spring-mvc-requestbody-and-responsebody-demystified.html
+
 		InputStream bodyInputStream = inputMessage.getBody();
 		byte[] bytes = IOUtils.toByteArray(bodyInputStream);
 
-		return YamlUtils.convertToBean(bytes,Person.class);
-		
-//MessagePack GOOD!!!		
-//		return MessagePackUtils.convertToBean(bytes,Person.class);
-
-//CSV Sucks		
-//		//Charsets.UTF_8 <<< GOOGLE
-//		String theString = IOUtils.toString(bodyInputStream, StandardCharsets.UTF_8.name());
-//		bodyInputStream.close();
-//		return CsvUtils.convertCsv2Bean(theString, Person.class, columnMapping);
+		return JsonUtils.convertToBean(bytes,Person.class);
 	}
 
 	@Override
 	protected void writeInternal(Person person, HttpOutputMessage outputMessage)
 			throws IOException, HttpMessageNotWritableException {
-
-//CSV Sucks			
-//		String csvString = CsvUtils.convertBean2Csv(person,Person.class,columnMapping);
-//		byte [] csvByteArray = csvString.getBytes();
 		
-//MessagePack GOOD!!!		
-//		byte[] raw = MessagePackUtils.convertFromBean( person, Person.class);
-		
-		
-		byte[] raw = YamlUtils.convertFromBean(person);
+		byte[] raw = JsonUtils.convertFromBean(person);
 		
 		OutputStream bodyOutputStream = outputMessage.getBody();
 		bodyOutputStream.write(raw);

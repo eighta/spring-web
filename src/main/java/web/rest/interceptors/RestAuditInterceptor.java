@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import a8.data.Person;
-import web.converters.PersonMessageConverter;
+import web.converters.http.message.PersonMessageConverter;
 
 @ControllerAdvice(basePackages="web.rest.controllers") //<<<el basePackages indica que Controller se interceptaran 
 public class RestAuditInterceptor implements ResponseBodyAdvice<Person>{

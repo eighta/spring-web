@@ -33,7 +33,7 @@ public class Person implements Serializable{
 	
     private String secondName;
     
-    private String lastName;
+    private String lastName = "OcHoA";
     
     @DateTimeFormat(pattern = DATE_PATTERN)
     private Date dateOfBirth;

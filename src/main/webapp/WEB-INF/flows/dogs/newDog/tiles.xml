@@ -4,10 +4,16 @@
 	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 	
-	<definition name="enterMainDogInfo" extends="layout">
-		<put-attribute name="pageTitle" value="Dog Information" />
-		<put-attribute name="pageLocation" value="WEB-INF/flows/dogs/newDog/_newDogFormUI.jsp" />
-		<put-attribute name="content" value="/WEB-INF/flows/dogs/newDog/_newDogFormUI.jsp" />
+	<definition name="animal1" extends="layout">
+		<put-attribute name="pageTitle" value="Animal 1" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/dogs/newDog/animial1_UI.jsp" />
+		<put-attribute name="content" value="/WEB-INF/flows/dogs/newDog/animial1_UI.jsp" />
+	</definition>
+	
+	<definition name="animal2" extends="layout">
+		<put-attribute name="pageTitle" value="Animal 2" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/dogs/newDog/animial2_UI.jsp" />
+		<put-attribute name="content" value="/WEB-INF/flows/dogs/newDog/animial2_UI.jsp" />
 	</definition>
 	
 </tiles-definitions>

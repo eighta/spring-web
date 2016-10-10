@@ -1,11 +1,12 @@
 package a8.data;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class User {
+public class User implements Serializable{
 
     private String name;
     private String location;

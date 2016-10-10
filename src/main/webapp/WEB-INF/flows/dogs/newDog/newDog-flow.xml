@@ -4,52 +4,20 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-	<!-- states and actions-->
-	<view-state id="enterMainDogInfo">
-		<!-- transitions -->
-		<transition on="next" to="enterLocationPersonInfo"/>
-		
-		<transition on="locationInfo" to="enterLocationPersonInfo"/>
-		<transition on="keyInfo" to="enterKeyPersonInfo"/>
-		<transition on="reviewInfo" to="reviewPersonInfo"/>
-		
+	<!-- Scope: Flow--> 
+	<!-- NOTA1: las var de scope flow, deben ir definidas de primero -->
+	<!-- NOTA2: los objetos definidos deben ser Serializables -->
+	<var name="newAnimal" class="a8.data.Animal" />
+	
+	<view-state id="animal1" model="newAnimal"> 
+		<transition on="next" to="animal2" />
 	</view-state>
 	
-	<view-state id="enterLocationPersonInfo">
-		<!-- transitions -->
-		<transition on="back" to="enterMainPersonInfo"/>
-		<transition on="next" to="enterKeyPersonInfo"/>
-		
-		<transition on="mainInfo" to="enterMainPersonInfo"/>
-		<transition on="keyInfo" to="enterKeyPersonInfo"/>
-		<transition on="reviewInfo" to="reviewPersonInfo"/>
-		
+	<view-state id="animal2">
+		<transition on="back" to="animal1" /> 
+		<transition on="next" to="animal3" />
 	</view-state>
 	
-	<view-state id="enterKeyPersonInfo">
-		<!-- transitions -->
-		<transition on="back" to="enterLocationPersonInfo"/>
-		<transition on="next" to="reviewPersonInfo"/>
-		
-		<transition on="mainInfo" to="enterMainPersonInfo"/>
-		<transition on="locationInfo" to="enterLocationPersonInfo"/>
-		<transition on="reviewInfo" to="reviewPersonInfo"/>
-	</view-state>
-	
-	<view-state id="reviewPersonInfo">
-		<!-- transitions -->
-		<transition on="back" to="enterKeyPersonInfo"/>
-		<transition on="confirm" to="end"/>
-		
-		<transition on="mainInfo" to="enterMainPersonInfo"/>
-		<transition on="locationInfo" to="enterLocationPersonInfo"/>
-		<transition on="keyInfo" to="enterKeyPersonInfo"/>
-	</view-state>
-	
-	<!-- XXX ANALIZAR LAS DISTINTAS ALTERNATIVOS EN EL VIEW attribute -->
-	<!-- view="externalRedirect:contextRelative:/rewards/1" -->
-	<!-- XXX PROBAR DANDO EL NOMBRE DE LA VISTA -->
-	<end-state id="end"  view="externalRedirect:contextRelative:/s/tasks/webflow/persons/1"/>
-	
+	<end-state id="animal3"/>
 
 </flow>

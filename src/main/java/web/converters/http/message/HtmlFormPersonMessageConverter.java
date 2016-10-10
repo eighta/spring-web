@@ -1,4 +1,4 @@
-package web.converters;
+package web.converters.http.message;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -29,9 +29,13 @@
 		<!-- Scope: View -->
 		<var name="concretePerson" class="a8.data.Webmaster" />
 		
-		<!-- NO YET
-		<binder />
-		 -->
+		<!-- Binding (Restricting Automatic Binding)  -->
+		<!-- White List: ESTA LISTA REPRESENTA LOS BINDING QUE SE PERMITIRAN -->
+		<!-- Los demas atributos, solo quedan de solo lectura  -->
+		<binder>
+			<binding property="firstName" required="false"/>
+			<binding property="email" required="false"/>
+		</binder>
 		
 		<!-- Event: Entry to View-State -->
 		<on-entry>
