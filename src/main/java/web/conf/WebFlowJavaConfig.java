@@ -1,12 +1,17 @@
 package web.conf;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.binding.convert.ConversionService;
 import org.springframework.binding.convert.service.DefaultConversionService;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.validation.DefaultMessageCodesResolver;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
@@ -27,7 +32,6 @@ import a8.data.Person;
 import a8.data.Simple1;
 import a8.services.InterviewFactory;
 import a8.utils.CommonsUtils;
-import web.converters.binding.UserToStringConverter;
 import web.listeners.WebFlowListener;
 
 @Configuration
@@ -97,6 +101,32 @@ extends AbstractFlowConfiguration
 	//OTHERs WebFlow Components
 	//=========================
 	
+	//XXX DEBE IR EN EL WEB-MVC Conf
+	@Bean
+	public MessageSource errorCodesMessageSource(){
+		
+//		StaticMessageSource
+//		
+//        ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource = 
+//				new ReloadableResourceBundleMessageSource();
+//		reloadableResourceBundleMessageSource.setBasename("classpath:/bundles/greetings");
+//		reloadableResourceBundleMessageSource.setCacheSeconds(5);
+//		return reloadableResourceBundleMessageSource;
+		
+//http://stackoverflow.com/questions/11150869/resourcebundle-not-found-for-messagesource-when-placed-inside-a-folder
+//		Since all your properties files are in classpath of java you need to define the path with prefix classpath*: otherwise it will look into the web directory of your application.
+		
+		ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+		resourceBundleMessageSource.setBasename("classpath*:bundles/errors/codes");
+//		resourceBundleMessageSource.setUseCodeAsDefaultMessage(true);
+		
+		String message = resourceBundleMessageSource.getMessage("typeMismatch", null, Locale.getDefault());
+		System.out.println("Nojoda: " + message);
+		
+		
+		return resourceBundleMessageSource;
+	}
+	
 //	@Bean
 //	public ViewResolver tilesViewResolver4WebFlow (){
 //		TilesViewResolver tilesViewResolver4WebFlow
@@ -105,7 +135,10 @@ extends AbstractFlowConfiguration
 //	}
 	
 	@Bean
-	public ViewFactoryCreator mvcViewFactoryCreator(List<ViewResolver> viewResolvers) {
+	public ViewFactoryCreator mvcViewFactoryCreator(
+			List<ViewResolver> viewResolvers
+//			,MessageCodesResolver messageCodesResolver XXX DEBERIA SER TOMADO DEL MVC
+			) {
 		
 		System.out.println("WEBFLOW.mvcViewFactoryCreator");
 		CommonsUtils commonsUtils = CommonsUtils.getInstance();
@@ -131,6 +164,18 @@ extends AbstractFlowConfiguration
 */
 		MvcViewFactoryCreator factoryCreator = new MvcViewFactoryCreator();
 		factoryCreator.setViewResolvers(viewResolvers);
+		
+		//=======================================
+		//Customizing Data Binding Error Messages
+		//=======================================
+	
+		//XXX IMPLEMENTACION DEBE SER TOMADA DESDE WEB-MVC
+		DefaultMessageCodesResolver messageCodesResolver = new DefaultMessageCodesResolver();
+		
+		
+		factoryCreator.setMessageCodesResolver(messageCodesResolver);
+		
+		
 		
 		//factoryCreator.setViewResolvers(Arrays.<ViewResolver>asList(this.mvcConfig.tilesViewResolver()));
 		//factoryCreator.setUseSpringBeanBinding(true);
@@ -161,7 +206,7 @@ extends AbstractFlowConfiguration
 		FlowBuilderServicesBuilder flowBuilderServicesBuilder = super.getFlowBuilderServicesBuilder();
 		flowBuilderServicesBuilder.setViewFactoryCreator(viewFactoryCreator);
 		flowBuilderServicesBuilder.setValidator(validator);
-		flowBuilderServicesBuilder.setConversionService(conversionService());
+//		flowBuilderServicesBuilder.setConversionService(conversionService());
 		flowBuilderServicesBuilder.setDevelopmentMode(true);
 		
 		return flowBuilderServicesBuilder.build();
@@ -344,7 +389,7 @@ extends AbstractFlowConfiguration
 			new DefaultConversionService(mvcConSvc);
 		
 		//CUSTOM BINDING CONVERTER
-		defaultConversionService.addConverter(new UserToStringConverter());
+		//defaultConversionService.addConverter(new UserToStringConverter());
 
 
 		return defaultConversionService;

@@ -17,6 +17,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
+import org.springframework.validation.DefaultMessageCodesResolver;
+import org.springframework.validation.MessageCodeFormatter;
+import org.springframework.validation.MessageCodesResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.View;
@@ -94,7 +97,7 @@ public class MvcJavaConfig
 //>	public void configureViewResolvers(ViewResolverRegistry arg0) {}
 //	public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> arg0) {}
 //	public void extendMessageConverters(List<HttpMessageConverter<?>> arg0) {}
-//	public MessageCodesResolver getMessageCodesResolver() {return ;}
+//>	public MessageCodesResolver getMessageCodesResolver() {return ;}
 //	public Validator getValidator() { return ;}
 
 	extends WebMvcConfigurerAdapter  // <- better than WebMvcConfigurer (interface)
@@ -151,6 +154,39 @@ public class MvcJavaConfig
 		return new AnnotationMethodHandlerAdapter();
 	}
 	*/
+	
+/*
+███╗   ███╗███████╗███████╗███████╗ █████╗  ██████╗ ███████╗  ██████╗ ██████╗  DDDD   ███████╗███████╗
+████╗ ████║██╔════╝██╔════╝██╔════╝██╔══██╗██╔════╝ ██╔════╝ ██╔════╝██╔═══██╗ D   D  ██╔════╝██╔════╝
+██╔████╔██║█████╗  ███████╗███████╗███████║██║  ███╗█████╗   ██║     ██║   ██║ D    D █████╗  ███████╗
+██║╚██╔╝██║██╔══╝  ╚════██║╚════██║██╔══██║██║   ██║██╔══╝   ██║     ██║   ██║ D   D  ██╔══╝  ╚════██║
+██║ ╚═╝ ██║███████╗███████║███████║██║  ██║╚██████╔╝███████╗ ╚██████╗╚██████╔╝ DDDD   ███████╗███████║
+╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝  ╚═════╝ ╚═════╝         ╚══════╝╚══════╝
+
+ ██▀███  ▓█████   ██████  ▒█████   ██▓  ██▒   █▓▓█████  ██▀███    ██████ 
+▓██ ▒ ██▒▓█   ▀ ▒██    ▒ ▒██▒  ██▒▓██▒ ▓██░   █▒▓█   ▀ ▓██ ▒ ██▒▒██    ▒ 
+▓██ ░▄█ ▒▒███   ░ ▓██▄   ▒██░  ██▒▒██░  ▓██  █▒░▒███   ▓██ ░▄█ ▒░ ▓██▄   
+▒██▀▀█▄  ▒▓█  ▄   ▒   ██▒▒██   ██░▒██░   ▒██ █░░▒▓█  ▄ ▒██▀▀█▄    ▒   ██▒
+░██▓ ▒██▒░▒████▒▒██████▒▒░ ████▓▒░░██████▒▒▀█░  ░▒████▒░██▓ ▒██▒▒██████▒▒
+░ ▒▓ ░▒▓░░░ ▒░ ░▒ ▒▓▒ ▒ ░░ ▒░▒░▒░ ░ ▒░▓  ░░ ▐░  ░░ ▒░ ░░ ▒▓ ░▒▓░▒ ▒▓▒ ▒ ░
+  ░▒ ░ ▒░ ░ ░  ░░ ░▒  ░ ░  ░ ▒ ▒░ ░ ░ ▒  ░░ ░░   ░ ░  ░  ░▒ ░ ▒░░ ░▒  ░ ░
+  ░░   ░    ░   ░  ░  ░  ░ ░ ░ ▒    ░ ░     ░░     ░     ░░   ░ ░  ░  ░  
+   ░        ░  ░      ░      ░ ░      ░  ░   ░     ░  ░   ░           ░  
+UTILIZADO EN WEBFLOW
+*/
+//	@Override
+//	public MessageCodesResolver getMessageCodesResolver() {
+//		
+//		DefaultMessageCodesResolver resolver = new DefaultMessageCodesResolver();
+//		//resolver.setMessageCodeFormatter(this.getMessageCodeFormatter());
+//		return resolver;
+//	}
+	
+//	@Bean 
+//	public MessageCodeFormatter getMessageCodeFormatter(){
+//		
+//		return null;
+//	}
 
 /*
 ███████╗███████╗███████╗██═╗  ██╗

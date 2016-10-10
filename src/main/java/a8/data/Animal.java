@@ -16,8 +16,8 @@ public class Animal implements Serializable{
 	private Integer age;
 	
 	public Animal(){
-		user = new User();
-		user.setName("eight-a");
+//		user = new User();
+//		user.setName("eight-a");
 	}
 	
 	public String getName() {
