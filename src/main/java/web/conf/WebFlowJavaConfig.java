@@ -8,6 +8,7 @@ import org.springframework.binding.convert.ConversionService;
 import org.springframework.binding.convert.service.DefaultConversionService;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -35,6 +36,7 @@ import a8.utils.CommonsUtils;
 import web.listeners.WebFlowListener;
 
 @Configuration
+@ComponentScan(basePackages={"a8.validators"})
 public class WebFlowJavaConfig 
 extends AbstractFlowConfiguration 
 {
@@ -117,7 +119,7 @@ extends AbstractFlowConfiguration
 //		Since all your properties files are in classpath of java you need to define the path with prefix classpath*: otherwise it will look into the web directory of your application.
 		
 		ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-		resourceBundleMessageSource.setBasename("classpath*:bundles/errors/codes");
+		resourceBundleMessageSource.setBasename("bundles/errors/codes");
 //		resourceBundleMessageSource.setUseCodeAsDefaultMessage(true);
 		
 		String message = resourceBundleMessageSource.getMessage("typeMismatch", null, Locale.getDefault());
@@ -162,8 +164,8 @@ extends AbstractFlowConfiguration
 | org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver@5721d689
 | org.springframework.web.servlet.view.InternalResourceViewResolver@34e28d59 
 */
-		MvcViewFactoryCreator factoryCreator = new MvcViewFactoryCreator();
-		factoryCreator.setViewResolvers(viewResolvers);
+		MvcViewFactoryCreator mvcViewFactoryCreator = new MvcViewFactoryCreator();
+		mvcViewFactoryCreator.setViewResolvers(viewResolvers);
 		
 		//=======================================
 		//Customizing Data Binding Error Messages
@@ -171,15 +173,15 @@ extends AbstractFlowConfiguration
 	
 		//XXX IMPLEMENTACION DEBE SER TOMADA DESDE WEB-MVC
 		DefaultMessageCodesResolver messageCodesResolver = new DefaultMessageCodesResolver();
-		
-		
-		factoryCreator.setMessageCodesResolver(messageCodesResolver);
+		//messageCodesResolver.se
+		errorCodesMessageSource();
+		mvcViewFactoryCreator.setMessageCodesResolver(messageCodesResolver);
 		
 		
 		
 		//factoryCreator.setViewResolvers(Arrays.<ViewResolver>asList(this.mvcConfig.tilesViewResolver()));
 		//factoryCreator.setUseSpringBeanBinding(true);
-		return factoryCreator;
+		return mvcViewFactoryCreator;
 	}
 	
 /*

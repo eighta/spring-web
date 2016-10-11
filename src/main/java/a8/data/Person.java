@@ -11,6 +11,8 @@ import javax.validation.constraints.Pattern;
 import org.msgpack.annotation.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.binding.message.MessageContext;
+import org.springframework.binding.validation.ValidationContext;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -28,7 +30,7 @@ public class Person implements Serializable{
 
 	private Integer id;
 	
-	@Pattern(regexp = "sophie", message="Debe ser {2}")
+	//@Pattern(regexp = "sophie", message="Debe ser {2}")
 	private String firstName;
 	
     private String secondName;
@@ -66,6 +68,17 @@ public class Person implements Serializable{
 			e.printStackTrace();
 		}
     }
+    
+    //Validation Via Model Object
+    //Method "discovered" by convention
+    //-validate[view-state-id](ValidationContext ctx) {...}
+    /*SI FUNCIONA
+    public void validateEnterMainPersonInfo(ValidationContext ctx){
+    	
+    	MessageContext messageContext = ctx.getMessageContext();
+    	System.out.println("1. Validando...... " + messageContext.hasErrorMessages());
+    }
+    */
 
     //Specialized JSON annotation in order to describe how the date will be formatted in the JSON output
     @JsonSerialize(using=JsonDateSerializer.class)

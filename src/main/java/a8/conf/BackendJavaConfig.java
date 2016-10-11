@@ -1,10 +1,13 @@
 package a8.conf;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 import a8.beans.SimpleBean;
 import a8.data.Person;
@@ -13,6 +16,16 @@ import a8.data.Person;
 @PropertySource(value = "classpath:core/backend.properties")
 public class BackendJavaConfig {
 
+	@Bean
+	public ResourceBundleMessageSource resourceBundle(){
+		ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+		resourceBundleMessageSource.setBasename("bundles/errors/codes");
+		String message = resourceBundleMessageSource.getMessage("typeMismatch", null, Locale.getDefault());
+		System.out.println("Nojoda: " + message);
+		
+		return resourceBundleMessageSource;
+	}
+	
 	@Bean
 	public SimpleBean getWhatIsMyBeanName(){
 		return  new SimpleBean("unknown");

@@ -53,7 +53,7 @@
 				value="requestParameters.firstName"/>
 				
 			<evaluate expression="theFlowListener.onViewStateTransition()" />
-			<evaluate expression="theFlowListener.onViewStateTransition()" />
+			<evaluate expression="personValidator.check(newPerson, messageContext)" />
 		</transition>
 
 		<transition on="locationInfo" to="enterLocationPersonInfo" bind="false" />

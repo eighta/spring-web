@@ -580,6 +580,8 @@ Binder white-lists elements eligible for binding
 	</binder>
 </view-state>
 
+
+//XXX TODO: NO PUDE CON ESTA DIAPOSITIVA :(
 Customizing Type Conversion
 ---------------------------
 Spring 3 Formatters can also be used for Web Flow
@@ -590,8 +592,11 @@ automatically defined for Web Flow as well
 -Default formatters are present in both "out of the box"
 
 <webflow:flow-builder-services
-	id="flowBuilderServices" conversion-service="converter"/>
-<webflow:flow-registry id="flowRegistry"
+	id="flowBuilderServices" 
+	conversion-service="converter"/>
+
+<webflow:flow-registry 
+	id="flowRegistry"
 	flow-builder-services="flowBuilderServices">
 
 Data Binding Error Messages
@@ -624,6 +629,8 @@ typeMismatch.amount.
 typeMismatch.diningForm.amount
 typeMismatch.common.money.MonetaryAmount
 
+//XXX TODO HASTA ACA NO PUDE
+
 Validation Options
 ------------------
 JSR 303 validation support
@@ -638,7 +645,7 @@ Custom validators
 Can use either, both or neither
 
 JSR 303 Validation (Web Flow 2.3)
-------------------
+---------------------------------
 Enable same validator as MVC
 -via Web Flow builder services
 
@@ -744,7 +751,7 @@ addMessage(new MessageBuilder().error()
 
 
 
-PROBAR DESDE LA LINEA #597
+HACER LABORATORIO
 
 SLIDE: 888
 
