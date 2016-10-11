@@ -33,6 +33,7 @@ import a8.data.Person;
 import a8.data.Simple1;
 import a8.services.InterviewFactory;
 import a8.utils.CommonsUtils;
+import web.converters.binding.UserToStringConverter;
 import web.listeners.WebFlowListener;
 
 @Configuration
@@ -201,17 +202,32 @@ extends AbstractFlowConfiguration
 	public FlowBuilderServices flowBuilderServices(
 			ViewFactoryCreator viewFactoryCreator, 
 			@Qualifier("mvcValidator")
-			Validator validator
-			
+			Validator validator,
+			org.springframework.binding.convert.ConversionService webflowConversionService
 			) {
 		
 		FlowBuilderServicesBuilder flowBuilderServicesBuilder = super.getFlowBuilderServicesBuilder();
 		flowBuilderServicesBuilder.setViewFactoryCreator(viewFactoryCreator);
 		flowBuilderServicesBuilder.setValidator(validator);
-//		flowBuilderServicesBuilder.setConversionService(conversionService());
+		
+		//XXX THIS WAY WORKS TOO!!!
+		//flowBuilderServicesBuilder.setConversionService(this._conversionService());
+		flowBuilderServicesBuilder.setConversionService(webflowConversionService);
 		flowBuilderServicesBuilder.setDevelopmentMode(true);
 		
 		return flowBuilderServicesBuilder.build();
+	}
+	
+	@Bean
+	public org.springframework.binding.convert.ConversionService webFlowConversionService(
+			//@Qualifier("mvcConversionService")//<<<XXX NOT WORKS with WebFlow
+			@Qualifier("typeConversionService")//<<<XXX Custom Formatter (User to String and viceversa)
+			org.springframework.core.convert.ConversionService delegateConversionService){
+		
+		org.springframework.binding.convert.service.DefaultConversionService defaultConversionService = 
+				new org.springframework.binding.convert.service.DefaultConversionService(delegateConversionService);
+		
+		return defaultConversionService;
 	}
 	
 	
@@ -257,8 +273,8 @@ extends AbstractFlowConfiguration
 	}
 
 
-	@Bean
-	public ConversionService conversionService() {
+	//@Bean
+	public ConversionService _conversionService() {
 		//return new DefaultConversionService(conversionServiceFactoryBean().getObject());
 		
 		org.springframework.core.convert.ConversionService mvcConSvc = getApplicationContext().getBean(
@@ -391,7 +407,7 @@ extends AbstractFlowConfiguration
 			new DefaultConversionService(mvcConSvc);
 		
 		//CUSTOM BINDING CONVERTER
-		//defaultConversionService.addConverter(new UserToStringConverter());
+		defaultConversionService.addConverter(new UserToStringConverter());
 
 
 		return defaultConversionService;

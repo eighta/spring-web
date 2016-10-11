@@ -1,7 +1,9 @@
 package web.conf;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Executor;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -10,6 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.Formatter;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.format.support.FormattingConversionServiceFactoryBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -17,9 +22,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
-import org.springframework.validation.DefaultMessageCodesResolver;
-import org.springframework.validation.MessageCodeFormatter;
-import org.springframework.validation.MessageCodesResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.View;
@@ -49,6 +51,8 @@ import web.converters.http.message.HtmlFormPersonMessageConverter;
 import web.converters.http.message.JsonPersonMessageConverter;
 import web.converters.http.message.PersonMessageConverter;
 import web.converters.http.message.SeveralPersonMessageConverter;
+import web.formatters.UserConverter;
+import web.formatters.UserFormatter;
 import web.interceptors.AuditInterceptor;
 import web.view_resolvers.JsonViewResolver;
 import web.view_resolvers.PdfViewResolver;
@@ -83,7 +87,7 @@ public class MvcJavaConfig
 	//implements WebMvcConfigurer {
 //	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> arg0) {}
 //	public void addCorsMappings(CorsRegistry arg0) {}
-//	public void addFormatters(FormatterRegistry arg0) {}
+//>	public void addFormatters(FormatterRegistry arg0) {}
 //>	public void addInterceptors(InterceptorRegistry arg0) {}
 //>	public void addResourceHandlers(ResourceHandlerRegistry registry) {}
 //	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> arg0) {}
@@ -103,6 +107,36 @@ public class MvcJavaConfig
 	extends WebMvcConfigurerAdapter  // <- better than WebMvcConfigurer (interface)
 	implements AsyncConfigurer // <<< this is for use @EnableAsync, @Async
 	{
+		
+	// <=> <mvc:annotation-driven conversion-service="conversionService"/>
+//XXX NOT WORKING WITH WEB-FLOW :(	
+		@Override
+		public void addFormatters(FormatterRegistry registry) {
+			//XXX Viene a representar "conversionService"
+			//registry.addConverter(this.formattingConversionServiceFactoryBean().getObject());
+			registry.addConverter(new UserConverter()); //<<< XXX ESTE CONVERTER NO SIRVE PARA WEB-FLOW
+		}
+		
+//		@Bean
+//	    public FormattingConversionService mvcConversionService() {
+//	        FormattingConversionService conversionService = new FormattingConversionService();
+//	        conversionService.addConverter(new UserConverter());
+//	        addFormatters(conversionService);
+//	        return conversionService;
+//	    }
+	
+		@Bean(name="typeConversionService")
+		public FormattingConversionServiceFactoryBean formattingConversionServiceFactoryBean(){
+			FormattingConversionServiceFactoryBean formattingConversionServiceFactoryBean =
+					new FormattingConversionServiceFactoryBean();
+			
+			Set<Formatter<?>> formatterSet = new HashSet<>();
+			formatterSet.add(new UserFormatter());
+			
+			formattingConversionServiceFactoryBean.setFormatters(formatterSet);
+			return formattingConversionServiceFactoryBean;
+		}
+		
 	
 	// <=> <mvc:default-servlet-handler/>
 		@Override

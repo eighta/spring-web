@@ -10,6 +10,12 @@
 	<var name="newAnimal" class="a8.data.Animal" />
 	
 	<view-state id="animal1" model="newAnimal"> 
+		
+		<binder>
+			<binding property="name" required="true"/>
+			<binding property="user" required="true"/>
+		</binder>
+	
 		<transition on="next" to="animal2" />
 	</view-state>
 	

@@ -77,6 +77,15 @@ public class Person implements Serializable{
     	
     	MessageContext messageContext = ctx.getMessageContext();
     	System.out.println("1. Validando...... " + messageContext.hasErrorMessages());
+    	
+    	//SI FLLA LA VALIDACION, SE PUEDE AGREGAR UN MENSAJE DE ERROR DE LA SIGUIENTE MANERA:
+		ctx.getMessageContext()
+			.addMessage(
+					new MessageBuilder()
+							.error()
+							.source("creditCardNumber")
+							.code("error.invalidFormat.DiningForm.creditCardNumber")
+							.build());
     }
     */
 

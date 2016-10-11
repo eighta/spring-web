@@ -744,16 +744,311 @@ addMessage(new MessageBuilder().error()
 	.code("creditCard.invalidNumber")
 	.defaultText("A credit ... 16 digits.").build());	
 	
+Web Flow Action States
+======================
+
+Branching
+---------
+Flow navigation logic is often dynamic
+-e.g. If <x> then go <y>, else go <z>
+
+View States only go so far for these cases
+-You can prevent the user from leaving a view because an action fails
+-But you cannot easily change the target state to transition to based on some condition
+
+"Action" and "Decision states" exist to implement dynamic navigation rules
+
+Action State
+------------
+
+Allows you to transition to a state that executes one or more actions
+-<evaluation/>, <set/>
+
+The action's result is raised as an event
+-<evaluation/> only
+--<set/> always returns true
+
+This event triggers a transition to another state
+-Different events can be raised to trigger different transitions
+ dynamically
+
+Several result (return) types possible
+-Always converted to a String
+
+Options are:
+>Booleans (always evaluate to “yes” or “no”)
+--Will not match “true” or “false”
+
+>Strings
+
+>Enumerated types (converted to a String)
+
+>org.springframework.webflow.execution.Event
+-transition uses event's id string
+
+>Any other value (including null) evaluates to “success”
+
+Examples
+--------
+<action-state id="bookingFound">
+	<evaluate expression="checkinService.bookingExists(paxInfo)"/>
+	<transition on="no" to="enterPassengerIdentification"/>
+	<transition on="yes" to="reviewItinerary"/>
+</action-state>
+
+<action-state id="bookingFound">
+	<set name="flowScope.booking” value="checkinService.findBooking(paxInfo)”/>
+	<evaluate expression="booking != null"/>
+	<transition on="no" to="enterPassengerIdentification"/>
+	<transition on="yes" to="reviewItinerary"/>
+</action-state>
 
 
+Transition Action Examples
+--------------------------
+A transition occurs if its <evaluate> succeeds
+-Result of evaluation can be
+ >Boolean: true
+ >String: “yes”, “true”, “success”
+ >Enumerated values converted to Strings
+ >Any other object treated as “success”, so is null
+ 
+<view-state id="enterPassengerIdentification" model="paxInfo">
+	<transition on="submit" to="reviewItinerary">
+		<evaluate expression="checkinService.bookingExists(paxInfo)"/>
+	</transition>
+</view-state>
+ 
+Different Types of Actions
+--------------------------
+No Action
+ >Invoke business services directly
+ 
+POJO Action
+ >A POJO invoked by the flow
+ 
+Action
+ >Implements webflow.action.Action (interface)
+
+MultiAction
+ >extends MultiAction, allows for multiple strongly typed
+  actions to be grouped together
+
+No Action
+---------
+-Transition on result of method call on a business-level service
+-Methods can be injected with request context and/or flow variables
+
+<action-state id="performBooking">
+	<evaluate expression="bookingService.make(booking)"/>
+	<transition on="success" to="bookingComplete"/>
+</action-state>
+
+@Service(“bookingService”)
+public class BookingServiceImpl implements BookingService{
+	public BookingConfirmation make(Booking booking) {
+		BookingConfirmation confirmation;
+		...
+		return confirmation;
+		//Remember, most return types evaluate to “success”
+	}
+}
 
 
+POJO Action
+-----------
+A variation on what you've seen so far
+-Transition on result of method call on a display-layer POJO
+-Typically a web-flow object or a spring-bean
+
+Methods
+-Can have any sensible signature
+ >Any variables in scope can be passed
+ 
+-Can also be injected with request context
+ >Hence context is managed explicitly by you
+ 
+-Must return a String to transition on
+
+<action-state id="performBooking">
+	<evaluate expression="bookingAction.book(booking, flowRequestContext)"/>
+	<transition on="success" to="bookingComplete"/>
+</action-state>
+
+@Component
+public class BookingAction {
+	public String book(Booking booking, RequestContext context){
+		BookingConfirmation confirmation = bookingService.make(booking);
+		...
+		return "success";
+	}
+}
+
+Plain Action
+------------
+Create a simple class for each action
+
+Two ways to create
+-implement Action interface
+-Often easier to extend AbstractAction class
+
+package org.springframework.webflow.execution;
+public interface Action {
+	public Event execute(RequestContext context) throws Exception;
+}
+//Context passed automatically by Spring
+
+e.g.
+<action-state id="performBooking">
+	<evaluate expression="bookingAction"/>
+	<transition on="success" to="bookingComplete"/>
+</action-state>
 
 
+@Component
+public class BookingAction implements Action {
 
-HACER LABORATORIO
+	//Context passed automatically by Spring
+	public Event execute(RequestContext context) {
+		Booking booking = (Booking) context.getFlowScope().get("booking");
+		BookingConfirmation confirmation = bookingService.make(booking);
+		...
+		return new Event(this, "success" );
+	}
+}
 
-SLIDE: 888
+MultiAction
+-----------
+Subclass MultiAction class
+-Allows mutiple action methods on one class
+
+-Methods must have the same signature
+public Event methodName(RequestContext context) throws Exception
+
+-Helper methods provided for returning Events
+ >success(), error(), yes(), no()
+ >result(), result(String), error(Exception)
+ 
+ e.g.
+<action-state id="performBooking">
+	<evaluate expression="bookingAction.makeBooking"/>
+	<transition on="success" to="bookingComplete"/>
+</action-state>
+
+@Component
+public class BookingAction extends MultiAction {
+	public Event makeBooking(RequestContext context) {
+		Booking booking = (Booking) context.getFlowScope().get("booking");
+		BookingConfirmation confirmation = bookingService.make(booking);
+		...
+		return success();
+	}
+}
+
+When to use which action?
+-------------------------
+No Action
+-Looks good on paper, allows a flow to invoke your business logic directly
+-However, tghter coupling between your flow and your business logic can bloat your flow definiton
+
+POJO Action
+-Commonly used to glue your flow logic with your business layer in a decoupled way
+-Allows for flexibility to encapsulate the handling of business-layer exceptions, for example
+-Typically results in slightly more complex flow definitions
+
+Plain Action
+-Rarely used directly
+
+Multi Action
+-Commonly used to glue your flow logic with your business layer in a decoupled way
+-Allows for flexibility to encapsulate the handling of business-layer exceptions, for example
+-Typically result in slightly more complex Action code
+
+Suggestion
+-Use either POJO Action or MultiAction
+-Weigh complexity of flow definition vs. complexity of Action
+
+RequestContext
+--------------
+Passed to any of the action types
+-Provides access to all data currently in scope
+ >getFlowScope() - can read and write flow data
+ 
+-Info about the flow itself
+ >getActiveFlow(), getCurrentState(),getFlowExecuteURL()
+
+-Access to the message-context
+ >getMessageContext()
+ 
+-Info about the calling context and how the flow was invoked
+ >getExternalContext()
+ 
+ 
+Decision State
+--------------
+Similar to an action state
+-For explicit state transition control
+
+Provides a convenient if/then syntax for evaluating a boolean expression
+-Boolean return value determines next state to go to
+-For more than one condition, use an action state
+
+<decision-state id="isValidBooking">
+	<if test="checkinService.bookingExists(passengerInfo)"
+		then="reviewItinerary"
+		else="enterPassengerIdentification"/>		
+</decision-state>
+
+
+Exception Handling
+------------------
+Actions often invoke services that may throw checked Business Exceptions
+
+How should the flow handle these exceptions?
+-(1)In the flow XML
+-(2)Using a global exception handler
+-(3)Using an Action class and returning an error event
+
+***Option One
+-Let the exception propagate
+-Have the XML flow definition handle it in a transition via
+on-exception "attribute"
+
+<transition on-exception="accounts.NoSuchAccountException"
+to="endCancel" />
+
+***Option Two (Global Transitions)
+Declare exception handling globally
+-Place at end of flow
+
+Exception can be thrown from any state in a flow
+<flow>
+	...
+	<global-transitions>
+		<transition on-exception="accounts.NoSuchAccountException" to="endCancel" />
+	</global-transitions>
+</flow>
+
+***Option Three (Handle in Action Class)
+-Using an ExceptionHandler is not clean (XML Bloat)
+-Instead, catch exception in Action & return error event
+
+public class BookingAction extends MultiAction {
+	public Event makeBooking(RequestContext context) {
+		try {
+			Booking booking = ...
+			return success();
+		} catch (SomeException e) {
+			return error(e); // Optionally pass exception
+			//Available as $exception in event-context
+		}
+	}
+}
+
+PROBAR DESDE 747
+
+
+SLIDE: 918 LAB
 
 >>>TODO testear los ConversionService en WebFlow slide 874<<<
 
