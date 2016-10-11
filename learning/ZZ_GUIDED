@@ -24,11 +24,6 @@ orden a seguir:
 -http://docs.spring.io/spring-webflow/docs/current/reference/html/el.html y todo el WEBFLOW	[NO YET]
 [WEBFLOW END]
 
--LIBRO GUIA DE ESTUDIO AJAX
-
-DIAPOSITIVA DE AJAX
-LABORATORIO DE AJAX
-
 -587 Introduction to Spring Security
 -LABORATORIO
 -LIBRO GUIA DE ESTUDIO: (SI HAY SPRING SECURITY)
@@ -36,6 +31,14 @@ LABORATORIO DE AJAX
 -639 Debuging and Testing
 -LABORATORIO
 -LIBRO GUIA DE ESTUDIO: (SI HAY SPRING TEST)
+
+(is not a subject in the certification exam)
+DIAPOSITIVA DE AJAX
+LABORATORIO DE AJAX
+-LIBRO GUIA DE ESTUDIO AJAX
+
+
+
 
 ------------------------------------------------
 SLIDES
