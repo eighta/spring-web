@@ -1,5 +1,6 @@
 package web.actions;
 
+import org.springframework.binding.message.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.action.AbstractAction;
 import org.springframework.webflow.execution.Event;
@@ -17,6 +18,17 @@ public class CustomActionException extends AbstractAction{
 			if(condition){throw new EightaException("RE-PAILAS");}
 			return success();
 		} catch (EightaException e) {
+			
+			context
+			.getMessageContext()
+			.addMessage(
+					new MessageBuilder()
+							.error()
+							.source("creditCardNumber")
+							.defaultText("The credit card number is not associated with any account")
+							.build());
+			
+			
 			return error(e); // Optionally pass exception
 			//Available as $exception in event-context
 		}

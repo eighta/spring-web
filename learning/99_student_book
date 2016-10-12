@@ -10,13 +10,23 @@ spring-web-4.0.a.RELEASE-student-handout.pdf
 724 Spring Core Introduction
 769	Getting Started with Spring Web Flow (similar a 'Introduction to Spring Webflow', pero mas detallada)	[DONE]
 808 Web Flow Essentials (similar a 'Introduction to Spring Webflow: Defining a flow', pero mas detallada)	[DONE]
-836 Web Flow Actions																						[READING...]
-888 Web Flow Action States
+836 Web Flow Actions																						[DONE]
+888 Web Flow Action States																					[DONE]
 919 Web Flow Advanced Features
 
 
 Spring Web Training - Lab
 -------------------------
 
-Chapter 11. webflow-getting-started: Getting Started with Spring Web Flow
-Chapter 12. webflow-language-essentials: Web Flow Language Essentials Lab
+Chapter 11. webflow-getting-started: Getting Started with Spring Web Flow				[DONE]
+Chapter 12. webflow-language-essentials: Web Flow Language Essentials Lab				[DONE]
+Chapter 13.
+Chapter 14.
+Chapter 15. webflow-actions: Adding Actions to Web Flow									[DONE]
+Chapter 16. webflow-action-states: Using Action Objects and Actions States in Web Flow	[DONE]
+FIN
+Appendix A. Spring XML Configuration Tips
+Appendix B. Monitoring with Spring Insight
+Appendix C. Instructions for IntelliJ IDEA Users
+Appendix D. Eclipse Tips
+Appendix E. Using Web Tools Platform (WTP)	
