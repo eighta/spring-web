@@ -14,10 +14,79 @@
 		<binder>
 			<binding property="name" required="true"/>
 			<binding property="user" required="true"/>
+			<binding property="breed" required="true"/>
 		</binder>
 	
 		<transition on="next" to="animal2" />
+		<transition on="decision" to="animalActionState" />
 	</view-state>
+	
+	<decision-state id="animalDecisionState">
+		<if test="animalEvalService.isPureBreed(newAnimal)"
+			then="pureBreed"
+			else="anotherBreed"/>		
+	</decision-state>
+	
+	<action-state id="animalActionState">
+		
+		<!-- Exception Handle in Action Class -->
+		<evaluate expression="customActionException"/>
+		<transition on="error" to="estallada"/>
+		
+		<!--WORKS Exception with on-exception attribute 
+		<evaluate expression="animalEvalService.methodThrowingException()"/>
+		<transition on="success" to="anotherBreed"/> -->
+		<!--Exception a nivel de action-state
+		<transition on-exception="a8.exceptions.EightaException" to="estallada"/>  -->
+		
+		<!--WORKS using MultiAction 
+		<evaluate expression="customMultiAction.methodOne"/>
+		<transition on="success" to="anotherBreed"/> -->
+		
+		<!--WORKS using Plain Action (class)
+		<evaluate expression="customAction2"/>
+		<transition on="_plainAction" to="anotherBreed"/> -->
+		
+		<!--WORKS using Plain Action (interface)
+		<evaluate expression="customAction1"/>
+		<transition on="_plainAction" to="anotherBreed"/>-->
+	
+		<!--WORKS set ALWAYS evaluate to "success" 
+		<set name="flowScope.setResult" value="animalEvalService.usingSetReturnString()"/>
+		<evaluate expression="setResult == 'ojoPelao'"/>
+		<transition on="yes" to="anotherBreed"/>-->
+	
+		<!--WORKS set return Void always return "success" 
+		<set name="flowScope.setResult" value="animalEvalService.usingSet()"/>
+		<transition on="success" to="anotherBreed"/> -->
+	
+		<!--WORKS return org.springframework.webflow.execution.Event 
+		<evaluate expression="animalEvalService.methodReturnEvent()"/>
+		<transition on="_eventId" to="anotherBreed"/> -->
+	
+		<!--WORKS return String, evaluates to "view with that id" 
+		<evaluate expression="animalEvalService.methodReturnString()"/>
+		<transition on="theString" to="anotherBreed"/>-->
+	
+		<!--WORKS return void, null, another Object, evaluates to "success"
+		<evaluate expression="animalEvalService.methodReturnVoid()"/>
+		<transition on="success" to="anotherBreed"/> -->
+	
+		<!--WORKS return boolean, "yes" or "no"
+		<evaluate expression="animalEvalService.isPureBreed(newAnimal)"/>
+		<transition on="no" to="anotherBreed"/>
+		<transition on="yes" to="pureBreed"/>-->
+	</action-state>
+	
+	<view-state id="pureBreed" />
+	
+	<action-state id="anotherBreed">
+		<evaluate expression="animalEvalService.haveName(newAnimal)"/>
+		<transition on="no" to="animal1"/>
+		<transition on="yes" to="showAnimalInfo"/>
+	</action-state>
+	
+	<view-state id="showAnimalInfo" />
 	
 	<view-state id="animal2">
 		<transition on="back" to="animal1" /> 
@@ -25,5 +94,12 @@
 	</view-state>
 	
 	<end-state id="animal3"/>
+	
+	<end-state id="estallada" view="webflow/estallada"/>
+	
+	<global-transitions>
+		<!--WORKS Exception a nivel GLOBAL-->
+		<transition on-exception="a8.exceptions.EightaException" to="estallada"/>
+	</global-transitions>
 
 </flow>

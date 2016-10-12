@@ -16,4 +16,18 @@
 		<put-attribute name="content" value="/WEB-INF/flows/dogs/newDog/animial2_UI.jsp" />
 	</definition>
 	
+	<definition name="pureBreed" extends="layout">
+		<put-attribute name="pageTitle" value="Pure Breed" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/dogs/newDog/pureBreed_UI.jsp" />
+		
+		<put-attribute name="content" value="/WEB-INF/flows/dogs/newDog/pureBreed_UI.jsp" />
+	</definition>
+	
+	<definition name="showAnimalInfo" extends="layout">
+		<put-attribute name="pageTitle" value="Animal Info" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/dogs/newDog/animalInfo_UI.jsp" />
+		
+		<put-attribute name="content" value="/WEB-INF/flows/dogs/newDog/animalInfo_UI.jsp" />
+	</definition>
+	
 </tiles-definitions>

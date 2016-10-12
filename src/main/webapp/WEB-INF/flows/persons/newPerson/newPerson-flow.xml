@@ -128,7 +128,7 @@
 		view="externalRedirect:contextRelative:/CONTEXT_RELATIVE"/>
 	
 		
-	<!-- LAS GLOBAL-TRANSITIONS, van despues de: view-states -->
+	<!-- LAS GLOBAL-TRANSITIONS-->
 	<global-transitions>
 		<transition on="cancel" to="cancelled" validate="false" />
 		<transition on="logout" to="logout" /> 

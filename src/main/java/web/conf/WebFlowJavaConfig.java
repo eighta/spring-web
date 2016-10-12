@@ -10,7 +10,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.DefaultMessageCodesResolver;
 import org.springframework.validation.Validator;
@@ -37,7 +36,7 @@ import web.converters.binding.UserToStringConverter;
 import web.listeners.WebFlowListener;
 
 @Configuration
-@ComponentScan(basePackages={"a8.validators"})
+@ComponentScan(basePackages={"a8.services","web.actions"})
 public class WebFlowJavaConfig 
 extends AbstractFlowConfiguration 
 {

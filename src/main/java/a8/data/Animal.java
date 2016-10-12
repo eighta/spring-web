@@ -7,13 +7,15 @@ import javax.validation.constraints.Pattern;
 
 public class Animal implements Serializable{
 
-	@Pattern(regexp = "doggie", message="Debe ser {2}")
+	//@Pattern(regexp = "doggie", message="Debe ser {2}")
 	private String name;
 	
 	private User user;
 	
 	@Max(4)
 	private Integer age;
+	
+	private String breed;
 	
 	public Animal(){
 //		user = new User();
@@ -37,5 +39,13 @@ public class Animal implements Serializable{
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getBreed() {
+		return breed;
+	}
+
+	public void setBreed(String breed) {
+		this.breed = breed;
 	}
 }

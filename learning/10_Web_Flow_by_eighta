@@ -854,7 +854,6 @@ public class BookingServiceImpl implements BookingService{
 	}
 }
 
-
 POJO Action
 -----------
 A variation on what you've seen so far
@@ -949,7 +948,7 @@ When to use which action?
 -------------------------
 No Action
 -Looks good on paper, allows a flow to invoke your business logic directly
--However, tghter coupling between your flow and your business logic can bloat your flow definiton
+-However, tighter coupling between your flow and your business logic can bloat your flow definiton
 
 POJO Action
 -Commonly used to glue your flow logic with your business layer in a decoupled way
@@ -999,7 +998,6 @@ Provides a convenient if/then syntax for evaluating a boolean expression
 		else="enterPassengerIdentification"/>		
 </decision-state>
 
-
 Exception Handling
 ------------------
 Actions often invoke services that may throw checked Business Exceptions
@@ -1044,9 +1042,6 @@ public class BookingAction extends MultiAction {
 		}
 	}
 }
-
-PROBAR DESDE 747
-
 
 SLIDE: 918 LAB
 
