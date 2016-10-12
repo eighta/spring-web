@@ -1043,6 +1043,368 @@ public class BookingAction extends MultiAction {
 	}
 }
 
+Flow Contract
+-------------
+A flow is like any other method with an input-output contract
+-Named parameters are passed in and out of flows
+ >Passed as values in a Map
+ 
+-Need a FlowHandler to create input and process output
+
+<flow>
+	<input name="accountNumber" required="true"/>
+	...
+	<end-state id="confirm">
+		<output name="confirmationNumber" value="confirmation.id"/>
+	</end-state>
+</flow>
+
+
+Flow Handler
+------------
+public interface FlowHandler {
+	// What flow does this handler apply to?
+	public String getFlowId();
+	
+	// Creates input map to pass to new flow instance
+	public MutableAttributeMap<Object> createExecutionInputMap(HttpServletRequest request);
+	
+	// Return location of the resource to redirect to when flow ends
+	// Use outcome.getOutput() to access <output> data
+	public String handleExecutionOutcome(FlowExecutionOutcome outcome,
+		HttpServletRequest request, HttpServletResponse response);
+		
+	// Handles a flow exception not handled by the Web Flow system.
+	public String handleException(FlowException e, HttpServletRequest request, HttpServletResponse response);
+}
+
+***Implement to setup flow input data and to access data returned
+***Easier to extend AbstractFlowHandler
+
+
+Subflows
+--------
+A flow invoked from another flow
+-Self contained execution
+-Parent flow is suspended while subflow is executing
+
+Has own scope
+-Flow scope isolated to particular flow or subflow
+-Conversation scope shared between parent flow and all subflows
+
+
+Subflow State
+-------------
+-Subflow launched from special state in parent flow
+-Transitions keyed from subflow's end-state id
+
+<subflow-state id="beneficiaries" subflow="editBeneficiaries">
+	<transition on="endCommit" to="confirm"/>
+	<transition on="endCancel" to="edit"/>
+</subflow-state>
+
+
+Subflow Input/Output
+--------------------
+Pass data between calling flow and subflow
+
+**calling flow
+<subflow-state id="beneficiaries" subflow="editBeneficiaries">
+	<input name="accountNumber" value="account.number"/>
+	<output name="confirmationNumber" value="flowScope.confirmationNumber"/>
+	...
+</subflow-state>
+
+**subflow “editBeneficiaries”
+<flow ...>
+	<input name="accountNumber" required="true"/>
+	...
+	<end-state id="endCommit">
+		<output name="confirmationNumber" value="confirmation.id" />
+	</end-state>
+	
+	<end-state id="endCancel"/>
+
+</flow>
+
+Mocking Subflows
+----------------
+
+**METHOD
+public Flow createMockEditBeneficiariesSubflow() {
+	
+	Flow mockSubflow = new Flow("editBeneficiaries");
+	
+	//INPUT
+	mockSubflow.setInputMapper(
+		new Mapper() {
+			public MappingResults map(Object source, Object target) {
+				assertEquals(1L,((AttributeMap) source).get("accountNumber")); 		// test input mapping
+				return null;
+			}
+		};
+	);
+	
+	//OUTPUT
+	mockSubflow.setOutputMapper(new DefaultMapper.addMapping(...) );
+	
+	// immediately return so the caller can respond
+	//END-STATE
+	new EndState(mockSubflow, "endCancel");
+
+	return mockSubflow;
+}
+
+**Y PARA REGISTRARLO
+getFlowDefinitionRegistry().registerFlowDefinition(
+								createMockEditBeneficiariesSubflow() );
+								
+Flow Inheritance
+----------------
+-Share common states, actions across flows
+
+-Support for multiple inheritance
+ >More like composition than inheritance
+ 
+-Merge (not override) differences between parent and child flow								
+
+-Child flow and parent flow are both registered in the same FlowRegistry
+
+Flow Level Inheritance	(HERENCIA DE FLOWS)
+----------------------
+Merges all elements of parent flow into child
+-Parent's actions are executed first
+
+<flow ... parent="parentFlowName">
+
+Comma separated flow names for multiple inheritance
+-Order has no effect on resulting flow
+
+Abstract flows cannot be directly instantiated, only extended
+
+<flow ... abstract="true">
+
+State Level Inheritance (HERENCIA DE ESTADOS)
+-----------------------
+Only specified state's elements are merged
+
+<view-state ... parent="parentFlowName#stateId">
+
+Must specify flow name and state id
+-flowId[#stateId]
+-default stateId is current state's id
+-Only single inheritance supported
+
+Must be of the same state type
+-view-state to view-state, end-state to end-state, ...
+
+e.g. (1)
+***common.xml
+<flow abstract="true">
+	<end-state id="endCancel" />
+	<global-transitions>
+		<transition on-exception="accounts.NoSuchAccountException“ to="endCancel" />
+	</global-transitions>
+</flow>
+
+***child.xml
+<flow parent="common">
+	...
+	<view-state id="confirm">
+		<transition on="save" to="endComplete" />
+	</view-state>
+	
+	<end-state id="endComplete" />
+</flow>
+
+DESPUES QUE SE APLICA LA HERENCIA, EL CHILD QUEDA ASI:
+
+<flow>
+	...
+	<view-state id="confirm">
+		<transition on="save" to="endComplete" />
+	</view-state>
+	
+	<end-state id="endComplete" />
+	
+	<end-state id="endCancel" />
+	
+	<global-transitions>
+		<transition on-exception="accounts.NoSuchAccountException“ to="endCancel" />
+	</global-transitions>
+</flow>
+
+
+Execution Listeners
+-------------------
+Observe flow execution life-cycle events
+-must implement FlowExecutionListener
+-registered with the flow execution engine
+
+<webflow:flow-executor id="flowExecutor" flow-registry="flowRegistry">
+	<webflow:flow-execution-listeners>
+		<webflow:listener ref="myFlowListener" />
+	</webflow:flow-execution-listeners>
+</webflow:flow-executor>
+
+
+FlowExecutionListener
+---------------------
+Methods to respond to web-flow events:
+-created, loaded, paused, resumed, saved, removed
+-eventSignaled
+-requestProcessed, requestSubmitted
+-sessionStarting, sessionStarted, sessionEnded
+-stateEntering, stateEntered
+
+Several predefined
+-Security, Persistence, Faces (JSF)
+-Can write your own (for example: event tracing/logging)
+
+Flow-Based Security
+-------------------
+Web Flow also integrates with Spring Security
+
+These “resources” can be secured
+-flows
+-states
+-transitions
+
+How To Secure A Flow
+--------------------
+Standard Spring Security configuration
+-secure the web-flow URLs
+-orthogonal (independent) to Web Flow
+
+A SecurityFlowExecutionListener declaration
+-configured and added to the flowExecutor
+
+Add <secured> elements to the flow definition
+
+
+Flow Security Attributes
+------------------------
+***flow
+<flow ...>
+	<secured attributes="ROLE_USER" />
+</flow>
+
+***state
+<flow ...>
+	<view-state id="edit">
+		<secured attributes="ROLE_USER" />
+	</view-state>
+</flow>
+
+***transition
+<flow ...>
+	<view-state id="edit">
+		<transition on="next" to="beneficiaries">
+			<secured attributes="ROLE_USER" />
+		</transition>
+	</view-state>
+</flow>
+
+
+
+Configuring a Security Flow Execution Listener
+----------------------------------------------
+Flow <secured> element will be ignored without a
+SecurityFlowExecutionListener in place
+
+<bean id="securityFlowExecutionListener" 
+	class="...webflow.security.SecurityFlowExecutionListener"/>
+	
+<webflow:flow-executor id="flowExecutor">
+	<webflow:flow-execution-listeners>
+		<webflow:listener ref="securityFlowExecutionListener"/>
+	</webflow:flow-execution-listeners>
+</webflow:flow-executor>
+
+
+Non-Role Based Authorities
+--------------------------
+Application may choose to authorize on something other than roles
+-Can override default AccessDecisionManager
+-Set "accessDecisionManager" property on listener
+
+<bean id="securityFlowExecutionListener”
+	class="...webflow.security.SecurityFlowExecutionListener">
+	
+	<property name="accessDecisionManager" ref="myDecisionMgr" />
+</bean>
+
+Exception Handling
+------------------
+The SecurityFlowExecutionListener throws AccessDeniedException
+-Bubbles up and is caught by a Spring Security servlet filter
+
+Avoid catching/suppressing that exception
+-If using SimpleMappingExceptionResolver, override
+ the doResolveException method to rethrow the exception
+
+Ignoring Exceptions in a Resolver
+---------------------------------
+public class SmartExceptionResolver extends SimpleMappingExceptionResolver {
+
+	protected ModelAndView doResolveException(
+						HttpServletRequest req, HttpServletResponse res,
+						Object handler, Exception ex) {
+						
+		if (ex instanceof AccessDeniedException)
+			throw (AccessDeniedException) ex;
+			
+		return super.doResolveException(req, res, handler, ex);
+	}
+}
+
+Flow Execution Tuning
+---------------------
+Limit the number of flow executions and snapshots for a user session
+-reduce memory overhead from “hog” users
+-less likely to encounter an OutOfMemory exception
+
+//Maximum 5 concurrent flow executions per user. 
+//No more than 30 snapshots per execution.
+<webflow:flow-execution-repository max-executions="5"
+	max-execution-snapshots="30" />
+	
+Warning: going back beyond first snapshot:
+Web Flow throws FlowExecution-RestorationFailureException
+
+**Java Configuration
+@Configuration
+public class WebFlowConfig extends AbstractFlowConfiguration {
+	@Bean
+	public FlowExecutor flowExecutor() {
+		return getFlowExecutorBuilder(flowRegistry())
+				.setMaxFlowExecutions(5)
+				.setMaxFlowExecutionSnapshots(30)
+				.build();
+	}
+...
+
+Embedded Flows
+--------------
+Every Web Flow transition involves a redirect
+
+Not always desirable
+-If using an AJAX-style partial page refresh
+-Trying to make page modal
+ >Stops user leaving flow with obsolete flow-data in Session
+ 
+Embedded flows (WebFlow 2.3)
+-Allow a transition with no redirect between different states
+ >Page must dynamically refresh its contents
+
+Initiated via parameter when flow started
+-/flights/checkin?mode=embedded
+
+
+
+
+
+
 
 SLIDE: 918 LAB
 
