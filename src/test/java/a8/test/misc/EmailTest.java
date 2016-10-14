@@ -1,5 +1,6 @@
 package a8.test.misc;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -15,12 +16,64 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class EmailTest {
 
 	@Test
-	public void sendEmail() throws MessagingException{
+	@Ignore
+	public void sendPlainTextMail() throws MessagingException{
+		
+		//CONTENT
+		Multipart plainMultiPart = new MimeMultipart();
+		BodyPart bodyPart = new MimeBodyPart();
+		bodyPart.setContent("CONTENIDO DEL MENSAJE", "text/plain");
+		plainMultiPart.addBodyPart(bodyPart,0);
+		
+		this.sendEmail(plainMultiPart);
+	}
+	
+	@Test
+	public void sendHtmlMail() throws MessagingException, IOException{
+		
+		Multipart htmlMultipart = this.getHtmlMultipart();
+		this.sendEmail(htmlMultipart);
+	}
+	
+	private Multipart getHtmlMultipart() throws MessagingException, IOException{
+		String content = this.getHtmlContent();
+		
+		MimeMultipart mimeMultipart = new MimeMultipart("related");
+		
+		//BODY-PART
+		BodyPart messageBodyPart = new MimeBodyPart();				
+        messageBodyPart.setContent(content, "text/html");
+        mimeMultipart.addBodyPart(messageBodyPart);
+        
+        //IMAGES
+        MimeBodyPart imagePart = new MimeBodyPart();
+        imagePart.setHeader("Content-ID", "CONTENT_IMAGE");
+        imagePart.setDisposition(MimeBodyPart.INLINE);
+        imagePart.attachFile("/p_wrk1/2016/TICKETS&MANTIS/T811931/SALUDO_BIENVENIDA_2.png");
+        mimeMultipart.addBodyPart(imagePart);
+        
+        return mimeMultipart;
+	}
+	
+	private String getHtmlContent() {
+		String htmlContent =
+				"<html style='height: 100%; display: table;  margin: auto;'>"
+				+ "<body style=' height: 100%;  display: table-cell;  vertical-align: middle;'>"
+				+ "	<img src='cid:CONTENT_IMAGE' width=950/>"
+				+ "</body>"
+				+ "</html>";
+		
+		
+		return htmlContent;
+	}
+
+	public void sendEmail(Multipart multipart) throws MessagingException{
 		
 		String smtpHost = "10.0.0.212";
 		
@@ -34,7 +87,7 @@ public class EmailTest {
 		Message msg = new MimeMessage(session);
 		
 		//ORIGEN
-		Address fromAdress = new InternetAddress("ate_cliente@enlace-apb.com");
+		Address fromAdress = new InternetAddress("me@myself.com");
 		msg.setFrom(fromAdress);
 		
 		//DESTINO
@@ -42,7 +95,7 @@ public class EmailTest {
 		msg.setRecipient(Message.RecipientType.TO, toAdress);
 		
 		//TITLE
-		msg.setSubject("Prueba de correo!");
+		msg.setSubject("TEST");
 		
 		//HEADERS
 		msg.setHeader("X-Mailer", "msgsend");
@@ -50,13 +103,8 @@ public class EmailTest {
 		//fecha de envio?
 		msg.setSentDate(new Date());
 		
-		//CONTENT
-		Multipart multiPart = new MimeMultipart();
-		BodyPart bodyPart = new MimeBodyPart();
-		bodyPart.setContent("CONTENIDO DEL MENSAJE", "text/plain");
-		multiPart.addBodyPart(bodyPart,0);
-		
-		msg.setContent(multiPart);
+		//CONTENIDO DEL MAIL
+		msg.setContent(multipart);
 		
 		msg.saveChanges();
 		

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,15 +39,20 @@ public class WebFlowController {
 	private WebApplicationContext webContext;
 	
 	@RequestMapping(path = "/ids")
-	public String flowsIds(HttpServletRequest request) {
+	public String flowsIds(HttpServletRequest request, Model model) {
 		
 		FlowHandlerMapping flowHandlerMapping = webContext.getBean(FlowHandlerMapping.class);
 		FlowDefinitionRegistry flowRegistry = flowHandlerMapping.getFlowRegistry();
 		
 		System.out.println("Registered Flow Ids are:");
-		CommonsUtils.getInstance().printList(Arrays.asList(flowRegistry.getFlowDefinitionIds() ) );
+		
+		//http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/Conventions.html#getVariableName-java.lang.Object-
+		//For arrays, is similat to List<String> => stringList
+		model.addAttribute(flowRegistry.getFlowDefinitionIds());
+		
+		//CommonsUtils.getInstance().printList(Arrays.asList(flowRegistry.getFlowDefinitionIds() ) );
 
-		return "no_vista_mapeada";
+		return "webflow/flowsRegistered";
 
 	}
 
