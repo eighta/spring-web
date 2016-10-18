@@ -11,7 +11,7 @@ public class CustomAction2 extends AbstractAction{
 	@Override
 	protected Event doExecute(RequestContext context) throws Exception {
 		System.out.println("Method: Executing CustomAction2.doExecute(...)");
-		return new Event(new Object(), "_plainAction");
+		return new Event(this, "_plainAction");
 		//return success();
 	}
 }

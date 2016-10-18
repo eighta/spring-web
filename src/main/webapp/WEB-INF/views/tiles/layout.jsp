@@ -17,6 +17,8 @@
 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 	<link rel="stylesheet" href="../libs/pure-release-0.6.0/pure-min.css">
 	
+	<link rel="stylesheet" href="../libs/Font-Awesome/css/font-awesome.min.css">
+	
 	<link rel="stylesheet" type="text/css" href="../css/themify/themify-icons.css">
 	<link rel="stylesheet" type="text/css" href="../css/webflow-styles.css">
 	

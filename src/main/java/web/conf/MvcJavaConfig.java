@@ -519,7 +519,11 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 				
 				//4 WebFlow
 				"/WEB-INF/flows/persons/newPerson/tiles.xml",
-				"/WEB-INF/flows/dogs/newDog/tiles.xml");
+				"/WEB-INF/flows/dogs/newDog/tiles.xml",
+				"/WEB-INF/flows/advanced/start/tiles.xml",
+				"/WEB-INF/flows/advanced/mySubflow/tiles.xml"
+				
+				);
 		
 		
 		return tilesConfigurer;

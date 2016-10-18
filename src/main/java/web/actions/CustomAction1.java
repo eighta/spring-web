@@ -11,7 +11,7 @@ public class CustomAction1 implements Action{
 	@Override
 	public Event execute(RequestContext context) throws Exception {
 		System.out.println("Method: Executing CustomAction1.execute(...)");
-		return new Event(new Object(), "_plainAction");
+		return new Event(this, "_plainAction");
 	}
 
 }

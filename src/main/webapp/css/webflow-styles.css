@@ -241,3 +241,14 @@ a{
 	top: -30px;
 	color: red;
 }
+
+.simple-table{
+	position:static;
+	color: black; 
+	width: 700px;
+}
+
+.simple-table td{
+	text-align: center;
+	border-style: dashed;
+}

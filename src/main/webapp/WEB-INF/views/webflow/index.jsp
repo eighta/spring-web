@@ -19,7 +19,8 @@
 	<h1><%=response.getStatus() %></h1>
 	
 	<ul class="rounded-list">
-		<li><a href="/spring-web/s/tasks/webflow/ids">/spring-web/s/tasks/webflow/ids</a> <span class="resalt">Flows Ids</span><span class="yellow">(FlowHandlerMapping)</span></li>
+		<li><a href="/spring-web/s/advanced/start">/spring-web/s/advanced/start</a> <span class="resalt">Advanced Flows</span><span class="yellow">(FlowHandlerMapping)</span></li>
+		<li><a href="/spring-web/s/tasks/webflow/ids">/spring-web/s/tasks/webflow/ids</a> <span class="resalt">Flows Ids</span><span class="yellow">(MvcHandlerMapping)</span></li>
 		<li><a href="/spring-web/s/dogs/newDog">/spring-web/s/dogs/newDog</a> <span class="resalt">Dog Flow</span><span class="yellow">(FlowHandlerMapping)</span></li>
 		<li><a href="/spring-web/s/persons/newPerson">/spring-web/s/persons/newPerson</a> <span class="resalt">Iniciar Flow</span><span class="yellow">(FlowHandlerMapping)</span></li>
 	</ul>
