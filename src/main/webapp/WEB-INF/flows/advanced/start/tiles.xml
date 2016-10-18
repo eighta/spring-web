@@ -9,5 +9,11 @@
 		<put-attribute name="pageLocation" value="WEB-INF/flows/advanced/start/letsBegin.jsp" />
 		<put-attribute name="content" value="/WEB-INF/flows/advanced/start/letsBegin.jsp" />
 	</definition>
+	
+	<definition name="finSubflow" extends="layout">
+		<put-attribute name="pageTitle" value="outputSubflow" />
+		<put-attribute name="pageLocation" value="WEB-INF/flows/advanced/start/finSubflow.jsp" />
+		<put-attribute name="content" value="/WEB-INF/flows/advanced/start/finSubflow.jsp" />
+	</definition>
 
 </tiles-definitions>

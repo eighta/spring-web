@@ -12,6 +12,10 @@
 		
 		<subflow-state id="mySubflow" subflow="advanced/mySubflow">
 			<input name="idNumber" value="thePerson.id"/>
+			
+			<transition on="done" to="finSubflow"/>
 		</subflow-state>
+		
+		<view-state id="finSubflow"/>
 		
 </flow>

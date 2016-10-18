@@ -6,6 +6,17 @@
 		
 		<input name="idNumber" required="true"/>
 		
-		<view-state id="dotZero"/>
+		<view-state id="dotZero">
+			<transition on="endSubflow" to="done" />
+		</view-state>
+		
+		<end-state id="done">
+			<output name="takeTheOut" value="idNumber"/>
+		</end-state>
+		
+		<!-- Event: Flow ends -->
+		<on-end>
+			<evaluate expression="theFlowListener.onEnd()" />
+		</on-end>
 		
 </flow>
