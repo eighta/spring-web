@@ -321,7 +321,7 @@ extends AbstractFlowConfiguration
 		//WEBFLOW - Security (listener) (requiere: spring-security-core)
 		SecurityFlowExecutionListener securityFlowExecutionListener = new SecurityFlowExecutionListener();
 		//>>custom AccessDecisionManager
-		securityFlowExecutionListener.setAccessDecisionManager(new EightaAccessDecisionManager());
+		//securityFlowExecutionListener.setAccessDecisionManager(new EightaAccessDecisionManager());
 		
 		flowExecutorBuilder.addFlowExecutionListener(securityFlowExecutionListener );
 		

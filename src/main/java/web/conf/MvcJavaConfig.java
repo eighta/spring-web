@@ -47,6 +47,7 @@ import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 
 import a8.business.PersonManager;
 import a8.business.PersonManagerImpl;
+import a8.exceptions.CustomExceptionResolver;
 import web.controllers.MyAbstractController;
 import web.controllers.PlainController;
 import web.converters.http.message.HtmlFormPersonMessageConverter;
@@ -155,6 +156,8 @@ public class MvcJavaConfig
 			registry.addResourceHandler("/fonts/**").addResourceLocations("/fonts//").setCachePeriod(31556926);;
 		}
 		
+		
+		
 	// <=> <mvc:view-controller path="/" view-name="welcome"/>		
 		@Override
 		public void addViewControllers(ViewControllerRegistry registry) {
@@ -165,6 +168,23 @@ public class MvcJavaConfig
 			//XXX TODO cual sera la forma de mapear TODAS LA URLs  a vistas?
 			registry.addViewController("/tasks/handler_mapping").setViewName("tasks/handler_mapping");
 			registry.addViewController("/tasks/view_resolver").setViewName("tasks/view_resolver");
+			
+			//XXX TODO QUITAR (SOLO ES DE PRUEBA)
+			//registry.addViewController("/ad").setViewName("errors/access_denied");
+		}
+		
+		//4 WebFlow
+		@Bean
+		public HandlerMapping myCustomsFlowsHandlerMappings(){
+			
+			SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
+			simpleUrlHandlerMapping.setOrder(123);
+			
+			Properties mappings = new Properties();
+			mappings.put("/eighta.flow", "_myCustomFlowHandler");
+			simpleUrlHandlerMapping.setMappings(mappings);
+			
+			return simpleUrlHandlerMapping;
 		}
 		
 	//HandlerMapping
@@ -298,6 +318,13 @@ UTILIZADO EN WEBFLOW
 	*/	
 		
 		@Bean
+		public CustomExceptionResolver customExceptionResolver(){
+			CustomExceptionResolver customExceptionResolver = new CustomExceptionResolver();
+			customExceptionResolver.setOrder(-1);
+			return customExceptionResolver;
+		}
+		
+		@Bean
 		public SimpleMappingExceptionResolver simpleMappingExceptionResolver(){
 			SimpleMappingExceptionResolver simpleMappingExceptionResolver =
 					new SimpleMappingExceptionResolver();
@@ -307,6 +334,8 @@ UTILIZADO EN WEBFLOW
 			//EL VALUE significa nombre de vista logica
 //			mappings.put("DataAccessException", "errors/databaseError"); 
 			mappings.put("EightaException", "errors/business_error");
+			mappings.put("AccessDeniedException", "errors/access_denied");
+			
 			simpleMappingExceptionResolver.setExceptionMappings(mappings);
 			
 			simpleMappingExceptionResolver.setDefaultStatusCode(405); //DEFAULT IS 200
@@ -761,21 +790,4 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	public PersonManager getPersonManager(){
 		return new PersonManagerImpl();
 	}
-	
-//HandlerMappings
-	
-	@Bean
-	public HandlerMapping myCustomsFlowsHandlerMappings(){
-		
-		SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
-		simpleUrlHandlerMapping.setOrder(123);
-		
-		Properties mappings = new Properties();
-		mappings.put("/eighta.flow", "_myCustomFlowHandler");
-		simpleUrlHandlerMapping.setMappings(mappings);
-		
-		return simpleUrlHandlerMapping;
-	}
-		
-	
 }
