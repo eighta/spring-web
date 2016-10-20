@@ -56,7 +56,9 @@
 			<evaluate expression="personValidator.check(newPerson, messageContext)" />
 		</transition>
 
-		<transition on="locationInfo" to="enterLocationPersonInfo" bind="false" />
+		<transition on="locationInfo" to="enterLocationPersonInfo" bind="false">
+			<secured attributes="ROLE_USER" />
+		</transition>
 		<transition on="keyInfo" to="enterKeyPersonInfo" />
 		<transition on="reviewInfo" to="reviewPersonInfo" />
 		

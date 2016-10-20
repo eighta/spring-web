@@ -20,14 +20,20 @@ public class PersonValidator {
 		//XXX asi se agrega un mensaje
 		//MessageResolver messageResolver = new DefaultMessageResolver(person,null,Severity.ERROR,null,"My Default Message");
 		//messageContext.addMessage(messageResolver);
-		messageContext.addMessage(
-				new MessageBuilder().
-				error().
-				source("firstName").
-				code("firstName.pailas").
-				defaultText("mENSAJE Por Defecto")
-				.build());
-		return false;
+		
+		if(false){
+			messageContext.addMessage(
+					new MessageBuilder().
+					error().
+					source("firstName").
+					code("firstName.pailas").
+					defaultText("mENSAJE Por Defecto")
+					.build());
+			
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/*XXX TODO NO FUNCIONA*/

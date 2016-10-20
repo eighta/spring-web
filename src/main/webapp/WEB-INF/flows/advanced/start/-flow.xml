@@ -5,13 +5,31 @@
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 		
 		<var name="thePerson" class="a8.data.Person" />
+		<var name="grammy" class="a8.data.GrammyAward"/>
+		
+		<on-start>
+			<set name="grammy.person.firstName" value="'JAVIER'"/>
+			<set name="grammy.person.lastName" value="'LARIOS'"/>
+			
+			<evaluate expression="'LETS SPEAK ' + flowUtils.currentDate()"
+					result="conversationScope.conversationVar1"/>
+		</on-start>
 		
 		<view-state id="letsBegin" model="thePerson">
+		
+			<var name="concretePerson" class="a8.data.Person" />
+			
+			<on-entry>
+				<set name="concretePerson.firstName" value="'SIMON'"/>
+				<set name="concretePerson.lastName" value="'BOLIVAR'"/>
+			</on-entry>
+		
 			<transition on="mySubflow" to="mySubflow"/>
 		</view-state> 
 		
 		<subflow-state id="mySubflow" subflow="advanced/mySubflow">
 			<input name="idNumber" value="thePerson.id"/>
+			<output name="takeMeOut" value="flowScope.confirmationNumber"/>
 			
 			<transition on="done" to="finSubflow"/>
 		</subflow-state>

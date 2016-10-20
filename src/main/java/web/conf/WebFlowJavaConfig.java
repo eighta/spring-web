@@ -21,19 +21,27 @@ import org.springframework.webflow.config.FlowBuilderServicesBuilder;
 import org.springframework.webflow.config.FlowDefinitionRegistryBuilder;
 import org.springframework.webflow.config.FlowExecutorBuilder;
 import org.springframework.webflow.definition.registry.FlowDefinitionRegistry;
+import org.springframework.webflow.engine.EndState;
+import org.springframework.webflow.engine.Flow;
 import org.springframework.webflow.engine.builder.ViewFactoryCreator;
 import org.springframework.webflow.engine.builder.support.FlowBuilderServices;
 import org.springframework.webflow.executor.FlowExecutor;
 import org.springframework.webflow.mvc.builder.MvcViewFactoryCreator;
+import org.springframework.webflow.mvc.servlet.FlowHandler;
 import org.springframework.webflow.mvc.servlet.FlowHandlerAdapter;
 import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
+import org.springframework.webflow.security.SecurityFlowExecutionListener;
 
 import a8.data.Person;
 import a8.data.Simple1;
+import a8.security.EightaAccessDecisionManager;
 import a8.services.InterviewFactory;
 import a8.utils.CommonsUtils;
 import web.converters.binding.UserToStringConverter;
+import web.flows.MyCustomFlowHandler;
+import web.listeners.RealWebFlowListener;
 import web.listeners.WebFlowListener;
+import web.utils.FlowUtils;
 
 @Configuration
 @ComponentScan(basePackages={"a8.services","web.actions"})
@@ -41,6 +49,16 @@ public class WebFlowJavaConfig
 extends AbstractFlowConfiguration 
 {
 
+	@Bean
+	public FlowUtils flowUtils(){
+		return new FlowUtils(); 
+	}
+	
+	@Bean
+	public FlowHandler _myCustomFlowHandler(){
+		return new MyCustomFlowHandler();
+	}
+	
 	//XXX OJO: Recordando, el nombre del metodo, es el nombre del Bean
 	@Bean
 	public WebFlowListener theFlowListener(){
@@ -81,6 +99,8 @@ extends AbstractFlowConfiguration
 		FlowHandlerMapping handlerMapping = new FlowHandlerMapping();
 		handlerMapping.setOrder(-1);
 		handlerMapping.setFlowRegistry(flowDefinitionRegistry);
+		
+		
 		return handlerMapping;
 	}
 /*	
@@ -174,7 +194,7 @@ extends AbstractFlowConfiguration
 		//XXX IMPLEMENTACION DEBE SER TOMADA DESDE WEB-MVC
 		DefaultMessageCodesResolver messageCodesResolver = new DefaultMessageCodesResolver();
 		//messageCodesResolver.se
-		errorCodesMessageSource();
+		//errorCodesMessageSource();
 		mvcViewFactoryCreator.setMessageCodesResolver(messageCodesResolver);
 		
 		
@@ -243,12 +263,39 @@ extends AbstractFlowConfiguration
 		
 		FlowDefinitionRegistryBuilder flowDefinitionRegistryBuilder = super.getFlowDefinitionRegistryBuilder(flowBuilderServices);
 		// ONE AT A TIME 
-		//flowDefinitionRegistryBuilder.addFlowLocation("/WEB-INF/flights/checkin/checkin.xml");
+		//flowDefinitionRegistryBuilder.addFlowLocation("/WEB-INF/flows/advanced/eightaCustomFlow/definicion-flujo.xml");
+		
+		// MANY AT TIME
 		flowDefinitionRegistryBuilder.setBasePath("/WEB-INF/flows");
 		flowDefinitionRegistryBuilder.addFlowLocationPattern("/**/*-flow.xml");
 		
-		return flowDefinitionRegistryBuilder.build();
+		FlowDefinitionRegistry flowDefinitionRegistry = flowDefinitionRegistryBuilder.build();
+		
+		//MOCK FLOW
+//		FlowDefinition myFlowDefinition = flowDefinitionRegistry.getFlowDefinition("advanced/start");
+//		StateDefinition startState = myFlowDefinition.getStartState();
+//		startState.
+		flowDefinitionRegistry.registerFlowDefinition(this.createMockFlow() );
+		
+		return flowDefinitionRegistry;
 	}
+	
+	public Flow createMockFlow() {
+		
+		Flow mockFlow = new Flow("advanced/mockFlow");
+		
+		//XXX TODO
+		//ViewState inicioUI = new ViewState(mockFlow, "inicio", null);
+		//mockSubflow.add(mockFlow);
+		//new SubflowState(flow, id, subflow)
+		new EndState(mockFlow, "fin");
+		
+		mockFlow.getStartState();
+		
+		
+		return mockFlow;
+	}
+
 /*
 ███████╗██╗      ██████╗ ██╗    ██╗███████╗██╗  ██╗███████╗ ██████╗██╗   ██╗████████╗ ██████╗ ██████╗ 
 ██╔════╝██║     ██╔═══██╗██║    ██║██╔════╝╚██╗██╔╝██╔════╝██╔════╝██║   ██║╚══██╔══╝██╔═══██╗██╔══██╗
@@ -267,6 +314,16 @@ extends AbstractFlowConfiguration
 		
 		flowExecutorBuilder.setMaxFlowExecutions(5);
 		flowExecutorBuilder.setMaxFlowExecutionSnapshots(30);
+		
+		//WEBFLOW - Listener
+		flowExecutorBuilder.addFlowExecutionListener(new RealWebFlowListener() );
+		
+		//WEBFLOW - Security (listener) (requiere: spring-security-core)
+		SecurityFlowExecutionListener securityFlowExecutionListener = new SecurityFlowExecutionListener();
+		//>>custom AccessDecisionManager
+		securityFlowExecutionListener.setAccessDecisionManager(new EightaAccessDecisionManager());
+		
+		flowExecutorBuilder.addFlowExecutionListener(securityFlowExecutionListener );
 		
 		return flowExecutorBuilder.build();
 	}

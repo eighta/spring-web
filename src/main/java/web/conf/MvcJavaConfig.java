@@ -22,6 +22,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.View;
@@ -34,6 +35,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
@@ -521,7 +523,9 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 				"/WEB-INF/flows/persons/newPerson/tiles.xml",
 				"/WEB-INF/flows/dogs/newDog/tiles.xml",
 				"/WEB-INF/flows/advanced/start/tiles.xml",
-				"/WEB-INF/flows/advanced/mySubflow/tiles.xml"
+				"/WEB-INF/flows/advanced/mySubflow/tiles.xml",
+				"/WEB-INF/flows/advanced/eightaCustomFlow/tiles.xml",
+				"/WEB-INF/flows/advanced/abstractFlow/tiles.xml"
 				
 				);
 		
@@ -757,4 +761,21 @@ TTTTTT  T:::::T  TTTTTT h::::h hhhhh           eeeeeeeeeeee       mmmmmmm    mmm
 	public PersonManager getPersonManager(){
 		return new PersonManagerImpl();
 	}
+	
+//HandlerMappings
+	
+	@Bean
+	public HandlerMapping myCustomsFlowsHandlerMappings(){
+		
+		SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
+		simpleUrlHandlerMapping.setOrder(123);
+		
+		Properties mappings = new Properties();
+		mappings.put("/eighta.flow", "_myCustomFlowHandler");
+		simpleUrlHandlerMapping.setMappings(mappings);
+		
+		return simpleUrlHandlerMapping;
+	}
+		
+	
 }

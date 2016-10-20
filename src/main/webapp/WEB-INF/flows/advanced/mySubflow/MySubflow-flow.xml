@@ -3,15 +3,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+		<var name="grammy" class="a8.data.GrammyAward"/>
 		
 		<input name="idNumber" required="true"/>
 		
+		<on-start>
+			<set name="grammy.person.firstName" value="'SOPHIE'"/>
+			<set name="grammy.person.lastName" value="'OCHOA'"/>
+		</on-start>
+
 		<view-state id="dotZero">
 			<transition on="endSubflow" to="done" />
 		</view-state>
 		
 		<end-state id="done">
-			<output name="takeTheOut" value="idNumber"/>
+			<output name="takeMeOut" value="flowUtils.multiplyByTwo(idNumber)"/>
 		</end-state>
 		
 		<!-- Event: Flow ends -->
