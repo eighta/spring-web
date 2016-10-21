@@ -14,6 +14,12 @@
 		<error-code>400</error-code>
 		<location>/WEB-INF/views/errors/simple.jsp</location>
 	</error-page>
+	
+	<!-- XXX CUANDO SE LANZA LO ATRAPA EL WEB.XML -->
+	<error-page>
+		<error-code>401</error-code>
+		<location>/WEB-INF/views/errors/simple.jsp</location>
+	</error-page>
 
 	<error-page>
 		<error-code>404</error-code>

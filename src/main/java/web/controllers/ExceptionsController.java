@@ -39,6 +39,17 @@ public class ExceptionsController {
 		return "NO ALCANZA A LLEGAR ACA";
 	}
 	
+	@RequestMapping(method=RequestMethod.GET, path="/401")
+	public String sendError401(HttpServletResponse response) throws IOException{
+		
+		//response.setStatus("", arg1); DEPRECIADO
+		response.sendError(401, "response.sendError(401) - Programado en el Controller");
+		
+		
+		//XXX LA VISTA NO ES RESULETA, Y SE SALE DEL CONTEXTO DE SPRING
+		return "errors/simple";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, path="/c")
 	public String sendError404(HttpServletResponse response) throws IOException{
 		

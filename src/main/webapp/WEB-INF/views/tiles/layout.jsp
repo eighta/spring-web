@@ -33,10 +33,10 @@
 	
 	$(document).ready(function(){
 		
-		$("body").css("display", "none");	
+//XXX		$("body").css("display", "none");	
 		
 		//IN
-		$("body").fadeIn(2000);
+//XXX		$("body").fadeIn(2000);
 		//$("body").hide(0).delay(500).fadeIn(1000);
 		
 		//OUT

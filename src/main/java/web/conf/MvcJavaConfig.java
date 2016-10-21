@@ -318,18 +318,12 @@ UTILIZADO EN WEBFLOW
 	*/	
 		
 		@Bean
-		public CustomExceptionResolver customExceptionResolver(){
-			CustomExceptionResolver customExceptionResolver = new CustomExceptionResolver();
-			customExceptionResolver.setOrder(-1);
-			return customExceptionResolver;
-		}
-		
-		@Bean
 		public SimpleMappingExceptionResolver simpleMappingExceptionResolver(){
 			SimpleMappingExceptionResolver simpleMappingExceptionResolver =
-					new SimpleMappingExceptionResolver();
-//			
-//			
+					new CustomExceptionResolver();
+
+			simpleMappingExceptionResolver.setOrder(-1);
+			
 			Properties mappings = new Properties();
 			//EL VALUE significa nombre de vista logica
 //			mappings.put("DataAccessException", "errors/databaseError"); 

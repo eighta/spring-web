@@ -312,8 +312,8 @@ extends AbstractFlowConfiguration
 		// apply the listener for all flow definitions
 		//flowExecutorBuilder.addFlowExecutionListener(new AuditFlowExecutorListener(), "*")
 		
-		flowExecutorBuilder.setMaxFlowExecutions(5);
-		flowExecutorBuilder.setMaxFlowExecutionSnapshots(30);
+		flowExecutorBuilder.setMaxFlowExecutions(2);
+		flowExecutorBuilder.setMaxFlowExecutionSnapshots(3);
 		
 		//WEBFLOW - Listener
 		flowExecutorBuilder.addFlowExecutionListener(new RealWebFlowListener() );
