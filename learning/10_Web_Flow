@@ -272,8 +272,192 @@ order:
 3.	Create mock views to test the connection of the states.
 4.	Add the intended behavior.
 
+Testing Web Flows
+-----------------
+The Spring Web Flow provides a test 
+class at org.springframework.webflow.test.execution.AbstractXmlFlowExecutionTests 
+that has to be extended to use unit tests to test flows
+
+Actions and Scopes
+------------------
+Actions are defined in Spring Web Flow using the Spring Expression Language
+
+There are five web flow scopes that are supported by the context of a flow:
+-Flow scope: This is the scope that lasts until the flow ends.
+-View scope: This is the scope associated with each view-state.
+-Request scope: This is the scope matching a single request
+-Flash scope: This the scope allocated when a flow starts; it is cleaned automatically
+after each view is rendered and destroyed when the flow ends.
+-Conversation scope: This is a global execution scope; all subflows share this scope.
+It gets allocated when a top-level flow starts and it is destroyed when the top-level
+flow ends.
+
+When using Spring EL to write expressions, a few reserved variables can be used without any prior
+manual initialization (Spring takes care of initializing them).
+
+scope-specific variables: 
+ requestScope, 
+ flashScope, 
+ viewScope, 
+ flowScope,
+ conversationScope
+
+environment-specific variables: 
+ flowExecutionUrl, 
+ flowRequestContext,
+ requestParameters, 
+ externalContext, 
+ messageContext, 
+ resourceBundle,
+ currentEvent, 
+ currentUser
+
+externalContext.sessionMap is used to access HTTP session contents.
+(No sessionScope variable exists in the context of a flow definition.)
+
+Some of these variables can be used in view template files also; in JSP, all scope variables are accessible,
+ flowExecutionUrl is the URL of the current page, 
+ flowRequestContext is the RequestContext. 
+
+Additional variables are available: pageScope, requestParameters, sessionScope, and so forth.
+
+Excelente ejercio: pag 290
+requestScope vs flashScope
+
+Model Objects
+-------------
+The model is populated with the request parameter process, also known as data binding.
+
+Validation and conversion are supported for all properties, but can be suppressed if needed (usually during
+development) using the bind and validation attributes on the <transition /> element, by setting them to
+"false".
+
+Validation, Formatting, and Conversion
+--------------------------------------
+Formatters and converters used with web flows are the same as in Spring MVC: default ones are present
+out of the box, and custom formatters and converters have to be declared and associated with the web flow
+engine using the flow builder services. 
+
+The same goes for validators: they have to be set on the flow builder services to be used.
+
+[A Spring convertor is a general-purpose class used for conversion between two types that implement
+org.springframework.core.convert.converter.GenericConverter or one of its subinterfaces, or
+implement org.springframework.core.convert.converter.Converter<S,T> or subinterfaces.]
+
+[A Spring formatter is a class specializing in transforming objects into strings or vice-versa, because when
+Spring MVC or Spring Web Flow is used, this is the focus of model objects. The classes must implement the
+org.springframework.format.Formatter<T> interface or one of its subinterfaces. The Formatter<T>
+interface is favored by developers because it is more suitable for web applications]
+
+Although the registered converters are applied to any model objects, if needed, a different converter
+can be set for a property using the converter attribute of the <binding /> element.
+
+<view-state id="enterIdentityCardInfo" model="identityCard">
+	<binder>
+		<binding property="emittedAt" required="true" converter="simpleDate"/>
+		...
+	</binder>
+</view-state>
+
+JSR 349 bean validation is supported and annotations on the form object properties are used to set up
+the validation; but to enable it, a bean of type LocalValidatorFactoryBean has to be defined and set on the
+on the flowBuilderServices bean. A validator set on the FlowBuilderServices bean is applied to all model
+objects in the application. For customizations, custom validators can also be used, just like in Spring MVC.
+
+JSR-349 bean validation supports partial validation through validation groups. 6 A group defines a
+subset of constraints. Instead of validating all constraints for a given object graph, only a subset is validated.
+This subset is defined by the group or groups targeted.
+
+@NotEmpty
+@Size(min=2, max=50, groups=NameRule.class)
+public String firstName;
+
+@NotEmpty
+@Size(min=2, max=50, groups=NameRule.class)
+public String lastName;
+
+In a flow definition, the equivalent of validation groups can be implemented using the
+validation-hints attribute on the <view-state />:
+
+<!-- Flow definition file-->
+<view-state id="enterPersonInfo" model="person" validation-hints="group1,group2">
+<transition on="submit" to="enterIdentityCardInfo">
+<evaluate expression="personValidator.check(person, messageContext)"/>
+</transition>
+</view-state>
+
+The validation groups are used to group together fields of the model object that are subjected to
+validation together.
+
+@NotEmpty
+@Size(min=2, max=50, groups={"group1,group2"})
+public String firstName;
+
+@NotEmpty
+@Size(min=2, max=50, groups={"group1"})
+public String lastName;
+
+The validation-hints attribute is an expression that resolves to a comma-delimited string consisting
+of hints that are resolved by a ValidationHintResolver bean. By default, Spring uses a bean of type org.
+springframework.webflow.validation.
+
+A custom ValidationHintResolver can also be provided if necessary, but has to be set on the
+FlowBuilderServices in the web flow configuration. In the following, you can see an XML and Java
+
+<!-- webflow-config.xml -->
+<webflow:flow-builder-services id="flowBuilderServices"
+view-factory-creator="mvcViewFactoryCreator"
+conversion-service="conversionService"
+validation-hint-resolver="customValidationHintResolver" />
+
+<!-- WebFlowConfig.class-->
+@Bean
+public FlowBuilderServices flowBuilderServices() {
+return getFlowBuilderServicesBuilder()
+.setViewFactoryCreator(mvcViewFactoryCreator())
+.setValidator(this.mvcConfig.validator())
+.setConversionService(conversionService())
+.setValidationHintResolver(customValidationHintResolver())
+.setDevelopmentMode(true)
+.build();
+}
+
+Action States
+-------------
+type of action implementation is suitable to a certain case.
+
+-No action: Easy to use: just plug in a business method call in the web flow definition.
+The main disadvantage here is the tight coupling between business logic and
+the flow definition, and the fact that business method calls can make your web
+flow definition look crowded. It is proper for usage in simple web flows in simple
+applications.
+
+-POJO action: Can be used to glue the flow logic with the business login in a
+decoupled way and provides a flexible way to solve business layer exceptions; but the
+disadvantage is that the flow definitions might become more complex.
+
+-Plain action: There are not many cases when this should be used, except of course,
+for explanatory exercises when teaching Spring Web Flow.
+
+-MultiAction: Offers all the advantages of a POJO action, and the code for the
+implementation class might become quite complex.
 
 
+Decision States
+---------------
+<!-- newPerson-flow.xml -->
+<action-state id="checkDuplicate">
+<evaluate expression="personAction" />
+<transition on="success" to="enterIdentityCardInfo"/>
+</action-state>
 
+The decision state type is an alternative for an action state type; when based on an evaluated expression,
+there are multiple possibilities of transitioning.
 
-CONTINUAR PAGINA: 279 
+<!-- newPerson-flow.xml -->
+<decision-state id="checkDuplicate">
+<if test="personService.isNewPerson(person)" then="enterIdentityCardInfo"
+else="reviewExistingPerson"/>
+</decision-state>
+
+page 311
