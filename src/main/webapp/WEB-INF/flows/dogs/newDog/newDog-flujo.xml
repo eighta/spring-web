@@ -31,7 +31,12 @@
 		
 		<!-- Exception Handle in Action Class -->
 		<evaluate expression="customActionException"/>
-		<transition on="error" to="estallada"/>
+		
+		<!-- WORKS at this level (inside a state) --> 
+		<exception-handler bean="customFlowExecutionExceptionHandler" />
+		
+		<!-- WORKS Exception catched and throw Error Event 
+		<transition on="error" to="estallada"/> -->
 		
 		<!--WORKS Exception with on-exception attribute 
 		<evaluate expression="animalEvalService.methodThrowingException()"/>
@@ -97,9 +102,10 @@
 	
 	<end-state id="estallada" view="webflow/estallada"/>
 	
+	<!--WORKS Exception a nivel GLOBAL
 	<global-transitions>
-		<!--WORKS Exception a nivel GLOBAL-->
 		<transition on-exception="a8.exceptions.EightaException" to="estallada"/>
 	</global-transitions>
+	 -->
 
 </flow>

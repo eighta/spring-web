@@ -19,6 +19,9 @@ public class CustomActionException extends AbstractAction{
 			return success();
 		} catch (EightaException e) {
 			
+			throw e;
+			
+			/* WORKS OK
 			context
 			.getMessageContext()
 			.addMessage(
@@ -30,6 +33,8 @@ public class CustomActionException extends AbstractAction{
 			
 			
 			return error(e); // Optionally pass exception
+			*/
+			
 			//Available as $exception in event-context
 		}
 	}

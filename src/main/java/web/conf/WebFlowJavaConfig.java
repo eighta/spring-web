@@ -38,6 +38,7 @@ import a8.security.EightaAccessDecisionManager;
 import a8.services.InterviewFactory;
 import a8.utils.CommonsUtils;
 import web.converters.binding.UserToStringConverter;
+import web.flows.CustomFlowExecutionExceptionHandler;
 import web.flows.MyCustomFlowHandler;
 import web.listeners.RealWebFlowListener;
 import web.listeners.WebFlowListener;
@@ -48,6 +49,11 @@ import web.utils.FlowUtils;
 public class WebFlowJavaConfig 
 extends AbstractFlowConfiguration 
 {
+	
+	@Bean
+	public CustomFlowExecutionExceptionHandler customFlowExecutionExceptionHandler(){
+		return new CustomFlowExecutionExceptionHandler();
+	}
 
 	@Bean
 	public FlowUtils flowUtils(){
@@ -262,11 +268,13 @@ extends AbstractFlowConfiguration
 	public FlowDefinitionRegistry flowRegistry(FlowBuilderServices flowBuilderServices) {
 		
 		FlowDefinitionRegistryBuilder flowDefinitionRegistryBuilder = super.getFlowDefinitionRegistryBuilder(flowBuilderServices);
+		
+		flowDefinitionRegistryBuilder.setBasePath("/WEB-INF/flows");
+		
 		// ONE AT A TIME 
-		//flowDefinitionRegistryBuilder.addFlowLocation("/WEB-INF/flows/advanced/eightaCustomFlow/definicion-flujo.xml");
+		flowDefinitionRegistryBuilder.addFlowLocation("/dogs/newDog/newDog-flujo.xml");
 		
 		// MANY AT TIME
-		flowDefinitionRegistryBuilder.setBasePath("/WEB-INF/flows");
 		flowDefinitionRegistryBuilder.addFlowLocationPattern("/**/*-flow.xml");
 		
 		FlowDefinitionRegistry flowDefinitionRegistry = flowDefinitionRegistryBuilder.build();
