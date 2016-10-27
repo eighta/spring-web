@@ -408,5 +408,6 @@ isRememberMe()				Returns true if the current principal is a remember-me user
 isAuthenticated()			Returns true if the user is not anonymous
 isFullyAuthenticated()		Returns true if the user is not an anonymous or a remember-me user
 
+http://websystique.com/spring-security/spring-security-4-logout-example/
 
 book: learning (page 339)

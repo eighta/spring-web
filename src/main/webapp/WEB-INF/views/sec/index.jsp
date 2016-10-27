@@ -19,6 +19,7 @@
 	<h1><%=response.getStatus() %></h1>
 	
 	<ul class="rounded-list">
+		<li><a href="/spring-web/s/tasks/sec/logout">/spring-web/s/tasks/sec/logout</a> <span class="resalt">Logout</span><span class="yellow">(Spring Security)</span></li>
 		<li><a href="/spring-web/s/tasks/sec/insured">/spring-web/s/tasks/sec/insured</a> <span class="resalt">Goto: Resource Insured</span><span class="yellow">(Spring Security)</span></li>
 	</ul>
 	
