@@ -1,0 +1,31 @@
+Introduction to Spring Security
+-------------------------------
+**Security Concepts
+-Principal: User, device or system that performs an action
+-Authentication: Establishing that a principal’s credentials are valid
+-Authorization: Deciding if a principal is allowed to perform an action
+-Secured item: Resource that is being secured
+
+**Authentication
+-There are many authentication mechanisms
+ >e.g. basic, digest, form, X.509
+ 
+-There are many storage options for credential andauthority information
+ >Database, in-memory (development) , LDAP ...
+ 
+ **Authorization
+-Authorization depends on authentication
+ >Before deciding if a user can perform an action, user identity must be established
+ 
+-The decision process is often based on roles
+ >ADMIN can cancel orders
+ >MEMBER can place orders
+ >GUEST can browse the catalog
+ 
+ **Motivations
+ -Spring Security is portable across containers
+ -Separation of Concerns
+ -Flexibility
+ -Extensible
+ 
+ 

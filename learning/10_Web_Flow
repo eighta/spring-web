@@ -460,4 +460,78 @@ there are multiple possibilities of transitioning.
 else="reviewExistingPerson"/>
 </decision-state>
 
-page 311
+Exception Handling
+------------------
+
+When exceptions are raised in the context of a flow execution, they can be taken care of in a few ways:
+
+1)Let the exception propagate and define the web flow in such a way that an exception
+will cause a transition to an exception view-state.
+
+<transition on-exception="com.pr.problem.DuplicatePersonException"
+				to="errorEndState" />
+
+2)Handle any exception globally; define a state in which any other state will transition
+into when an exception is thrown.
+<flow>
+...
+	<global-transitions>
+		<transition on-exception="com.pr.problem.DuplicatePersonException" to="errorEndState" />
+	</global-transitions>
+</flow>
+
+3)Use an <exception-handler bean="flowExceptionHandler"/> element as a child
+element to any state type. 
+
+The bean set by the bean attribute of this element is a bean
+of type org.springframework.webflow.engine.FlowExecutionExceptionHandler.
+
+It is recommended to avoid this option, as it can leave the flow in an invalid state
+when used incorrectly. The most simple way to create a flow executor handler is
+to extend the TransitionExecutingFlowExecutionExceptionHandler class that
+extends the previously mentioned interface. 
+
+public class PersonFlowExceptionHandler
+	extends TransitionExecutingFlowExecutionExceptionHandler {
+	
+	public PersonFlowExceptionHandler() {
+		super.add(DuplicatePersonException.class, "errorStateId");
+	}
+}
+
+MISC
+----
+In case you insert data that is invalid, you can use the browser Back button to go back to the previous
+state and change the information. To prevent browsing back to a state previous to a transition with the
+Back button, the history attribute of the transaction element can be used:
+
+<transition on="confirm" to="end" history="discard">
+<!-- or invalidate all previous visited views in the browser history -->
+<transition on="confirm" to="end" history="invalidate">
+
+The default value for this attribute is "preserve" , which allows returning to a state before the execution of
+the transition and the data for the state is still accessible.
+
+"discard" prevents backtracking to the state, meaning that all information related to the state is
+discarded and using the browser Back button results in a 500 HTTP internal server error.
+
+"invalidate" prevents backtracking to the state, as well as any previously entered view-state, and
+pressing the browser Back button has the same effect as the previous case.
+
+Subflows
+--------
+
+Flow Definition Inheritance
+---------------------------
+Flow inheritance is analogous to bean definition inheritance. It is more a composition than inheritance,
+as parent and child are merged together to create a new flow.
+
+Another interesting thing is that flow definition inheritance can be selective, meaning there is a way that
+only certain state definitions can be inherited, instead of the whole parent flow definition:
+
+<flow ... parent="parentFlowName">
+	<view-state id="childState" parent="parentFlowName#stateId">
+</flow>
+
+Securing Web Flows
+------------------

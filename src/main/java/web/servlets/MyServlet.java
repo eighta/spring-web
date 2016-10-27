@@ -3,6 +3,7 @@ package web.servlets;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ViewResolver;
 
@@ -41,14 +41,22 @@ public class MyServlet extends HttpServlet {
 		Life life = (Life)servletContext.getAttribute("GLOBAL");
 		Map<String, HandlerMapping> handlerMappings = life.getHandlerMappings();
 		Map<String, ViewResolver> viewResolvers = life.getViewResolvers();
+		List<String> beansList = life.getAllBeans();
+		
 		
 		//prints
 		printMvcComponents("HandlerMapping",handlerMappings);
 		printMvcComponents("ViewResolver",viewResolvers);
+		printMvcComponents("Beans",beansList);
 		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
+	private void printMvcComponents(String title, List<String> beansList) {
+		System.out.println("=="+title+"===");
+		beansList.forEach(out -> System.out.println(out));
+	}
+
 	private void printMvcComponents(String title, Map<String, ? extends Object> map){
 		
 		System.out.println("=="+title+"===");

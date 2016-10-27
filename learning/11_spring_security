@@ -1,0 +1,396 @@
+Spring Security
+===============
+
+Spring Security is a framework that can be used to secure web applications. It is very easy to use and
+highly customizable, providing access control over units of an application. When writing secure Spring
+web applications, this is the default tool that developers go to because configuration follows the same
+standard with all the Spring projects. Infrastructure beans are provided out of the box for multiple types of
+authentication and they are clearly compatible with other Spring projects. Spring Security provides a wide
+set of capabilities that can be grouped in four areas of interest: authentication, authorizing web requests,
+authorizing methods calls, and authorizing access to individual domain objects.
+
+**The following are Spring Security’s core features:
+
+-Authentication (user identification) and authorization (managing access to
+resources); comprehensible and extensible support is provided.
+
+-It is easy to configure.
+
+-It is highly customizable.
+
+-Protection against session fixation, clickjacking, cross-site request forgery, and other
+type of attacks is provided via simple and flexible configurations.
+
+-It can be integrated with the Servlet API.
+
+**There are five security concepts that you have to familiarize yourself with and understand to use Spring
+Security:
+
+-Credentials are identification keys that an entity presents to the application to
+confirm their identity( a password or a token).
+
+-Principal represents an authenticated entity that was recognized by the application
+based on its credentials.
+
+-Authentication is the process that determines if the credentials of an entity are valid.
+
+-Authorization is the process that determines if a principal is allowed access to a
+resource or performs a certain action. The decision process is often based on roles.
+
+The following are the most common roles:
+ >GUEST, usually can just view data
+ 
+ >MEMBER (or USER), can insert data
+ 
+ >ADMIN, can insert and delete data
+ 
+-Secured item is a resource that is being secured.
+
+Componentes
+-----------
+securityConfig: 	"org.springframework.security:spring-security-config"
+securityWeb: 		"org.springframework.security:spring-security-web"
+securityTaglibs: 	"org.springframework.security:spring-security-taglibs"
+
+The "spring-security-config" module provides security namespace parsing code and is needed when using
+XML configuration.
+
+The "spring-security-web" provides filters and related web-security infrastructure beans.
+(This library is needed for web-based authentication.)
+
+The "spring-security-taglibs" provides security tags that can be used to secure elements in
+JSP pages.
+
+The main reason why Spring Security is preferred when developing web applications is portability.
+
+When it comes to authentication and credential storage, Spring Security is very flexible. All common
+authentication mechanisms are supported (Basic, Form, OAuth, X.509, cookies, single sign-on).
+
+Regarding support storage for credentials databases, Spring Security supports anything—LDAP, properties file, custom
+DAOs, and even beans, among many others.
+
+Configuring Spring Security is easy. A common practice is to define a separate file when using XML and
+a separate configuration class when using Java Configuration. Infrastructure beans can be used to customize
+the following:
+
+-How a principal is defined
+-Where authentication information is stored
+-How authorization decisions are made
+-Where security constraints are stored
+
+Spring Security is consistent. The authentication purpose is to create a security context with the
+principal’s information; it does not depend on the mechanism used. The authorization process has the same
+purpose, regardless of the resource type: consult resource properties, consult the principal’s role, and decide
+to grant or deny access.
+
+Spring Security anatomy
+-----------------------
+
+The following explains the flow described in the image "spring-security-anatomy.png"
+
+1.	
+The user makes a login request. (Introduces credentials in a login form and
+submits it.)
+2.	
+The user logs into the application and the Authentication Manager populates
+the security information of the user into the security context.
+3.	
+When the user makes resource requests (requests to view a page, starts a flow,
+requests a document) after logging in, the security interceptor intercepts them
+before they invoke a protected/secured resource.
+4.	
+The Security Interceptor then retrieves the user information from the context.
+5.	
+The Access Decision Manager polls a list of voters to return a decision regarding
+the rights the authenticated user has on system resources
+6.	
+The Spring Interceptor consults the resource attributes that are configured in the
+application.
+7.	
+Access is granted or denied to the resource based on the user rights (5) and the
+resource attributes (6).
+
+XML-config
+----------
+
+<sec:http auto-config="true">
+	<sec:intercept-url pattern="/auth*" 				access="permitAll"/>
+	<sec:intercept-url pattern="/persons/newPerson"		access="ROLE_ADMIN"/>
+	<sec:intercept-url pattern="/**"					access="ROLE_USER, ROLE_ADMIN"/>
+	
+	<sec:form-login login-page="/auth" authentication-failure-url="/auth?auth_error=1" default-target-url="/"/>
+	<sec:logout logout-url="/j_spring_security_logout" logout-success-url="/home" />
+</sec:http>
+
+The configuration presented earlier uses basic authentication, without any password encryption. The
+auto-config="true" is a legacy attribute that automatically registers a login form, BASIC authentication,
+and a logout URL and logout services. It is not meant to be used for production applications, as the level of
+security required is higher than the default one provided by Spring Security out of the box for educational
+purposes.
+
+The <intercept-url /> elements are evaluated in the order they are listed into the configuration, so
+the most restrictive ones need to be at the top of the list; otherwise, the result might not be the expected one.
+
+<sec:authentication-manager>
+	<sec:authentication-provider>
+		<sec:user-service>
+			<sec:user name="john" password="doe"	authorities="ROLE_USER"/>
+			<sec:user name="jane" password="doe"	authorities="ROLE_USER,ROLE_ADMIN"/>
+			<sec:user name="admin" password="admin"	authorities="ROLE_ADMIN"/>
+		</sec:user-service>
+	</sec:authentication-provider>
+</sec:authentication-manager>
+
+Three users are defined with different roles. Access to the newPerson flow has been restricted to users
+having the ROLE_ADMIN role, to test the configuration. This file is Spring Security 3.0–specific and it won’t
+work in a Spring Security 4 environment, because this version has introduced a lot of changes.
+
+The <sec:logout /> logout element is used to customize logout details. The logout-url attribute
+specifies the URL that will cause a logout. Spring Security initializes a filter that responds to this particular
+URL. The logout-success-url attribute is used to define where the user is redirected after logging out.
+
+In the <sec:form-login /> the URL of the page used for authentication is set as a value for the login-
+page attribute. After successfully logging in, the user is redirected to the page set as a value for the default-
+target-url attribute. In case of failure, the user is redirected to the login view, and using the auth_error
+parameter, a proper value is displayed to the user. The auth.jsp template file presents to the user a login
+form looks like this for Spring Security 3:
+
+<!-- auth.jsp -->
+<form action="<c:url value='/j_spring_security_check'/>" method="post">
+
+	<spring:message code="login.username"/>
+	<input type='text' id='j_username' name='j_username' value='<c:out value="${user}"/>'/>
+	
+	<spring:message code="login.password"/>
+	<input type='password' id='password' name='j_password'/>
+	
+	<button type="submit">
+		<spring:message code="login.submit"/>
+	</button>
+</form>
+
+There is another way to specify access by using Spring Security Expressions, but they must be enabled
+by declaring the use-expressions="true" attribute on the <sec:http /> configuration element. So, the
+access attributes under the <sec:http /> configuration element become this:
+
+<sec:http auto-config="true" use-expressions="true">
+	<sec:intercept-url pattern="/auth*" 				access="permitAll"/>
+	<sec:intercept-url pattern="/persons/newPerson"		access="hasRole('ROLE_ADMIN')"/>
+	<sec:intercept-url pattern="/**"					access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
+
+	<sec:form-login login-page="/auth" authentication-failure-url="/auth?auth_error=1" default-target-url="/"/>
+	<sec:logout logout-url="/j_spring_security_logout"/>
+</sec:http>
+
+Mixing expression style configuration with direct configuration is not permitted. You either use
+expressions or you don’t. Mixing them will make your configuration file invalid.
+
+Spring Security Expressions are quite easy to use and understand:
+
+> hasRole('role') checks whether the principal has the given role.
+
+> hasAnyRole('role1', 'role2', ?) checks whether the principal has any of the
+given roles.
+
+> isAuthenticated() allows access for authenticated or remembered principals.
+
+> permitAll allows unauthenticated users access to a resource. In the previous
+example, this is used to make sure that the login form is accessible so a user can
+insert his credentials for authentication to take place.
+
+> Expressions can be aggregated hasRole('ROLE_ADMIN') and
+hasRole('ROLE_MANAGER').
+
+***Spring Security 4 has introduced a few critical changes that need coverage in this book; because by the
+time this book is published, Spring Security 4 might be a subject on the exam.
+
+
+Spring Security 4 has introduced the possibility of using CSFR tokens in Spring forms to prevent cross-
+site request forgery. 12 A configuration without a <csrf /> element configuration is invalid, and any login
+requests direct you to a 403 error page stating:
+  Invalid CSRF Token 'null' was found on the request parameter
+  '_csrf' or header 'X-CSRF-TOKEN'
+  
+To migrate from Spring Security 3 to version 4, you have to add a configuration for that element, even if
+all you do is disable using CSRF tokens.
+
+<http auto-config="true" use-expressions="true">
+	<csrf disabled="true"/>
+	...
+	
+	<form-login login-page="/auth" authentication-failure-url="/auth?auth_error=1" default-target-url="/"/>
+	<logout logout-url="/logout" delete-cookies="JSESSIONID" logout-success-url="/"/>
+</http>
+
+The delete-cookies attribute can be used to specify a list of cookies to delete at logout time. In the
+previous configuration, only one is specified, named JSESSIONID; but if the application uses more cookies,
+they can be specified as a value for this attribute using their names separated by commas.
+
+Other critical changes are related to the login form default Spring resources, such as the login URL (that
+indicates an authentication request) and names of the request parameters (expected keys for generation of an
+authentication token). 13 These were changed to match JavaConfig. The login form in the auth.jsp view became
+the following:
+
+<form action="<c:url value='/login'/>" method="post">
+	<spring:message code="login.username"/>
+	<input type='text' id='username' name='username' value='<c:out value="${user}"/>'/>
+
+	<spring:message code="login.password"/>
+	<input type='password' id='password' name='password'/>
+	
+	<button type="submit">
+		<spring:message code="login.submit"/>
+	</button>
+</form>
+
+The default values for the login URL and the authentication key names
+>Spring Security 3
+	j_spring_security_check, j_username, j_password
+>Spring Security 4	
+	login, username, password
+
+Keep in mind that all of them can be redefined using Spring configuration.
+
+***
+If you are interested in keeping your form as secure as possible, you can configure CSRF usage and add
+the token generated by Spring to your form. The following are the required modifications:
+
+1)First you must enable CSRF generation in your security-config.xml file by adding
+a <csrf /> configuration element and a repository to generate the value for it.
+Modify the logout element appropriately; the third bullet in this list tells you why.
+
+
+<beans:beans .../>
+
+	<!-- repository to generate CSRF-->
+	<beans:bean id="tokenRepo" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository">
+		<beans:property name="sessionAttributeName" value="_csrf"/>
+	</beans:bean>
+	
+	<http auto-config="true" use-expressions="true">
+		
+		<csrf token-repository-ref="tokenRepo"/>
+
+		<intercept-url pattern="/auth*" access="permitAll"/>
+		<intercept-url pattern="/persons/newPerson" access="hasRole('ADMIN')"/>
+		<intercept-url pattern="/**" access="hasAnyRole('USER, ADMIN')"/>
+
+		<form-login login-page="/auth" authentication-failure-url="/auth?auth_error=1" default-target-url="/"/>
+		<logout logout-url="/logout" delete-cookies="JSESSIONID" invalidate-session="true" logout-success-url="/"/>
+	</http>
+
+	...
+</beans:beans>
+
+2)Second, you must add a hidden parameter in every form that you are interested in
+protecting form cross-site request forgery.
+
+<form action="<c:url value='/login'/>" method="post">
+
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	
+	<spring:message code="login.username"/>
+	<input type='text' id='username' name='username' value='<c:out value="${user}"/>'/>
+	
+	<spring:message code="login.password"/>
+	<input type='password' id='password' name='password'/>
+	
+	<button type="submit">
+		<spring:message code="login.submit"/>
+	</button>
+
+</form>	
+
+3)And last, logging out becomes a pain when CSRF is enabled, because you need to
+log out using a POST request. Thus, you cannot just use a link build like this (like in
+Spring Security 3):
+
+<a href="<spring:url value="/j_spring_security_logout"/>">
+	<spring:message code="menu.logout"/>
+</a>
+
+You need to add a logout form to the page and submit it using JavaScript:
+
+<spring:url value="/logout" var="logoutUrl" />
+	
+<form action="${logoutUrl}" id="logout" method="post">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
+
+<a href="#" onclick="document.getElementById('logout').submit();">
+	<spring:message code="menu.logout"/>
+</a>
+
+Also, as we’ve been mentioning logout, you probably noticed the extra attributes of the <logout />
+element; their names are quite obvious, and if specified at logout, the specific resources are cleaned
+accordingly:
+
+<logout 
+	logout-url="/logout" 
+	delete-cookies="JSESSIONID"
+	invalidate-session="true"
+	logout-success-url="/" />
+
+Also, a handler can be used instead of the logout-success-url that takes care of redirecting to the
+proper page and eventually cleaning up any resources:
+	
+<logout logout-url="/logout"
+	delete-cookies="JSESSIONID"
+	success-handler-ref="logoutSuccessHandler"/>
+
+Another simplification change that can be done to this file is provided by a new feature introduced in
+Spring Security 4 that allows access expressions to be specified without the ROLE_ prefix in front of them; thus,
+the preceding configuration becomes this:
+
+<http auto-config="true" use-expressions="true">
+	<csrf disabled="true"/>
+
+	<intercept-url pattern="/auth*" access="permitAll"/>
+	<intercept-url pattern="/persons/newPerson" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/**" access="hasAnyRole('USER, ADMIN')"/>
+
+	<form-login login-page="/auth" authentication-failure-url="/auth?auth_error=1" default-target-url="/"/>
+	<logout logout-url="/j_spring_security_logout"/>
+</http>
+
+<authentication-manager>
+	<authentication-provider>
+		<user-service>
+			<user name="john" password="doe" authorities="ROLE_USER"/>
+			<user name="jane" password="doe" authorities="ROLE_USER,ROLE_ADMIN"/>
+			<user name="admin" password="admin" authorities="ROLE_ADMIN"/>
+		</user-service>
+	</authentication-provider>
+</authentication-manager>
+
+Another part of configuration needs to be added in the web.xml file, if used. A security filter needs to be
+added to intercept all requests to the application. springSecurityFilterChain is a mandatory name and
+refers to an infrastructure bean with the same name. This bean is responsible for all the security within the
+application (protecting the application URLs, validating submitted usernames and passwords, redirecting to
+the log in form, etc.).
+
+<filter>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+
+---------------------------------------------------------------------------
+HELP: http://docs.spring.io/spring-security/site/docs/current/guides/html5/
+---------------------------------------------------------------------------
+
+Configure Authentication
+------------------------
+NOTA MUY IMPORTANTE: Al configurar Spring Security, se debe crear el filtro en el web.xml,
+enseguida este intentara localizar un bean llamado:  "springSecurityFilterChain" el cual,
+es creado implicitamente cuando se configura (xml) spring security.
+Hay que tener presente lo siguiente: la configuracion del spring security debe estar del lado de
+la configuracion del backend (si esta es hecha con XML), ya que al configurar en el WebApplicationContext, el bean 
+springSecurityFilterChain no es detectado  
+
+
+
+book: learning (page 339)

@@ -11,6 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
@@ -85,6 +86,12 @@ import web.views.xls.OneExcelView;
 
 //<context:component-scan />.
 @ComponentScan(basePackages={"web.beans","web.controllers","web.rest.controllers","web.rest.interceptors"})
+
+
+//In the Spring XML file, just scan the Java @Configuration.
+//<context:component-scan base-package="com.mkyong.form.config" />
+//@ImportResource("classpath:/conf/security-config.xml")
+
 public class MvcJavaConfig 
 	
 	//implements WebMvcConfigurer {
@@ -171,6 +178,8 @@ public class MvcJavaConfig
 			
 			//XXX TODO QUITAR (SOLO ES DE PRUEBA)
 			//registry.addViewController("/ad").setViewName("errors/access_denied");
+			
+			registry.addViewController("/login").setViewName("sec/auth");
 		}
 		
 		//4 WebFlow

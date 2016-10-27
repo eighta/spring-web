@@ -91,6 +91,23 @@ public class Life {
 		return handlerExceptionResolverMap;
 	}
 	
+	public List<String> getAllBeans() {
+		
+		List<String> allBeans = new ArrayList<>();
+		
+		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
+		String[] beanDefinitionNames = frontendApplicationContext.getBeanDefinitionNames();
+		
+		for(String beanName: beanDefinitionNames){
+			
+			Object bean = frontendApplicationContext.getBean(beanName);
+			allBeans.add(bean.getClass()+"::"+beanName);
+		}
+		
+		return allBeans;
+	}
+	
+	
 	public Map<String, ViewResolver> getViewResolvers(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
@@ -168,7 +185,7 @@ System.out.print("---"+commonsUtils.callMethod(c, "hashCode"));
 	}
 	
 	public String giveMeDauthersName(){
-		return "SOPHIE OCHOA"; //XXX leerlo del proeprties
+		return "SOPHIE OCHOA"; //XXX leerlo del properties
 	}
 	
 	//BEING: SINGLETON

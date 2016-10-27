@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
+<beans:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:p="http://www.springframework.org/schema/p" 
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -18,27 +19,29 @@
 		>
 		
 		<!-- styling&internationalization resources do not need to be secured -->
-		<sec:http pattern="/images/*" security="none"/>
-		<sec:http pattern="/styles/*" security="none"/>
-		<sec:http pattern="/resources/*" security="none"/>
+		<http pattern="/images/*" security="none"/>
+		<http pattern="/styles/*" security="none"/>
+		<http pattern="/resources/*" security="none"/>
 		
-		<sec:http auto-config="true">
-			<sec:intercept-url pattern="/auth*" 				access="permitAll"/>
-			<sec:intercept-url pattern="/persons/newPerson"		access="ROLE_ADMIN"/>
-			<sec:intercept-url pattern="/**"					access="ROLE_USER, ROLE_ADMIN"/>
-			
-			<sec:form-login login-page="/auth" authentication-failure-url="/auth?auth_error=1" default-target-url="/"/>
-			<sec:logout logout-url="/j_spring_security_logout" logout-success-url="/home" />
-		</sec:http>
+		<http auto-config="true" use-expressions="true">
+			<csrf disabled="true"/>
 		
-		<sec:authentication-manager>
-			<sec:authentication-provider>
-				<sec:user-service>
-					<sec:user name="john" password="doe"	authorities="ROLE_USER"/>
-					<sec:user name="jane" password="doe"	authorities="ROLE_USER,ROLE_ADMIN"/>
-					<sec:user name="admin" password="admin"	authorities="ROLE_ADMIN"/>
-				</sec:user-service>
-			</sec:authentication-provider>
-		</sec:authentication-manager>
+			<intercept-url pattern="/auth*" access="permitAll"/>
+			<intercept-url pattern="/persons/newPerson" access="hasRole('ADMIN')"/>
+			<intercept-url pattern="/**" access="hasAnyRole('USER, ADMIN')"/>
 		
-</beans>
+			<form-login login-page="/s/tasks/sec/auth" authentication-failure-url="/auth?auth_error=1" default-target-url="/s/tasks/sec/insured"/>
+			<logout logout-url="/j_spring_security_logout"/>
+		</http>
+		
+		<authentication-manager>
+			<authentication-provider>
+				<user-service>
+					<user name="john" password="doe"	authorities="ROLE_USER"/>
+					<user name="jane" password="doe"	authorities="ROLE_USER,ROLE_ADMIN"/>
+					<user name="admin" password="admin"	authorities="ROLE_ADMIN"/>
+				</user-service>
+			</authentication-provider>
+		</authentication-manager>
+		
+</beans:beans>

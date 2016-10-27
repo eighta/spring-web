@@ -12,6 +12,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import web.conf.MvcJavaConfig;
 import web.conf.WebFlowJavaConfig;
+import web.conf.WebSecurityJavaConfig;
 
 public class ServletContextUtil {
 	
@@ -79,7 +80,7 @@ public class ServletContextUtil {
 //or		
 //using Java
 		AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = new AnnotationConfigWebApplicationContext();
-		annotationConfigWebApplicationContext.register(MvcJavaConfig.class, WebFlowJavaConfig.class);
+		annotationConfigWebApplicationContext.register(MvcJavaConfig.class, WebFlowJavaConfig.class, WebSecurityJavaConfig.class);
 		
 		DispatcherServlet frontControllerDispatcherServlet = new DispatcherServlet(annotationConfigWebApplicationContext);
 		

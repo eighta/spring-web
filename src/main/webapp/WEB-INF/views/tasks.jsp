@@ -21,6 +21,7 @@
 	</div>
 	
 	<ul class="rounded-list">
+		<li><a href="tasks/sec">Spring Security</a></li>
 		<li><a href="tasks/webflow">Web Flow</a></li>
 		<li><a href="tasks/rest">RESTful services</a></li>
 		<li><a href="tasks/forms">Forms</a></li>
