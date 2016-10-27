@@ -80,7 +80,7 @@ public class ServletContextUtil {
 //or		
 //using Java
 		AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = new AnnotationConfigWebApplicationContext();
-		annotationConfigWebApplicationContext.register(MvcJavaConfig.class, WebFlowJavaConfig.class, WebSecurityJavaConfig.class);
+		annotationConfigWebApplicationContext.register(MvcJavaConfig.class, WebFlowJavaConfig.class/*, WebSecurityJavaConfig.class*/);
 		
 		DispatcherServlet frontControllerDispatcherServlet = new DispatcherServlet(annotationConfigWebApplicationContext);
 		

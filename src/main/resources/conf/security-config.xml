@@ -23,19 +23,44 @@
 		<http pattern="/styles/*" security="none"/>
 		<http pattern="/resources/*" security="none"/>
 		
-		<http auto-config="true" use-expressions="true">
+		<!-- auto-config="true"  -->
+		<http use-expressions="true">
+			
 			<csrf disabled="true"/>
+			
+			<intercept-url pattern="/s/tasks/sec/insured" access="isAuthenticated()" />
+		
+			<!-- 
+			<intercept-url pattern="/" access="isAnonymous()" />
+			<intercept-url pattern="/login*" access="isAnonymous()" />
 		
 			<intercept-url pattern="/auth*" access="permitAll"/>
 			<intercept-url pattern="/persons/newPerson" access="hasRole('ADMIN')"/>
+			-->
+			
+			<!-- 
 			<intercept-url pattern="/**" access="hasAnyRole('USER, ADMIN')"/>
+			 -->
 		
-			<form-login login-page="/s/tasks/sec/auth" authentication-failure-url="/auth?auth_error=1" default-target-url="/s/tasks/sec/insured"/>
-			<logout logout-url="/j_spring_security_logout"/>
+			<!-- 
+				login-page="/s/tasks/sec/auth"
+				authentication-failure-url="/s/tasks/" 
+				default-target-url="/s/tasks/sec/insured"
+			-->
+			
+			<!-- Sino se coloca en login-page, por defecto Spring provee un JSP de login: "http://localhost:8080/spring-web/login" -->
+			<form-login login-page="/s/tasks/sec/auth"/>
+					
+			<!-- logout-url="/j_spring_security_logout" -->
+			<!-- 
+			<logout />
+			 -->
 		</http>
 		
 		<authentication-manager>
 			<authentication-provider>
+			
+				<!-- ONLY DEV-MODE -->
 				<user-service>
 					<user name="john" password="doe"	authorities="ROLE_USER"/>
 					<user name="jane" password="doe"	authorities="ROLE_USER,ROLE_ADMIN"/>

@@ -19,7 +19,7 @@
 	<h1><%=response.getStatus() %></h1>
 	
 	<div id="form">
-		<form action="<c:url value='/s/login'/>" method="post">
+		<form action="<c:url value='/login'/>" method="POST">
 			Username
 			<input type='text' id='username' name='username'/>
 		

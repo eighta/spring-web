@@ -179,7 +179,7 @@ public class MvcJavaConfig
 			//XXX TODO QUITAR (SOLO ES DE PRUEBA)
 			//registry.addViewController("/ad").setViewName("errors/access_denied");
 			
-			registry.addViewController("/login").setViewName("sec/auth");
+			//registry.addViewController("/login").setViewName("sec/auth");
 		}
 		
 		//4 WebFlow

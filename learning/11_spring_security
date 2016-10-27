@@ -391,6 +391,22 @@ Hay que tener presente lo siguiente: la configuracion del spring security debe e
 la configuracion del backend (si esta es hecha con XML), ya que al configurar en el WebApplicationContext, el bean 
 springSecurityFilterChain no es detectado  
 
+OTRA NOTA MUY IMPORTANTE: el filter que se configura en el web.xml, DEBE ser <url-pattern>/*</url-pattern> OBLIGADO: "/*",
+sino, la URL por defecto de autenticacion: "/login" (Spring Security 4) o "/j_spring_security_check" (Spring Security 3) 
+
+Table 15.1. Common built-in expressions
+
+Expression					Description
+hasRole([role])				Returns true if the current principal has the specified role.
+hasAnyRole([role1,role2])	Returns true if the current principal has any of the supplied roles (given as a comma-separated list of strings)
+principal					Allows direct access to the principal object representing the current user
+authentication				Allows direct access to the current Authentication object obtained from the SecurityContext
+permitAll					Always evaluates to true
+denyAll						Always evaluates to false
+isAnonymous()				Returns true if the current principal is an anonymous user
+isRememberMe()				Returns true if the current principal is a remember-me user
+isAuthenticated()			Returns true if the user is not anonymous
+isFullyAuthenticated()		Returns true if the user is not an anonymous or a remember-me user
 
 
 book: learning (page 339)
