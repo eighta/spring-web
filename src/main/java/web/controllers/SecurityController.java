@@ -22,7 +22,7 @@ public class SecurityController {
 	        new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }
 		
-		return "sec/auth";
+		return "sec/out";
 	}
 	
 	//OBLIGADO MAPEAR LA URL QUE SE DEFINE EN <form-login login-page="/s/tasks/sec/auth"/>

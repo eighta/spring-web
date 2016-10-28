@@ -6,6 +6,7 @@
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
@@ -15,9 +16,14 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/security
-		http://www.springframework.org/schema/security/spring-security.xsd"
-		>
+		http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/jdbc 
+		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 		
+		<!--<beans:import resource="classpath:conf/security-config-built-in-auth-provider.xml" />  -->
+		<beans:import resource="classpath:conf/security-config-custom-auth-provider.xml" />
+		
+		<!-- SECURITY CONFIGURATION -->
 		<!-- styling&internationalization resources do not need to be secured -->
 		<http pattern="/images/*" security="none"/>
 		<http pattern="/styles/*" security="none"/>
@@ -56,17 +62,5 @@
 			<logout />
 			 -->
 		</http>
-		
-		<authentication-manager>
-			<authentication-provider>
-			
-				<!-- ONLY DEV-MODE -->
-				<user-service>
-					<user name="john" password="doe"	authorities="ROLE_USER"/>
-					<user name="jane" password="doe"	authorities="ROLE_USER,ROLE_ADMIN"/>
-					<user name="admin" password="admin"	authorities="ROLE_ADMIN"/>
-				</user-service>
-			</authentication-provider>
-		</authentication-manager>
 		
 </beans:beans>

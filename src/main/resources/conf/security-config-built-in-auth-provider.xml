@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/jdbc 
+		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+		
+		<!-- storage for credentials IN a database. -->
+		<!-- Embedded Database -->
+		<jdbc:embedded-database id="authDataSource" type="HSQL">
+			<jdbc:script location="classpath:database/security/DDL.sql" />
+			<jdbc:script location="classpath:database/security/DML.sql" />
+		</jdbc:embedded-database>
+		
+		
+		<authentication-manager>
+		
+			<authentication-provider>
+			
+				<!--The encrypted strings were generated using an instance of org.springframework.security.
+						authentication.encoding.Md5PasswordEncoder: -->
+				<password-encoder hash="md5">
+					<!-- MySalt is just a CONSTANT String -->
+					<salt-source system-wide="MySalt"/> 
+					<!-- To use an entity property as salt -->
+					<!-- <salt-source user-property="id" /> -->
+				</password-encoder>
+			
+				<!-- For production application, the most common storage for credentials is a database. --> 
+				<jdbc-user-service data-source-ref="authDataSource" />
+			
+				<!-- ONLY DEV-MODE (too) 
+				<user-service properties="/WEB-INF/users.properties"/>
+				-->
+			
+				<!-- ONLY DEV-MODE 
+				<user-service>
+					<user name="john" password="doe"	authorities="ROLE_USER"/>
+					<user name="jane" password="doe"	authorities="ROLE_USER,ROLE_ADMIN"/>
+					<user name="admin" password="admin"	authorities="ROLE_ADMIN"/>
+				</user-service> -->
+				
+				
+			</authentication-provider>
+		</authentication-manager>
+		
+</beans:beans>

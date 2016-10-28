@@ -410,4 +410,42 @@ isFullyAuthenticated()		Returns true if the user is not an anonymous or a rememb
 
 http://websystique.com/spring-security/spring-security-4-logout-example/
 
+
+The credentials were decoupled from the configuration by isolating them in a property file, which can
+be easily edited without needing to recompile the application. The credentials property file has a specific
+syntax:
+[username] = [password(encrypted)],[role1,role2...]
+admin=5a693853b2958ecb256db46b808ac488,ROLE_ADMIN
+
+DataBase
+--------
+To provide these credentials to the authentication manager, a data source is
+needed:
+<authentication-manager>
+	<authentication-provider>
+		<jdbc-user-service data-source-ref="authDataSource" />
+	</authentication-provider>
+</authentication-manager>
+
+Two tables must be accessible using the authDataSource: one named users containing user credentials
+and one named authorities continuing user-role correspondences. The following queries are run by the
+authentication provider and must execute successfully:
+SELECT username, password, enabled FROM users WHERE username = ?
+SELECT username, authority FROM authorities WHERE username = ?
+
+
+**Another way to provide credentials is to write a custom implementation for an authentication provider:
+
+<authentication-manager>
+	<authentication-provider user-service-ref="customCredentialsProvider" />
+</authentication-manager>
+
+
+
+
+
+
+
+
+
 book: learning (page 339)
