@@ -1,5 +1,6 @@
 package web.conf;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -11,6 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.validation.DefaultMessageCodesResolver;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.ViewResolver;
@@ -34,7 +38,6 @@ import org.springframework.webflow.security.SecurityFlowExecutionListener;
 
 import a8.data.Person;
 import a8.data.Simple1;
-import a8.security.EightaAccessDecisionManager;
 import a8.services.InterviewFactory;
 import a8.utils.CommonsUtils;
 import web.converters.binding.UserToStringConverter;
@@ -330,12 +333,17 @@ extends AbstractFlowConfiguration
 		SecurityFlowExecutionListener securityFlowExecutionListener = new SecurityFlowExecutionListener();
 		//>>custom AccessDecisionManager
 		//securityFlowExecutionListener.setAccessDecisionManager(new EightaAccessDecisionManager());
-		
+		securityFlowExecutionListener.setAccessDecisionManager(localCustomDecisionManager());
 		flowExecutorBuilder.addFlowExecutionListener(securityFlowExecutionListener );
 		
 		return flowExecutorBuilder.build();
 	}
-
+	
+	@Bean
+	public AccessDecisionManager localCustomDecisionManager(){
+		List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList<>();
+		return new UnanimousBased(decisionVoters);
+	}
 
 	//@Bean
 	public ConversionService _conversionService() {

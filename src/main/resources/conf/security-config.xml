@@ -63,4 +63,11 @@
 			 -->
 		</http>
 		
+		<!-- Securing Methods -->
+		<security:global-method-security>
+			<security:protect-pointcut
+				expression="execution(* com.pr..*Actions.*(..))?"
+				access="hasRole('ROLE_ADMIN')" />
+		</security:global-method-security>
+		
 </beans:beans>

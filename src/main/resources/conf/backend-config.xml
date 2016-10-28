@@ -13,13 +13,16 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/tx
-		http://www.springframework.org/schema/tx/spring-tx.xsd"
-		>
-
-		<!-- Spring Security -->		
-		<import resource="classpath:/conf/security-config.xml" />
-		
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
 <!-- No schemaLocation needed for [c] and [p] namespace -->
+
+		<!-- Spring Security -->
+		<!-- <import resource="classpath:/conf/security-config.xml" /> --> 
+		<!-- Better using SecurityJavaConfig -->
+		<bean class="web.conf.WebSecurityJavaConfig"/>		
+		<!-- be sure to include the JavaConfig bean post-processor 
+    	<bean class="org.springframework.config.java.process.ConfigurationPostProcessor"/>
+    	-->
 		
 		<!-- General properties -->
 		<context:property-placeholder location="classpath:core/backend.properties" />

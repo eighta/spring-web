@@ -441,9 +441,167 @@ SELECT username, authority FROM authorities WHERE username = ?
 </authentication-manager>
 
 
+No web.xml Configuration
+------------------------
+As the official documentation says, if Spring Security is used with Spring MVC, you
+need an extra empty class that extends org.springframework.security.web.context.
+AbstractSecurityWebApplicationInitializer, a class provided by Spring Security that ensures that
+the springSecurityFilterChain gets registered.
 
+En palabras menos, un alternativa al filtro: "springSecurityFilterChain" definido en el web.xml,
+es: simplemente crear una clase que extienda de 
+org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer
 
+Spring Security Java Configuration
+----------------------------------
 
+Al definir una clase Java para configurar el WebSecurity, se debe tener en cuenta lo siguientes pasos:
+
+1. se debe extender de la clase: 
+	org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+	
+2. La clase debe ser anotada con: @EnableWebSecurity
+  
+3. @Override protected void configure(HttpSecurity http) throws Exception {...}
+	y configurar las URLs, forma de autenticacion, csrf y entre otros 
+
+Spring Security Tag Library
+---------------------------
+Security tags can be used in JSP directly to secure elements in the page and prevent their rendering if the
+authenticated user is not allowed to see them. To use them, the Spring Security Tag library must be declared
+in the JSP page:
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<sec:authorize access="isAuthenticated()">
+...
+</sec:authorize>
+
+So basically, the same expressions used when configuring Spring Security are
+used for the access attribute.
+
+And another tag was used to display information about the user being logged in:
+<sec:authentication property="principal.username"/>
+
+Securing Methods
+----------------
+Spring Security uses AOP to secure method calls. The Spring Security namespace can be used to configure
+method security using XML. But the most commonly used and easy-to-understand way to secure methods
+is through annotations. Spring Security provides its own annotations, but JSR-250 annotations are supported
+too.
+
+Of course, method security must be enabled, which can be done by adding the following element in the
+security configuration file:
+
+<global-method-security secured-annotations="enabled" />
+
+Securing an action method using annotations can be done using the @Secured Spring annotation,
+which is activated when the global-method-security element is present in the configuration.
+
+***@Secured("ROLE_ADMIN")
+
+The equivalent of the global-method-security XML configuration is @EnableGlobalMethodSecurity(
+securedEnabled = true) , which can be placed on any configuration class annotated with @Configuration
+
+To enable JSR-250 annotations, and especially the @RolesAllowed annotation (that is an equivalent for
+Spring @Secured), the following configurations must be made:
+
+<global-method-security jsr250-annotations="enabled" />
+or
+@EnableGlobalMethodSecurity(jsr250Enabled = true)
+
+***@RolesAllowed("ROLE_ADMIN")
+
+Spring Security also provides the @PreAuthorize annotation, which is used to set an expression that is
+evaluated to decide if the method is invoked or not.(Basically, the equivalent of the <intercept /> XML
+configuration element.) Being a Spring Security annotation, it supports SpEL. This annotation can be used
+if it has been enabled using the @EnableGlobalMethodSecurity annotation.
+
+//@WebFlowAction
+public class AccountActions extends MultiAction {
+
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public Event saveAccount(RequestContext context) {
+		...
+	}
+}
+
+Securing Flow Definitions
+-------------------------
+Any component of a flow definition—states, subflows, transitions—can be considered resources and thus
+secured. So far, we have secured the web-flow link by using a <sec:authorize /> element in the templates/
+layout.jsp tiles template and setting up authentication and authorization. But flow components can be
+secured using a org.springframework.webflow.security.SecurityFlowExecutionListener and by
+adding <secured> elements in the flow definition. Considering that authentication and authorization rules
+have been set up as described earlier, the next step is to configure a SecurityFlowExecutionListener. This
+can be done using XML configuration by adding the bean definition in the configuration file setting up the
+web flow environment, webflow-config.xml.
+
+<!--webflow-config.xml-->
+<flow ...>
+	<!-- Executes web flows -->
+	<webflow:flow-executor id="flowExecutor" >
+		<webflow:flow-execution-listeners>
+			<webflow:listener ref="auditExecutionListener"/>
+			<webflow:listener ref="securityFlowExecutionListener"/>
+		</webflow:flow-execution-listeners>
+	</webflow:flow-executor>
+	
+	<bean id="auditExecutionListener" class="com.pr.audit.AuditFlowExecutorListener"/>
+	<bean id="securityFlowExecutionListener" class="org.springframework.webflow.security.SecurityFlowExecutionListener"/>
+	... // other flow infrastrucure beans
+</flow>
+
+The UnanimousBased is a simple concrete implementation of the AccessDecisionManager provided by
+Spring Security; it requires all voters to abstain or grant access.
+
+The SecurityFlowExecutionListener bean throws AccessDeniedException when the user is not
+authorized to access a flow resource. The exception is caught by Spring Security servlet filter. Catching or
+suppressing this exception is not recommended. When extending SimpleMappingExceptionResolver,
+doResolveException should be implemented so that this exception is rethrown.
+
+The following example depicts the specific points where the secured element can appear in a flow
+definition:
+
+<!-- 1. Under the flow element, securing the whole flow definition -->
+<flow ...>
+	<secured attributes="ROLE_ADMIN" />
+</flow>
+
+<!-- 2. Securing a view-state -->
+<flow ...>
+	<view-state id="enterPersonInfo" model="person">
+		<secured attributes="ROLE_ADMIN" />
+	</view-state>
+</flow>
+
+<!-- or a decision state -->
+	<decision-state id="isNewPerson">
+		<secured attributes="IS_AUTHENTICATED_FULLY"/>
+		<if test="personService.isNewPerson(person)"
+			then="enterIdentityCardInfo" else="reviewExistingPerson"/>
+	</decision-state>
+
+<!-- 3. Securing a transition -->
+<flow ...>
+	<view-state id="enterPersonInfo" model="person">
+		...
+		<transition on="next" to="isNewPerson" >
+			<secured attributes="ROLE_ADMIN" />
+		</transition>
+	</view-state>
+</flow>
+
+The attributes attribute is a comma-separated list of Spring Security authorization attributes. Often,
+these are specific security roles. But, when using a custom access decision manager, the syntax can vary; for
+example, SpEL can be used when the custom access manager is a Spring bean that supports them.
+
+Spring Security with OAuth
+--------------------------
+OAuth is an open standard for authorization. It is an open protocol to allow secure authorization in a
+simple and standard method for web, mobile, and desktop applications. It is designed to work with HTTP
+and basically allows access tokens to be generated by a server, which can then be used by the client to access
+resources on another server. It’s like there is an authentication provider that guarantees that you are who you
+say you are (it vouches for you) to a different service provider.
 
 
 
