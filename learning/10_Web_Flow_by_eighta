@@ -434,7 +434,7 @@ externalContext
 messageContext
 resourceBundle
 
-NOTA: Note: sessionScope. Use externalContext.sessionMap
+NOTA: sessionScope NO EXISTE. Use externalContext.sessionMap
 
 Reserved EL Variables in JSP
 ----------------------------
