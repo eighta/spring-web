@@ -63,11 +63,31 @@
 			 -->
 		</http>
 		
-		<!-- Securing Methods -->
-		<security:global-method-security>
-			<security:protect-pointcut
-				expression="execution(* com.pr..*Actions.*(..))?"
-				access="hasRole('ROLE_ADMIN')" />
-		</security:global-method-security>
+		<!-- Securing Methods-->
+		<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" jsr250-annotations="enabled">
+		
+			<!-- NOT WORK 
+			<expression-handler ref="myExpressionHandler"/> -->
+			
+			<!-- WORKs OK, -->
+			<protect-pointcut
+				expression="execution(* a8.core.JustBusiness.getMySelf(..))"
+				access="ROLE_USER" />
+		
+			<protect-pointcut
+				expression="execution(* a8.core.JustBusiness.getMyDaughter(..))"
+				access="IS_AUTHENTICATED_FULLY" />
+				
+		<!-- access="IS_AUTHENTICATED_FULLY"  -->
+		<!-- access="isAuthenticated()" -->
+		</global-method-security>
+		
+		<!-- NOT WORKs
+		<beans:bean name="myExpressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+			<beans:property name="permissionEvaluator" ref="myPermissionEvaluator"/>
+		</beans:bean>
+		
+		<beans:bean name="myPermissionEvaluator" class="a8.evaluators.MyPermissionEvaluator"/>
+		 -->
 		
 </beans:beans>

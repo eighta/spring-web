@@ -186,6 +186,7 @@ Mixing expression style configuration with direct configuration is not permitted
 expressions or you don’t. Mixing them will make your configuration file invalid.
 
 Spring Security Expressions are quite easy to use and understand:
+---------------------------
 
 > hasRole('role') checks whether the principal has the given role.
 

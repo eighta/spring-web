@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
@@ -32,10 +33,12 @@ public class MyWebApplicationInitializer
 	//	protected Class<?>[] getServletConfigClasses() {return new Class<?>{MvcConfig.class,WebFlowConfig.class};}
 	//	protected String[] getServletMappings() {return new String{"/"};}
 
-//or 
+//or
+	//extends AbstractSecurityWebApplicationInitializer
 	implements org.springframework.web.WebApplicationInitializer
+	
 	{
-
+	
 	private static final ServletContextUtil servletContextUtil = ServletContextUtil.getInstance();
 	private static final Logger logger = LoggerFactory.getLogger(MyWebApplicationInitializer.class);
 	

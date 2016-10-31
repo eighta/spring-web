@@ -24,7 +24,7 @@
 		
 		<authentication-manager>
 			<!-- Custom implementation for an authentication provider -->
-			<authentication-provider user-service-ref="myCustomCredentialsProvider" />
+			<authentication-provider user-service-ref="myCustomCredentialsProvider"  />
 		</authentication-manager>
 		
 </beans:beans>

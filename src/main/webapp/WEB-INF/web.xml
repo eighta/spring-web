@@ -62,8 +62,7 @@
 	
 	
 	<!-- spring security-->
-	<!-- SE UTILIZA AbstractSecurityWebApplicationInitializer -->
-	<!-- 
+	<!-- SE UTILIZA AbstractSecurityWebApplicationInitializer
 	<filter>
 	  <filter-name>springSecurityFilterChain</filter-name>
 	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -72,8 +71,7 @@
 	<filter-mapping>
 	  <filter-name>springSecurityFilterChain</filter-name>
 	  <url-pattern>/*</url-pattern>
-	</filter-mapping>
-	-->
+	</filter-mapping> -->
 
 	<!-- TAG LIBS CONF <jsp-config> <taglib> <taglib-uri></taglib-uri> <taglib-location></taglib-location> 
 		</taglib> </jsp-config> -->

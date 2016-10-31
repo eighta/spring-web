@@ -330,16 +330,16 @@ extends AbstractFlowConfiguration
 		flowExecutorBuilder.addFlowExecutionListener(new RealWebFlowListener() );
 		
 		//WEBFLOW - Security (listener) (requiere: spring-security-core)
-		SecurityFlowExecutionListener securityFlowExecutionListener = new SecurityFlowExecutionListener();
+		//SecurityFlowExecutionListener securityFlowExecutionListener = new SecurityFlowExecutionListener();
 		//>>custom AccessDecisionManager
 		//securityFlowExecutionListener.setAccessDecisionManager(new EightaAccessDecisionManager());
-		securityFlowExecutionListener.setAccessDecisionManager(localCustomDecisionManager());
-		flowExecutorBuilder.addFlowExecutionListener(securityFlowExecutionListener );
+		//securityFlowExecutionListener.setAccessDecisionManager(localCustomDecisionManager());
+		//flowExecutorBuilder.addFlowExecutionListener(securityFlowExecutionListener );
 		
 		return flowExecutorBuilder.build();
 	}
 	
-	@Bean
+	//@Bean
 	public AccessDecisionManager localCustomDecisionManager(){
 		List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList<>();
 		return new UnanimousBased(decisionVoters);

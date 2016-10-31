@@ -16,13 +16,15 @@
 		http://www.springframework.org/schema/tx/spring-tx.xsd">
 <!-- No schemaLocation needed for [c] and [p] namespace -->
 
-		<!-- Spring Security -->
-		<!-- <import resource="classpath:/conf/security-config.xml" /> --> 
-		<!-- Better using SecurityJavaConfig -->
-		<bean class="web.conf.WebSecurityJavaConfig"/>		
+		<!-- Spring Security-->
+		<!-- XML Conf -->
+		<import resource="classpath:/conf/security-config.xml" />        
+		<!-- SecurityJavaConfig 
+		<bean class="web.conf.WebSecurityJavaConfig"/> --> 
+		
+		<!-- NOT NEEDED -->		
 		<!-- be sure to include the JavaConfig bean post-processor 
-    	<bean class="org.springframework.config.java.process.ConfigurationPostProcessor"/>
-    	-->
+    	<bean class="org.springframework.config.java.process.ConfigurationPostProcessor"/> -->
 		
 		<!-- General properties -->
 		<context:property-placeholder location="classpath:core/backend.properties" />
@@ -91,6 +93,8 @@
 	<bean class="a8.beans.ComplexBean">
 		<property name="simpleBean" ref="factoryBean" />
 	</bean>
+	
+	<bean class="a8.core.JustBusiness"/>
 
 	<!-- Using constructor-arg && property TAG's -->
 	<bean name="simplePropertiesBean_old" class="a8.beans.SimplePropertiesBean">

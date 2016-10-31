@@ -8,11 +8,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import a8.security.MyAuthenticationProvider;
+import a8.security.MyCustomCredentialsProvider;
 
 @Configuration //<<< Solo es necesario, si esta clase es identificada a travez del Component-Scan o usar @EnableGlobalMethodSecurity 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+
+//Enables Spring Security global method security similar to the <global-method-security> xml support.
+//<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" jsr250-annotations="enabled">
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled= true, jsr250Enabled= true)
+
 public class WebSecurityJavaConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
@@ -37,8 +41,14 @@ public class WebSecurityJavaConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		
-		MyAuthenticationProvider myAuthenticationProvider = new MyAuthenticationProvider();
-		auth.authenticationProvider(myAuthenticationProvider);
+		//AuthenticationProvider
+		//MyAuthenticationProvider myAuthenticationProvider = new MyAuthenticationProvider();
+		//auth.authenticationProvider(myAuthenticationProvider);
+		
+		auth.userDetailsService(new MyCustomCredentialsProvider() );
+		
+		//Securing Methods
+		//auth.po
 		
 		//ONLY 4 DEV MODE 
 //		try {

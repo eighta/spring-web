@@ -28,4 +28,48 @@ Introduction to Spring Security
  -Flexibility
  -Extensible
  
+ 
+ http://docs.spring.io/spring-security/site/docs/current/reference/html/el-access.html
+ 26.1.1 Common Built-In Expressions
+ hasRole([role])
+ hasAnyRole([role1,role2])
+ hasAuthority([authority])
+ hasAnyAuthority([authority1,authority2])
+ principal
+ authentication
+ permitAll
+ denyAll
+ isAnonymous()
+ isRememberMe()
+ isAuthenticated()
+ isFullyAuthenticated()
+ hasPermission(Object target, Object permission)
+ hasPermission(Object targetId, String targetType, Object permission)
+ 
+@Pre and @Post Annotations
+--------------------------
+@PreAuthorize 
+@PreFilter
+@PostAuthorize 
+@PostFilter
+ 
+Filtering using @PreFilter and @PostFilter
+------------------------------------------
+Spring Security supports filtering of collections and arrays and this can now be achieved using expressions. 
+This is most commonly performed on the return value of a method. 
+
+For example:
+@PreAuthorize("hasRole('USER')")
+@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'admin')")
+public List<Contact> getAll(); 
+
+When using the @PostFilter annotation, Spring Security iterates through the returned collection and removes any 
+elements for which the supplied expression is false. The name filterObject refers to the current object in the collection. 
+You can also filter before the method call, using @PreFilter, though this is a less common requirement. 
+The syntax is just the same, but if there is more than one argument which is a collection type then you have to select 
+one by name using the filterTarget property of this annotation.
+
+Note that filtering is obviously not a substitute for tuning your data retrieval queries. If you are filtering large 
+collections and removing many of the entries then this is likely to be inefficient.
+ 
  page 607
