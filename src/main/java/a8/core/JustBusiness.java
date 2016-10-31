@@ -14,8 +14,8 @@ public class JustBusiness {
 		return new Person(1,"@","RolesAllowed","2000-01-01");
 	}
 	
-	
-	@Secured("hasRole('USER')")
+	//Spring 2.0 syntax, so not limited to roles. SpEL not supported.
+	@Secured("IS_AUTHENTICATED_FULLY")
 	public Person getPersonSecured(){
 		return new Person(1,"@","Secure","2000-01-01");
 	}

@@ -72,4 +72,4 @@ one by name using the filterTarget property of this annotation.
 Note that filtering is obviously not a substitute for tuning your data retrieval queries. If you are filtering large 
 collections and removing many of the entries then this is likely to be inefficient.
  
- page 607
+ page 630
