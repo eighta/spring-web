@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.HandlerAdapter;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.ViewResolverComposite;
 
 import a8.utils.CommonsUtils;
+import web.utils.ServletContextUtil;
 
 //ESTA CLASE en realidad debe ser una interface
 //ya que ofrece una serie de servicios
@@ -139,6 +142,18 @@ public class Life {
 		return commonsUtils.getBeansOfType(frontendApplicationContext, HandlerAdapter.class);
 	}
 	
+	public Map<String, Filter> getFilters(){
+		
+		ServletContextUtil.getInstance().getFilters(servletContext);
+		System.out.println("OK-FILTER");
+		
+		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
+		FilterChainProxy filterChainProxy = frontendApplicationContext.getBean(FilterChainProxy.class);
+		System.out.println("filterChainProxy: " + filterChainProxy);
+		
+		return null;
+	}
+	
 	public Map<String, HandlerMapping> getHandlerMappings(){
 		
 		WebApplicationContext frontendApplicationContext = heart.getFrontendApplicationContext();
@@ -189,9 +204,10 @@ System.out.print("---"+commonsUtils.callMethod(c, "hashCode"));
 	}
 	
 	//BEING: SINGLETON
+	private ServletContext servletContext;
 	private static Life INSTANCE = null;
 	private Life(ServletContext servletContext){
-//XXX		this.servletContext=servletContext;
+		this.servletContext=servletContext;
 	}
     private synchronized static void createInstance(ServletContext servletContext) {
         if (INSTANCE == null) { 

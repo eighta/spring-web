@@ -29,8 +29,12 @@
 		<http pattern="/styles/*" security="none"/>
 		<http pattern="/resources/*" security="none"/>
 		
+		<beans:bean name="myFilter" class="web.filters.MyFilter" />
+		
 		<!-- auto-config="true"  -->
 		<http use-expressions="true">
+			
+			<custom-filter ref="myFilter" after="FORM_LOGIN_FILTER"/>
 			
 			<csrf disabled="true"/>
 			

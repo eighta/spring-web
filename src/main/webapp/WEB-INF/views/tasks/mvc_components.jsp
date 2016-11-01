@@ -28,6 +28,35 @@
 		<c:out value="${global.giveMeDauthersName().getClass().getCanonicalName()}"/>
 	</div>
 	
+	<!-- =======================FILTERS=================================== -->
+	<!-- XXX NO IMPPLEMENTADO -->
+	<div>
+		<a href="#" class="title">Filter's</a>
+		<span class="readable">javax.servlet.<span class="neon">Filter</span></span>
+	</div>
+	
+	<table class="pure-table">
+		<thead>
+	        <tr>
+	            <th>Filter name</th>
+	            <th>Class</th>
+	            <th>Order</th>
+        	</tr>
+    	</thead>
+		<tbody>
+			<c:forEach items="${global.getFilters()}" var="handlerMapping">
+				<tr>
+					<td>${handlerMapping.key}</td>
+					<td>${handlerMapping.value.getClass().getCanonicalName()}</td>
+					<td>${handlerMapping.value.getOrder()}</td>
+				</tr>
+			</c:forEach>
+		
+		</tbody>
+	</table>
+	
+	
+	<!-- ================================================================= -->
 	<div>
 		<a href="handler_mapping" class="title">HandlerMapping's</a>
 		<span class="readable">org.springframework.web.servlet.<span class="neon">HandlerMapping</span></span>

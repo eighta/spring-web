@@ -2,6 +2,7 @@ package web.utils;
 
 import java.util.Map;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
@@ -32,6 +33,14 @@ public class ServletContextUtil {
 		return INSTANCE;
 	}
 	// END: SINGLETON
+	
+	public void getFilters(ServletContext servletContext){
+		Map<String, ? extends FilterRegistration> filterRegistrations = servletContext.getFilterRegistrations();
+		for(String name:filterRegistrations.keySet() ){
+			System.out.println(name);
+		}
+		
+	}
 	
 	public void printAllServletNames(ServletContext servletContext) {
 		
