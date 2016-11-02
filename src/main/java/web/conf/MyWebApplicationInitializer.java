@@ -34,7 +34,6 @@ public class MyWebApplicationInitializer
 	//	protected String[] getServletMappings() {return new String{"/"};}
 
 //or
-	//extends AbstractSecurityWebApplicationInitializer
 	implements org.springframework.web.WebApplicationInitializer
 	
 	{

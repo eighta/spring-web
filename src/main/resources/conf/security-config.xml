@@ -34,6 +34,7 @@
 		<!-- auto-config="true"  -->
 		<http use-expressions="true">
 			
+			<!-- CUSTOM FILTER CHAIN -->
 			<custom-filter ref="myFilter" after="FORM_LOGIN_FILTER"/>
 			
 			<csrf disabled="true"/>

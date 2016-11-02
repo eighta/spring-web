@@ -22,6 +22,12 @@ public class WebSecurityJavaConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
+		//custom security filters
+//		http.addFilter(filter)
+//		http.addFilterAfter(filter, afterFilter)
+//		http.addFilterAt(filter, atFilter)
+//		http.addFilterBefore(filter, beforeFilter)
+		
 		http.authorizeRequests()
 			.antMatchers("/resources/**","/images/**","/styles/**").permitAll()
 			.antMatchers("/s/tasks/sec/insured").authenticated()
